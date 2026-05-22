@@ -174,47 +174,48 @@
         /* 隨身小卡黑金排版 */
         .card-container-flex {
             display: flex;
-            gap: 25px;
+            gap: 30px;
             align-items: center;
             justify-content: center;
             background: #1e1e24;
-            padding: 25px;
+            padding: 25px 30px;
             border-radius: 12px;
             color: #ffeaa7;
             margin-top: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+        /* 放大版太極圖容器 */
         .taichi-svg-wrapper {
-            width: 160px;
-            height: 90px;
+            width: 240px; /* 從原本的 160px 放大 */
+            height: auto;
             cursor: pointer;
             user-select: none;
             transition: transform 0.1s;
         }
         .taichi-svg-wrapper:active { transform: scale(0.97); }
         
-        /* 100% 依照手繪示意圖修正：左半上弧、右半下弧 */
+        /* 太極雙半圈（左半上弧、右半下弧） */
         .taichi-curve {
             fill: none;
             stroke: #d4af37;
-            stroke-width: 4.5;
+            stroke-width: 3.5; /* 配合放大圖形微調粗細比例 */
             stroke-linecap: round;
             transition: stroke 0.3s, filter 0.3s;
         }
-        /* 連接處三點點構造 */
+        /* 三顆點點構造代碼樣式 */
         .taichi-dot {
             fill: #d4af37;
             transition: fill 0.3s, filter 0.3s;
         }
         
-        /* 長按琉璃藍光發光 */
+        /* 長按發光狀態（琉璃藍光） */
         .glow-active .taichi-curve {
             stroke: #00cec9;
             filter: drop-shadow(0 0 6px #0984e3);
         }
         .glow-active .taichi-dot {
             fill: #00cec9;
-            filter: drop-shadow(0 0 4px #0984e3);
+            filter: drop-shadow(0 0 6px #0984e3);
         }
 
         /* 氣功修煉專區佈局 */
@@ -351,7 +352,10 @@
             .tab-btn { padding: 10px 5px; font-size: 0.85rem; }
             .grid { grid-template-columns: 1fr; gap: 8px; }
             .med-display { flex-direction: column; gap: 8px; }
-            .card-container-flex { flex-direction: column; text-align: center; gap: 15px; padding: 15px; }
+            
+            /* 手機板：字在上方，太極圖在下方，置中對齊 */
+            .card-container-flex { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
+            .taichi-svg-wrapper { width: 220px; } /* 手機板微微縮小以免滿版 */
             
             .qi-flex-layout { flex-direction: column; align-items: stretch; gap: 15px; }
             .qi-visual-panel { width: 100%; box-sizing: border-box; }
@@ -418,19 +422,19 @@
             </div>
             
             <div class="card-container-flex">
-                <div style="flex:1; font-size:0.9rem; line-height:1.5;">
-                    <strong>☯️ 藥詩咒・身心舒緩隨身小卡</strong><br>
-                    <span style="font-size:0.8rem; opacity:0.8;">① 使用方法：手按住太極點中心發願誦念，至症狀舒緩即停。</span><br>
-                    <span style="font-size:0.8rem; opacity:0.8; color:#ff7675;">② 注意事項：藥詩咒為居家輔助工具，切勿盲目按此抓藥。</span>
+                <div style="flex:1; font-size:0.95rem; line-height:1.6;">
+                    <strong style="font-size: 1.1rem;">☯️ 藥詩咒・身心舒緩隨身小卡</strong><br>
+                    <span style="font-size:0.85rem; opacity:0.8;">① 使用方法：手按住太極點中心發願誦念，至症狀舒緩即停。</span><br>
+                    <span style="font-size:0.85rem; opacity:0.8; color:#ff7675;">② 注意事項：藥詩咒為居家輔助工具，切勿盲目按此抓藥。</span>
                 </div>
                 
                 <svg id="taichi-node" class="taichi-svg-wrapper" viewBox="0 0 100 84" onmousedown="startGlow()" onmouseup="endGlow()" ontouchstart="startGlow()" ontouchend="endGlow()">
                     <path class="taichi-curve" d="M 12,42 A 19,19 0 0,1 50,42" />
                     <path class="taichi-curve" d="M 50,42 A 19,19 0 0,0 88,42" />
                     
-                    <circle class="taichi-dot" cx="31" cy="23" r="5" />
-                    <circle class="taichi-dot" cx="50" cy="42" r="5" />
-                    <circle class="taichi-dot" cx="69" cy="61" r="5" />
+                    <circle class="taichi-dot" cx="31" cy="42" r="4.5" />
+                    <circle class="taichi-dot" cx="50" cy="42" r="4.5" />
+                    <circle class="taichi-dot" cx="69" cy="42" r="4.5" />
                 </svg>
             </div>
         </div>
@@ -529,7 +533,7 @@ const sources = [{ name: "太陽真氣", desc: "太陽星君之真氣" }, { name
 const hosts = [{ name: "觀世音菩薩", desc: "請賜大悲神咒水，或化解疾病厄難" }, { name: "藥師佛", desc: "最常用以請求療癒疾病及請求和解" }, { name: "地藏菩薩", desc: "主法宿業所感問題（如化解業力、特殊傳染病）" }, { name: "準提佛母", desc: "法能量強，主法元神歸位/歸元及修補內外丹" }, { name: "百解大天尊", desc: "棘手的問題通常可化解（如各種疑難雜症）" }];
 const mantras = [{ name: "大悲神咒", desc: "大悲咒改成大悲神咒效果更強。通常先請觀世音菩薩" }, { name: "大隨求神咒", desc: "可化解一切，圓滿無事平安" }, { name: "安土地真言", desc: "穩定身處之處能量場，使之適合練功" }, { name: "楞嚴神咒", desc: "淨化磁場、設立結界。改為神咒效果更強" }, { name: "佛頂尊勝陀羅尼神咒", desc: "有形及無形眾生都可用的祝福和解能量" }, { name: "藥師神咒", desc: "藥師佛十二大願的祈願方向皆可應用" }, { name: "一切有為法，如夢幻泡影，如露亦如電，應作如是觀", desc: "淨心、化負面情緒、穩定心境。特別適合打坐前使用" }, { name: "願以此功德，迴向於法界，我等與眾生，皆共成佛道", desc: "練功完有法喜的時候迴向使用，後可加上自己祈願" }, { name: "解結解結解冤結，解了多生冤和業，洗心滌慮發虔誠，今對佛前求解結。藥師佛，藥師佛，消災延壽藥師佛，隨心滿願藥師佛", desc: "練功前請求和解不受干擾，可解三世因果及業障" }, { name: "金剛經", desc: "般若類經書，能量場與護法神很穩定，適合正心正念者" }, { name: "妙法蓮華經", desc: "經中之王，作者體會可用於開發第六感與醫術" }];
 const modes = [{ name: "祈福模式", desc: "灌入好能量。特定用法：請三官大帝主法並誠心懺悔彌補" }, { name: "淨化模式", desc: "把汙濁的負面能量或干擾化開" }, { name: "金剛模式", desc: "化解下降頭、符咒或跑宮廟帶來的負面因果體影響" }, { name: "清涼模式", desc: "炎熱時避免中暑，或體內燥熱。建議搭配大悲水" }, { name: "美白／帥氣模式", desc: "改變肉體及乙太體狀態，外在形象更佳。常搭配妙法蓮華經" }, { name: "特急急救模式", desc: "急性狀況送醫之餘的功法輔助，可幫助緩解" }, { name: "舒眠模式", desc: "提升睡眠品質。通常搭配楞嚴經/地藏經/普門品" }, { name: "保護模式", desc: "「三界內外放光明」，保護家人遺體火化時靈魂不受痛苦" }, { name: "重症模式", desc: "專用於癌症/重症，搭配藥師佛使用。用於親人為宜（救急不救窮）" }];
-const gongfas = [{ name: "七彩大金光（彩光氣）", desc: "氣的能量類型，能提振精神，使心情興奮" }, { name: "七彩金光愛與溫暖", desc: "打開身體寒氣與業力，對腫瘤也有能量" }, { name: "九宮", desc: "補足八卦與外丹共修。入門用五行，進階用九宮" }, { name: "三昧真火", desc: "給予陽性能量，改善四肢冰冷、頸椎痛、預防寒冷型感冒" }, { name: "三昧真火旺", desc: "補滿特定穴位開關竅(六關->八關->十關)，效率提升" }, { name: "上元神金光大法令", desc: "幫助跳脫小我，從更高維度觀察問題、理解生命" }, { name: "大悲（神咒）水", desc: "先請觀音賜水，將奉請的能量放進所要飲用的水中" }, { name: "五行陣", desc: "聚焦能量(土金水木火土順時針)，可用於設立保護性結界" }, { name: "內在小孩呼呼療癒", desc: "靈系功法後仍不圓滿時使用，撫慰受傷心靈" }, { name: "天使靈氣", desc: "以此感受靈氣的能量加持" }, { name: "心開意解", desc: "可以用以調理情緒體，迅速調適心境" }, { name: "仙女美人令／美男子令", desc: "用以使容貌保持青春活力與容光煥發" }, { name: "生命大金光", desc: "修復生魂與心脈，讓三魂與身體穩定結合，修復肉體" }, { name: "生命大金光七彩大金光護體", desc: "特定用於輔助燒燙傷，使其恢復得較快" }, { name: "佛光普照法", desc: "開心、興奮、陽光的陽性能量，使能量充沛、法喜充滿" }, { name: "佛光補滿", desc: "適用練功後不舒服部位，手貼該處默唸此四字即可" }, { name: "金甘露", desc: "玉皇大帝賜予。氣凝聚為液態、消業障、通中脈、安眠" }, { name: "清淨自性", desc: "清洗因果業力，也可用於反思負面情緒或過錯" }, { name: "無形針", desc: "施用在穴位，不用實體針，以氣的能量模擬出針灸效果" }, { name: "轉化調和令", desc: "調和能量分布。練功常打呵欠可用，加持胃經、腎經" }, { name: "靈性伴侶", desc: "使伴侶關係和諧。單身者可改善外在人緣與異性關係" }, { name: "靈性家人", desc: "使人間關係和諧圓滿，將周遭人(如同事)當家人對待" }, { name: "靈脈清理", desc: "從根本做起，以最高視角淡化減輕三世因果，使肉靈同化" }, { name: "靈氣充滿", desc: "使用前宜先使用靈脈清理，乾淨後再補充好能量" }, { name: "靈界干擾", desc: "諸多不順時梳理乙太體，預先化解未來3-6個月災厄" }];
+const gongfas = [{ name: "七彩大金光（彩光氣）", desc: "氣的能量類型，能提振精神，使心情興奮" }, { name: "七彩金光愛與溫暖", desc: "八字真言。可打開身體寒氣與業力，對腫瘤也有能量" }, { name: "九宮", desc: "補足八卦與外丹共修。入門用五行，進階用九宮" }, { name: "三昧真火", desc: "給予陽性能量，改善四肢冰冷、頸椎痛、預防寒冷型感冒" }, { name: "三昧真火旺", desc: "補滿特定穴位開關竅(六關->八關->十關)，效率提升" }, { name: "上元神金光大法令", desc: "幫助跳脫小我，從更高維度觀察問題、理解生命" }, { name: "大悲（神咒）水", desc: "先請觀音賜水，將奉請的能量放進所要飲用的水中" }, { name: "五行陣", desc: "聚焦能量(土金水木火土順時針)，可用於設立保護性結界" }, { name: "內在小孩呼呼療癒", desc: "靈系功法後仍不圓滿時使用，撫慰受傷心靈" }, { name: "天使靈氣", desc: "以此感受靈氣的能量加持" }, { name: "心開意解", desc: "可以用以調理情緒體，迅速調適心境" }, { name: "仙女美人令／美男子令", desc: "用以使容貌保持青春活力與容光煥發" }, { name: "生命大金光", desc: "修復生魂與心脈，讓三魂與身體穩定結合，修復肉體" }, { name: "生命大金光七彩大金光護體", desc: "特定用於輔助燒燙傷，使其恢復得較快" }, { name: "佛光普照法", desc: "開心、興奮、陽光的陽性能量，使能量充沛、法喜充滿" }, { name: "佛光補滿", desc: "適用練功後不舒服部位，手貼該處默唸此四字即可" }, { name: "金甘露", desc: "玉皇大帝賜予。氣凝聚為液態、消業障、通中脈、安眠" }, { name: "清淨自性", desc: "清洗因果業力，也可用於反思負面情緒或過錯" }, { name: "無形針", desc: "施用在穴位，不用實體針，以氣的能量模擬出針灸效果" }, { name: "轉化調和令", desc: "調和能量分布。練功常打呵欠可用，加持胃經、腎經" }, { name: "靈性伴侶", desc: "使伴侶關係和諧。單身者可改善外在人緣與異性關係" }, { name: "靈性家人", desc: "使人間關係和諧圓滿，將周遭人(如同事)當家人對待" }, { name: "靈脈清理", desc: "從根本做起，以最高視角淡化減輕三世因果，使肉靈同化" }, { name: "靈氣充滿", desc: "使用前宜先使用靈脈清理，乾淨後再補充好能量" }, { name: "靈界干擾", desc: "諸多不順時梳理乙太體，預先化解未來3-6個月災厄" }];
 
 function startGlow() { document.getElementById('taichi-node').classList.add('glow-active'); }
 function endGlow() { document.getElementById('taichi-node').classList.remove('glow-active'); }
@@ -584,7 +588,7 @@ function updateSymptoms() {
     const symSelect = document.getElementById('symptom-select');
     symSelect.innerHTML = '<option value="">-- 請選擇症狀 --</option>';
     if (cat) for (let sym in medicineData[cat]) symSelect.options.add(new Option(sym, sym));
-    document.getElementById('m1').innerText = "薬名 1"; document.getElementById('m2').innerText = "薬名 2"; document.getElementById('m3').innerText = "薬名 3";
+    document.getElementById('m1').innerText = "藥名 1"; document.getElementById('m2').innerText = "藥名 2"; document.getElementById('m3').innerText = "藥名 3";
 }
 
 function generateMedSentence() {
