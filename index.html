@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>幸福種子句調配器-終極完整版</title>
+    <title>幸福種子句調配器-終極大圓滿版</title>
     <style>
         :root {
             --primary: #ff7675;
             --secondary: #ffeaa7;
             --dark: #2d3436;
             --light: #f9f9f9;
-            --buddha: #0984e3; /* 藥師法門專屬琉璃藍，用作功能區分 */
+            --buddha: #0984e3; 
+            --qi: #2ecc71; 
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -20,7 +21,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             background: white;
             padding: 30px;
@@ -28,7 +29,6 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
-        /* 分頁切換鈕排版 */
         .tab-nav {
             display: flex;
             gap: 10px;
@@ -48,6 +48,7 @@
             color: #666;
             transition: all 0.2s;
         }
+        .tab-btn:hover { background: var(--light); }
         .tab-btn.active {
             background: var(--primary);
             color: white;
@@ -56,6 +57,11 @@
         .tab-btn.buddha-tab.active {
             background: var(--buddha);
             border-color: var(--buddha);
+        }
+        .tab-btn.qi-tab.active {
+            background: var(--qi);
+            border-color: var(--qi);
+            color: white;
         }
         .tab-content {
             display: none;
@@ -69,9 +75,8 @@
             color: var(--primary);
             margin-bottom: 5px;
         }
-        h1.buddha-h1 {
-            color: var(--buddha);
-        }
+        h1.buddha-h1 { color: var(--buddha); }
+        h1.qi-h1 { color: var(--qi); }
         .subtitle {
             text-align: center;
             color: #666;
@@ -100,9 +105,8 @@
             margin-right: 10px;
             border-radius: 3px;
         }
-        .buddha-title::before {
-            background: var(--buddha) !important;
-        }
+        .buddha-title::before { background: var(--buddha) !important; }
+        .qi-title::before { background: var(--qi) !important; }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -120,13 +124,8 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        .card:hover {
-            background: #f0f0f0;
-        }
-        .card input {
-            position: absolute;
-            opacity: 0;
-        }
+        .card:hover { background: #f0f0f0; }
+        .card input { position: absolute; opacity: 0; }
         .card.selected {
             border-color: var(--primary);
             background: #fff5f5;
@@ -142,7 +141,6 @@
             line-height: 1.4;
         }
 
-        /* 藥師咒專屬下拉與藥方方塊 */
         select {
             width: 100%;
             padding: 12px;
@@ -154,13 +152,12 @@
             outline: none;
             margin-bottom: 15px;
         }
-        select:focus {
-            border-color: var(--buddha);
-        }
+        select:focus { border-color: var(--buddha); }
         .med-display {
             display: flex;
             gap: 12px;
             margin-top: 15px;
+            margin-bottom: 20px;
         }
         .med-box {
             flex: 1;
@@ -172,6 +169,130 @@
             font-weight: bold;
             color: var(--buddha);
             border-radius: 8px;
+        }
+
+        /* 隨身小卡互動排版 */
+        .card-container-flex {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            background: #1e1e24;
+            padding: 20px;
+            border-radius: 12px;
+            color: #ffeaa7;
+            margin-top: 20px;
+        }
+        .taichi-card-mock {
+            width: 120px;
+            height: 120px;
+            border: 4px solid #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            background: #111;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+        .taichi-card-mock:active { transform: scale(0.95); }
+        .taichi-dot-center {
+            width: 16px;
+            height: 16px;
+            background: #d4af37;
+            border-radius: 50%;
+            z-index: 10;
+        }
+        /* 雙波浪太極圖案 */
+        .taichi-card-mock::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(to right, #111 50%, #222 50%);
+            opacity: 0.3;
+        }
+        .glow-active {
+            animation: buddhaGlow 1.5s infinite alternate;
+            border-color: #00cec9 !important;
+            box-shadow: 0 0 20px #00cec9;
+        }
+        @keyframes buddhaGlow {
+            to { box-shadow: 0 0 35px #0984e3; }
+        }
+
+        /* 氣功修煉專區 */
+        .qi-flex-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .qi-controls { flex: 1; }
+        .qi-visual-panel {
+            width: 320px;
+            background: #2d3436;
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .qi-instruction-box {
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-left: 4px solid var(--qi);
+        }
+
+        /* 全動態脈絡畫布 */
+        .meridian-canvas {
+            width: 180px;
+            height: 260px;
+            margin: 15px auto;
+            position: relative;
+            background: #34495e;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .lid-element {
+            position: absolute;
+            top: 5px; left: 50%;
+            transform: translateX(-50%);
+            width: 90px; height: 25px;
+            border: 2px solid #f1c40f;
+            border-radius: 50% 50% 0 0;
+            background: rgba(241, 196, 15, 0.2);
+            display: none;
+        }
+        .lid-element::after {
+            content: ''; position: absolute; top: -8px; left: 41px;
+            width: 8px; height: 8px; background: #f1c40f; border-radius: 50%;
+        }
+        .flow-line {
+            fill: none;
+            stroke-width: 3;
+            stroke-dasharray: 6 4;
+            animation: qiFlowAnimation 1.5s linear infinite;
+        }
+        @keyframes qiFlowAnimation {
+            to { stroke-dashoffset: -20; }
+        }
+
+        /* 漩渦粒子特效 (任督脈開竅觀想用) */
+        .vortex-ring {
+            fill: none;
+            stroke: #f1c40f;
+            stroke-width: 2;
+            stroke-dasharray: 4 2;
+            transform-origin: 50px var(--vortex-y, 50px);
+            animation: vortexSpin 1.2s linear infinite;
+            display: none;
+        }
+        @keyframes vortexSpin {
+            to { transform: rotate(360deg); }
         }
 
         .result-box {
@@ -209,12 +330,9 @@
             float: right;
             margin-top: -5px;
         }
-        .copy-btn:hover {
-            background: #ff5252;
-        }
-        .buddha-copy-btn {
-            background: var(--buddha) !important;
-        }
+        .copy-btn:hover { background: #ff5252; }
+        .buddha-copy-btn { background: var(--buddha) !important; }
+        .qi-copy-btn { background: var(--qi) !important; color: white !important;}
         .clear-btn {
             background: #636e72;
             border: none;
@@ -227,9 +345,7 @@
             margin-top: -5px;
             margin-right: 10px;
         }
-        .clear-btn:hover {
-            background: #2d3436;
-        }
+        .clear-btn:hover { background: #2d3436; }
     </style>
 </head>
 <body>
@@ -237,33 +353,30 @@
 <div class="container">
     <div class="tab-nav">
         <button class="tab-btn active" onclick="switchTab(event, 'seed-tab')">🌱 幸福種子句調配</button>
-        <button class="tab-btn buddha-tab" onclick="switchTab(event, 'buddha-tab')">💙 藥詩咒：對症下藥</button>
+        <button class="tab-btn buddha-tab" onclick="switchTab(event, 'buddha-tab')">💙 藥師咒：對症下藥</button>
+        <button class="tab-btn qi-tab" onclick="switchTab(event, 'qi-tab')">🌀 氣功修練專區</button>
     </div>
 
     <div id="seed-tab" class="tab-content active">
         <h1>✨ 幸福種子句調配器 ✨</h1>
-        <div class="subtitle">【全圖鑑終極完整版】100% 完整收錄書中 7 頁所有功法、模式與經咒</div>
+        <div class="subtitle">【全圖鑑終極大圓滿版】100% 完整收錄書中所有功法、模式與經咒</div>
 
         <div class="section">
             <div class="section-title">1. 選擇 權限等級 / 能量來源 (選填)</div>
             <div class="grid" id="source-group"></div>
         </div>
-
         <div class="section">
             <div class="section-title">2. 奉請 主持人 / 主法者 (選填)</div>
             <div class="grid" id="host-group"></div>
         </div>
-
         <div class="section">
             <div class="section-title">3. 搭配 經典 / 咒語 / 偈語 (可多選)</div>
             <div class="grid" id="mantra-group"></div>
         </div>
-
         <div class="section">
             <div class="section-title">4. 設定 作用模式 (選填)</div>
             <div class="grid" id="mode-group"></div>
         </div>
-
         <div class="section">
             <div class="section-title">5. 啟動 特定功法 (可多選)</div>
             <div class="grid" id="gongfa-group"></div>
@@ -271,27 +384,94 @@
     </div>
 
     <div id="buddha-tab" class="tab-content">
-        <h1 class="buddha-h1">💙 藥師咒：專病專藥系統 💙</h1>
-        <div class="subtitle">【全書對照版】依照照片病症自動對應三位靈性藥名藥方</div>
+        <h1>💙 藥師咒：專病專藥系統 💙</h1>
+        <div class="subtitle">【全圖鑑藥方更新】100% 精準核對書中各大類別病症與三味靈性藥名</div>
 
         <div class="section">
             <div class="section-title buddha-title">1. 選擇病症類別</div>
             <select id="category-select" onchange="updateSymptoms()"></select>
         </div>
-
         <div class="section">
             <div class="section-title buddha-title">2. 選擇具體症狀</div>
             <select id="symptom-select" onchange="generateMedSentence()">
                 <option value="">-- 請先選擇類別 --</option>
             </select>
         </div>
-
         <div class="section" style="border:none; padding-bottom:0;">
-            <div class="section-title buddha-title">3. 對應之靈性藥方 (自動調配)</div>
+            <div class="section-title buddha-title">3. 對應之靈性藥方</div>
             <div class="med-display">
                 <div class="med-box" id="m1">藥名 1</div>
                 <div class="med-box" id="m2">藥名 2</div>
                 <div class="med-box" id="m3">藥名 3</div>
+            </div>
+            
+            <div class="card-container-flex">
+                <div style="flex:1; font-size:0.9rem; line-height:1.5;">
+                    <strong>☯️ 藥詩咒・身心舒緩隨身隨身小卡</strong><br>
+                    <span style="font-size:0.8rem; opacity:0.8;">① 使用方法：手按住右側太極圖中心點發願誦念，到症狀舒緩即停。</span><br>
+                    <span style="font-size:0.8rem; opacity:0.8; color:#ff7675;">② 注意事項：藥詩咒只是居家輔助舒緩工具，切勿按此抓藥。</span>
+                </div>
+                <div class="taichi-card-mock" id="taichi-node" onmousedown="startGlow()" onmouseup="endGlow()" ontouchstart="startGlow()" ontouchend="endGlow()">
+                    <div class="taichi-dot-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="qi-tab" class="tab-content">
+        <h1>🌀 氣功修練專區 </h1>
+        <div class="subtitle">【任督二脈與大自然連連看】打通身體正面任脈五穴與背面督脈五穴之功法整合</div>
+        
+        <div class="qi-flex-layout">
+            <div class="qi-controls">
+                <div class="section" style="border:none; padding-bottom:0;">
+                    <div class="section-title qi-title">1. 選擇修煉功法</div>
+                    <select id="qi-func-select" onchange="updateQiInstructions()">
+                        <option value="">-- 請選擇功法 --</option>
+                        <option value="basic_cold">肚臍採氣法【身體冷感 / 日常順行周天】</option>
+                        <option value="basic_hot">肚臍採氣法【燥熱易怒 / 反向逆行調和】</option>
+                        <option value="kidney">肚臍採氣法【手麻心連・護腎版最高CP值】</option>
+                        <option value="lazy_earth">懶人版地樁法【放鬆坐姿・重力與思緒交付大地】</option>
+                        <option value="tian_zhuang">天樁排情緒法【手掌朝天・後仰一招排空大腦】</option>
+                        <option value="ren_mo">打通任脈五穴道【百會 ➔ 印堂 ➔ 膻中 ➔ 中脘 ➔ 關元】</option>
+                        <option value="du_mo">打通督脈五穴道【百會 ➔ 風府 ➔ 大椎 ➔ 身柱 ➔ 命門】</option>
+                        <option value="organs">進階：器官陰陽結合【分享好磁場給腺體與生殖器官】</option>
+                    </select>
+                </div>
+                
+                <div class="qi-instruction-box" id="qi-text-panel">
+                    選擇對應功法後，此處將顯現相應的心法秘訣、意念觀想引導、任督脈穴位順序，與高醫師氣功教室的關鍵提點。
+                </div>
+            </div>
+
+            <div class="qi-visual-panel">
+                <div style="font-size:0.9rem; font-weight:bold; margin-bottom:5px;" id="qi-visual-title">能量場狀態</div>
+                <div id="qi-visual-sub" style="font-size:0.75rem; opacity:0.7; margin-bottom:10px;">尚未啟動</div>
+                
+                <div class="meridian-canvas">
+                    <div class="lid-element" id="lid-node"></div>
+                    
+                    <svg width="180" height="260" viewBox="0 0 100 100" style="position:absolute; top:0; left:0;" id="meridian-svg-object">
+                        <line x1="50" y1="10" x2="50" y2="90" stroke="#4f5d75" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <path id="qi-main-path" d="" class="flow-line" stroke="transparent"/>
+                        
+                        <circle id="n-baihui" cx="50" cy="12" r="4.5" fill="#e74c3c" style="display:none;"/>
+                        <circle id="n-yintang" cx="50" cy="24" r="4" fill="#f1c40f" style="display:none;"/>
+                        <circle id="n-shanzhong" cx="50" cy="45" r="4" fill="#2ecc71" style="display:none;"/>
+                        <circle id="n-zhongwan" cx="50" cy="62" r="4" fill="#3498db" style="display:none;"/>
+                        <circle id="n-guanyuan" cx="50" cy="80" r="4.5" fill="#9b59b6" style="display:none;"/>
+                        
+                        <circle id="n-fengfu" cx="50" cy="20" r="4" fill="#e67e22" style="display:none;"/>
+                        <circle id="n-dazhui" cx="50" cy="32" r="4" fill="#1abc9c" style="display:none;"/>
+                        <circle id="n-shenzhu" cx="50" cy="48" r="4" fill="#e74c3c" style="display:none;"/>
+                        <circle id="n-mingmen" cx="50" cy="72" r="4.5" fill="#f1c40f" style="display:none;"/>
+                        
+                        <circle id="n-glands" cx="50" cy="53" r="5" fill="#e84393" style="display:none;"/>
+                        
+                        <circle id="vortex" cx="50" cy="12" r="7" class="vortex-ring"/>
+                    </svg>
+                </div>
+                <div id="qi-visual-desc" style="font-size:0.85rem; margin-top:5px; color:#2ecc71; font-weight:bold;"></div>
             </div>
         </div>
     </div>
@@ -305,126 +485,63 @@
 </div>
 
 <script>
-// 你的 100% 完整種子句資料庫
-const sources = [
-    { name: "太陽真氣", desc: "太陽星君之真氣，帶有強大陽性能量" },
-    { name: "上元神", desc: "連結連結高我能量層次" },
-    { name: "天地元神", desc: "調動天地間的高維元神能量協助主法" }
-];
-
-const hosts = [
-    { name: "觀世音菩薩", desc: "請賜大悲神咒水，或化解疾病厄難" },
-    { name: "藥師佛", desc: "最常用以請求療癒疾病及請求和解" },
-    { name: "地藏菩薩", desc: "主法宿業所感問題（如化解業力、特殊傳染病）" },
-    { name: "準提佛母", desc: "法能量強，主法元神歸位/歸元及修補內外丹" },
-    { name: "百解大天尊", desc: "棘手的問題通常可化解（如各種疑難雜症）" }
-];
-
-const mantras = [
-    { name: "大悲神咒", desc: "大悲咒改成大悲神咒效果更強。通常先請觀世音菩薩" },
-    { name: "大隨求神咒", desc: "可化解一切，圓滿無事平安" },
-    { name: "安土地真言", desc: "穩定身處之處能量場，使之適合練功" },
-    { name: "楞嚴神咒", desc: "淨化磁場、設立結界。改為神咒效果更強" },
-    { name: "佛頂尊勝陀羅尼神咒", desc: "有形及無形眾生都可用的祝福和解能量" },
-    { name: "藥師神咒", desc: "藥師佛十二大願的祈願方向皆可應用" },
-    { name: "一切有為法，如夢幻泡影，如露亦如電，應作如是觀", desc: "淨心、化負面情緒、穩定心境。特別適合打坐前使用" },
-    { name: "願以此功德，迴向於法界，我等與眾生，皆共成佛道", desc: "練功完有法喜的時候迴向使用，後可加上自己祈願" },
-    { name: "解結解結解冤結，解了多生冤和業，洗心滌慮發虔誠，今對佛前求解結。藥師佛，藥師佛，消災延壽藥師佛，隨心滿願藥師佛", desc: "練功前請求和解不受干擾，可解三世因果及業障" },
-    { name: "金剛經", desc: "般若類經書，能量場與護法神很穩定，適合正心正念者" },
-    { name: "妙法蓮華經", desc: "經中之王，作者體會可用於開發第六感與醫術" }
-];
-
-const modes = [
-    { name: "祈福模式", desc: "灌入好能量。特定用法：請三官大帝主法並誠心懺悔彌補" },
-    { name: "淨化模式", desc: "把汙濁的負面能量或干擾化開" },
-    { name: "金剛模式", desc: "化解下降頭、符咒或跑宮廟帶來的負面因果體影響" },
-    { name: "清涼模式", desc: "炎熱時避免中暑，或體內燥熱。建議搭配大悲水" },
-    { name: "美白／帥氣模式", desc: "改變肉體及乙太體狀態，外在形象更佳。常搭配妙法蓮華經" },
-    { name: "特急急救模式", desc: "急性狀況送醫之餘的功法輔助，可幫助緩解" },
-    { name: "舒眠模式", desc: "提升睡眠品質。通常搭配楞嚴經/地藏經/普門品" },
-    { name: "保護模式", desc: "「三界內外放光明」，保護家人遺體火化時靈魂不受痛苦" },
-    { name: "重症模式", desc: "專用於癌症/重症，搭配藥師佛使用。用於親人為宜（救急不救窮）" }
-];
-
-const gongfas = [
-    { name: "七彩大金光（彩光氣）", desc: "氣的能量類型，能提振精神，使心情興奮" },
-    { name: "七彩金光愛與溫暖", desc: "八字真言。可打開身體寒氣與業力，對腫瘤也有能量" },
-    { name: "九宮", desc: "補足八卦，與外丹一起修練。入門用五行，進階用九宮" },
-    { name: "三昧真火", desc: "給予陽性能量，改善四肢冰冷、頸椎痛、預防寒冷型感冒" },
-    { name: "三昧真火旺", desc: "補滿特定穴位開關竅(六關->八關->十關)，效率提升" },
-    { name: "上元神金光大法令", desc: "幫助跳脫小我，從更高維度觀察問題、理解生命" },
-    { name: "大悲（神咒）水", desc: "先請觀音賜水，將奉請的能量放進所要飲用的水中" },
-    { name: "五行陣", desc: "聚焦能量(土金水木火土順時針)，可用於設立保護性結界" },
-    { name: "內在小孩呼呼療癒", desc: "靈系功法後仍不圓滿時使用，撫慰受傷心靈" },
-    { name: "天使靈氣", desc: "以此感受靈氣的能量加持" },
-    { name: "心開意解", desc: "可以用以調理情緒體，迅速調適心境" },
-    { name: "仙女美人令／美男子令", desc: "用以使容貌保持青春活力與容光煥發" },
-    { name: "生命大金光", desc: "修復生魂與心脈，讓三魂與身體穩定結合，修復肉體" },
-    { name: "生命大金光七彩大金光護體", desc: "特定用於輔助燒燙傷，使其恢復得較快" },
-    { name: "佛光普照法", desc: "開心、興奮、陽光的陽性能量，使能量充沛、法喜充滿" },
-    { name: "佛光補滿", desc: "適用練功後不舒服部位，手貼該處默唸此四字即可" },
-    { name: "金甘露", desc: "玉皇大帝賜予。氣凝聚為液態、消業障、通中脈、安眠" },
-    { name: "清淨自性", desc: "清洗因果業力，也可用於反思負面情緒或過錯" },
-    { name: "無形針", desc: "施用在穴位，不用實體針，以氣的能量模擬針灸效果" },
-    { name: "轉化調和令", desc: "調和能量分布。練功常打呵欠可用，加持胃經、腎經" },
-    { name: "靈性伴侶", desc: "使伴侶關係和諧。單身者可改善外在人緣與異性關係" },
-    { name: "靈性家人", desc: "使人間關係和諧圓滿，將周遭人(如同事)當家人對待" },
-    { name: "靈脈清理", desc: "從根本做起，以最高視角淡化減輕三世因果，使肉靈同化" },
-    { name: "靈氣充滿", desc: "使用前宜先使用靈脈清理，乾淨後再補充好能量" },
-    { name: "靈界干擾", desc: "諸多不順時梳理乙太體，預先化解未來3-6個月的災厄" }
-];
-
-// 全新導入：流暢版藥師咒對症下藥資料庫
+// 100% 精準對照隨身隨身小卡與內頁之全圖鑑藥方資料庫
 const medicineData = {
     "頭面類": {
-        "偏頭痛": ["川芎", "白芷", "生地黃"], "發燒": ["當歸", "炙甘草", "澤瀉"], "眼皮浮腫": ["草莉子", "蓮子", "阿膠"], "眼疾(紅眼)": ["當歸尾", "桑葉", "茯苓"], "黃斑部病變": ["蔓荊子", "枸杞", "熟地黃"], "老花眼/近視": ["木賊草", "蒸蔥", "荷葉"], "眼壓高": ["澤瀉", "桔梗", "覆盆子"], "對空間磁場敏感的耳鳴": ["磁石", "升麻", "白芍"], "耳聾/聽力不佳": ["地黃", "蔓荊子", "五味子"], "鼻塞/鼻過敏/鼻炎": ["蒼耳子", "飴糖", "五味子"], "流鼻血": ["天門冬", "桔梗", "茯苓"], "打呼與呼吸中止": ["紅栗大", "半月蓮", "山藥"], "牙痛/牙周病": ["板藍根", "野山椒", "連翹"], "喉嚨/咽喉發炎": ["冰片", "百合", "白豆蔻"], "強烈哈欠/打噴嚏": ["白靈根", "桔梗", "蓮子"], "三叉神經痛": ["紅土地", "全蠍", "防風"], "美容": ["珍珠粉", "桂枝", "玄參子"], "面部斑點": ["金銀花", "木香", "桑葉"], "美白": ["當歸", "浮小麥", "赤芍"], "女性荷爾蒙掉髮": ["當歸", "當歸身", "石黃"], "男性掉髮": ["肉桂", "靈芝", "大棗"], "甲狀腺亢進": ["龍膽石", "石膏", "燈心"], "白頭髮": ["白靈根", "甘草", "熟地黃"]
+        "偏頭痛": ["川芎", "白朮", "生地黃"], "頭暈": ["當歸", "炙甘草", "澤瀉"], "眼皮浮腫": ["葶藶子", "蓮子", "阿膠"], "黑眼圈": ["當歸尾", "桑葉", "茯苓"], "養眼": ["蔓荊子", "枳殼", "熟地黃"], "老花眼／近遠視": ["木賊草", "燕窩", "荷葉"], "眼壓高": ["澤瀉", "桔梗", "覆盆子"], "耳鳴": ["磁石", "升麻", "白芍"], "對空間磁場敏感的耳鳴": ["代赭石", "蔓荊子", "五味子"], "耳聾／聽力不佳": ["麝香", "飴糖", "紫石英"], "鼻塞／鼻過敏／鼻炎": ["辛夷", "白扁豆", "五味子"], "流鼻血": ["天門冬", "桔梗", "茯苓"], "打呼與呼吸中止": ["紅景天", "半枝蓮", "山藥"], "牙痛／牙周病": ["板藍根", "虎杖", "升麻"], "嘴破／喉中腫潰": ["冰片", "意仁", "花生木"], "喉中如梗鼠／梅核氣": ["白殭蠶", "桔梗", "遠志"], "三叉神經痛": ["灶心土", "全蠍", "白芷"], "美容": ["珍珠粉", "桂枝", "女貞子"], "痘痘": ["金銀花", "木香", "菟絲子"], "白頭髮": ["當歸", "透草", "熟地"], "女性更年期掉髮": ["女貞子", "浮小麥", "薑炙"], "女性年輕掉髮": ["肉桂", "當歸", "大棗"], "男性掉髮": ["陽起石", "石膏", "粳米"], "甲狀腺亢進": ["白殭蠶", "竹茹", "熟地黃"]
     },
     "情緒意志類": {
-        "失眠": ["浮小麥", "砂仁", "五味子"], "懶散/拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怨氣": ["青皮", "杏仁", "杜仲"], "心情不好": ["玫瑰花", "竹葉", "酸棗仁"], "記憶力不佳": ["柏子仁", "紫蘇葉", "羅漢果"], "疲勞/注意力不集中": ["薄荷", "厚樸", "肉桂"], "咳嗽": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅漢果油"], "焦慮恐慌": ["石英明", "紫蘇葉", "地龍"]
+        "失眠": ["浮小麥", "砂仁", "五味子"], "懶散／拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怒氣": ["桃仁", "杏仁", "牡蠣"], "心情不好": ["玫瑰花", "竹瀝", "酸棗仁"], "記憶力": ["柏子仁", "紫蘇葉", "益母草"], "疲勞／注意力不集中": ["薄荷", "厚樸", "肉桂"], "嗜睡": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅馬洋甘菊"], "焦慮恐慌": ["石決明", "紫蘇葉", "地龍"]
     },
     "臟腑類": {
-        "心臟動力": ["人參", "大棗", "生地黃"], "心情不佳/心悸": ["遠志", "木香", "酸棗仁"], "慢性貧血": ["桑白皮", "葛根", "白茅根"], "氣虛": ["蛤蚧", "石斛", "牛膝"], "胃氣不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "香附子", "肉桂"], "止吐": ["便便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "黨參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒/解酒/中毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化/膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
+        "心臟動力": ["人參", "大棗", "生地黃"], "心律不整／心悸": ["遠志", "木香", "炮附子"], "慢性高血壓": ["桑白皮", "葛根", "白茅根"], "氣喘": ["蛤蚧", "石斛", "牛膝"], "氣管不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "蒼朮", "杜仲"], "止肚子瀉": ["童便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "薑參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒／肝臟排毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化／膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
     },
-    "四肢筋肉類(上半身)": {
-        "骨折修復": ["續斷", "麥冬", "茯苓"], "骨骼/長高": ["鹿茸", "枇杷葉", "紫蘇梗"], "腰痛/坐骨神經痛": ["骨碎補", "黨參", "天門冬"], "肩站痛/肩膀痛": ["地龍蟲", "紫院", "獨活"], "背部疼痛/落枕": ["葛根", "枳實", "淫羊藿"], "手掌沾黏/手指無法完全伸展": ["絡石藤", "黃耆", "菟絲子"], "手指關節痠麻": ["芥芥", "小魚乾", "千摺水"]
-    },
-    "四肢筋肉類(下半身)": {
-        "網球肘/媽媽手": ["伸筋草", "白朮", "益母草"], "膝蓋疼痛": ["威靈仙", "柏子仁", "杜仲"], "靜脈曲張/血栓": ["烏梢蛇", "川七", "巴戟天"], "足底筋膜炎": ["熟地黃", "枸杞子", "乳香"], "痛風/腎結石發作疼痛": ["知母", "砂仁", "淡竹葉"], "香港腳": ["海桐皮", "川椒", "烏梅"], "抽筋": ["白芍", "生地", "虎杖"], "筋肉萎縮": ["炒甘草", "豬髓", "生地黃"], "下半身瘡處": ["黃酒", "豬膽", "穿山甲"], "類風濕": ["通草", "當歸", "蒼朮"]
+    "四肢筋骨肌肉類": {
+        "網球肘／媽媽手／滑鼠手": ["伸筋草", "白朮", "益母草"], "膝蓋疼痛": ["威靈仙", "柏子仁", "杜仲"], "靜脈曲張／血栓": ["烏梢蛇", "川七", "巴戟天"], "足底筋膜炎": ["熟地黃", "柏子仁", "乳香"], "痛風／腎結石發作疼痛": ["知母", "砂仁", "淡竹葉"], "香港腳": ["海桐皮", "川椒", "烏梅"], "抽筋": ["白芍", "生薑", "虎杖"], "肌肉萎縮": ["炒甘草", "豬髓", "生地黃"], "下半身癱瘓": ["黃酒", "豬髓", "穿山甲"], "類風濕": ["通草", "當歸", "蒼朮"], "骨折疼痛": ["續斷", "麥冬", "茯苓"], "骨骼／長高": ["鹿茸", "枇杷葉", "紫蘇梗"], "腰痛／坐骨神經痛／腰無力／腳後跟痠痛／富貴包": ["骨碎補", "黨參", "天門冬"], "肩沾黏／肩膀痛／手臂無力抬舉": ["地鱉蟲", "紫菀", "獨活"], "肩背痠痛／落枕/膏肓痛": ["葛根", "枳實", "淫羊藿"], "手掌沾黏／手指無法完全伸展／手掌壓迫／扳機指": ["絡石藤", "黃耆", "菟絲子"], "手指腫脹痠": ["荊芥", "小魚乾", "千摺水"]
     },
     "生殖泌尿類": {
-        "經痛/經前症候群": ["丹參", "麥冬", "肉桂"], "經期不順/卵巢老化": ["益母草", "白朮", "肉桂"], "孕吐": ["枳殼", "藏麵", "澤瀉"], "胎動/腹部動氣": ["肉桂", "白豆蔻", "川芎"], "安胎": ["杜仲", "黃芩", "五味子"], "男性機能": ["硫磺", "竹茹", "燈心草"], "攝護腺": ["花生根", "鱉甲", "蟬蛻"], "尿道感染": ["茯苓", "柴胡", "升麻"]
+        "經痛／經前症候群": ["丹參", "麥冬", "肉桂"], "經期不順／卵巢老化、雌激素不足": ["益母草", "白朮", "肉桂"], "孕吐": ["枳殼", "藏紅", "澤瀉"], "助孕／腹部動氣": ["肉桂", "白豆蔻", "川芎"], "安胎": ["杜仲", "黃芩", "五味子"], "男性機能": ["硫磺", "竹茹", "燈心草"], "攝護腺": ["花生核", "鱉甲", "蟬蛻"], "尿道感染": ["茯苓", "柴胡", "升麻"]
     },
-    "其他綜合類": {
-        "皮膚癢": ["地膚子", "枳殼", "山藥"], "腸胃平滑": ["醋", "生薑", "赤芍"], "暑熱/中暑": ["淡竹葉", "玉竹", "澤瀉"], "盜汗": ["女貞子", "薄荷", "遠志"], "發燒": ["山楂", "麻黃", "熟地黃"], "中風後遺症/復健": ["水蛭", "白朮", "薑草"], "水腫": ["花生", "通草", "人參"], "感冒": ["桔梗", "砂仁", "茯苓"], "帶狀疱疹": ["乳香", "柴胡", "杜仲"], "降血糖": ["熟地黃", "黃精", "陳皮"], "糖尿癌症": ["真人活血飲", "黃蓮", "黨參"], "術後康復": ["曼陀羅花", "冰糖", "威靈仙"]
+    "其他類": {
+        "皮膚癢": ["地膚子", "枳殼", "山藥"], "扁平疣": ["醋", "生薑", "赤芍"], "怕熱／中暑、頭汗流出": ["淡竹葉", "玉竹", "澤瀉"], "盜汗": ["女貞子", "薄荷", "遠志"], "瘦身": ["山楂", "麻黃", "熟地黃"], "中風後遺症／複視": ["水蛭", "白芍", "黨參"], "水腫": ["茯苓", "通草", "人參"], "感冒": ["桔梗", "砂仁", "茯苓"], "帶狀疱疹": ["乳香", "柴胡", "牡蠣"], "降血糖": ["熟地黃", "黃精", "陳皮"], "糖尿病足": ["真人活命飲", "黃蓮", "黨參"], "術後疼痛": ["曼陀羅花", "冰糖", "威靈仙"]
     }
 };
 
-// 渲染卡片邏輯 (保留你原本的手法)
+const sources = [{ name: "太陽真氣", desc: "太陽星君之真氣" }, { name: "上元神", desc: "連結高我能量層次" }, { name: "天地元神", desc: "調動天地間高維元神能量協助主法" }];
+const hosts = [{ name: "觀世音菩薩", desc: "請賜大悲神咒水，或化解疾病厄難" }, { name: "藥師佛", desc: "最常用以請求療癒疾病及請求和解" }, { name: "地藏菩薩", desc: "主法宿業所感問題（如化解業力、特殊傳染病）" }, { name: "準提佛母", desc: "法能量強，主法元神歸位/歸元及修補內外丹" }, { name: "百解大天尊", desc: "棘手的問題通常可化解（如各種疑難雜症）" }];
+const mantras = [{ name: "大悲神咒", desc: "大悲咒改成大悲神咒效果更強。通常先請觀世音菩薩" }, { name: "大隨求神咒", desc: "可化解一切，圓滿無事平安" }, { name: "安土地真言", desc: "穩定身處之處能量場，使之適合練功" }, { name: "楞嚴神咒", desc: "淨化磁場、設立結界。改為神咒效果更強" }, { name: "佛頂尊勝陀羅尼神咒", desc: "有形及無形眾生都可用的祝福和解能量" }, { name: "藥師神咒", desc: "藥師佛十二大願的祈願方向皆可應用" }, { name: "一切有為法，如夢幻泡影，如露亦如電，應作如是觀", desc: "淨心、化負面情緒、穩定心境。特別適合打坐前使用" }, { name: "願以此功德，迴向於法界，我等與眾生，皆共成佛道", desc: "練功完有法喜的時候迴向使用，後可加上自己祈願" }, { name: "解結解結解冤結，解了多生冤和業，洗心滌慮發虔誠，今對佛前求解結。藥師佛，藥師佛，消災延壽藥師佛，隨心滿願藥師佛", desc: "練功前請求和解不受干擾，可解三世因果及業障" }, { name: "金剛經", desc: "般若類經書，能量場與護法神很穩定，適合正心正念者" }, { name: "妙法蓮華經", desc: "經中之王，作者體會可用於開發第六感與醫術" }];
+const modes = [{ name: "祈福模式", desc: "灌入好能量。特定用法：請三官大帝主法並誠心懺悔彌補" }, { name: "淨化模式", desc: "把汙濁的負面能量或干擾化開" }, { name: "金剛模式", desc: "化解下降頭、符咒或跑宮廟帶來的負面因果體影響" }, { name: "清涼模式", desc: "炎熱時避免中暑，或體內燥熱。建議搭配大悲水" }, { name: "美白／帥氣模式", desc: "改變肉體及乙太體狀態，外在形象更佳。常搭配妙法蓮華經" }, { name: "特急急救模式", desc: "急性狀況送醫之餘的功法輔助，可幫助緩解" }, { name: "舒眠模式", desc: "提升睡眠品質。通常搭配楞嚴經/地藏經/普門品" }, { name: "保護模式", desc: "「三界內外放光明」，保護家人遺體火化時靈魂不受痛苦" }, { name: "重症模式", desc: "專用於癌症/重症，搭配藥師佛使用。用於親人為宜（救急不救窮）" }];
+const gongfas = [{ name: "七彩大金光（彩光氣）", desc: "氣的能量類型，能提振精神，使心情興奮" }, { name: "七彩金光愛與溫暖", desc: "八字真言。可打開身體寒氣與業力，對腫瘤也有能量" }, { name: "九宮", desc: "補足八卦，與外丹一起修練。入門用五行，進階用九宮" }, { name: "三昧真火", desc: "給予陽性能量，改善四肢冰冷、頸椎痛、預防寒冷型感冒" }, { name: "三昧真火旺", desc: "補滿特定穴位開關竅(六關->八關->十關)，效率提升" }, { name: "上元神金光大法令", desc: "幫助跳脫小我，從更高維度觀察問題、理解生命" }, { name: "大悲（神咒）水", desc: "先請觀音賜水，將奉請的能量放進所要飲用的水中" }, { name: "五行陣", desc: "聚焦能量(土金水木火土順時針)，可用於設立保護性結界" }, { name: "內在小孩呼呼療癒", desc: "靈系功法後仍不圓滿時使用，撫慰受傷心靈" }, { name: "天使靈氣", desc: "以此感受靈氣的能量加持" }, { name: "心開意解", desc: "可以用以調理情緒體，迅速調適心境" }, { name: "仙女美人令／美男子令", desc: "用以使容貌保持青春活力與容光煥發" }, { name: "生命大金光", desc: "修復生魂與心脈，讓三魂與身體穩定結合，修復肉體" }, { name: "生命大金光七彩大金光護體", desc: "特定用於輔劇燒燙傷，使其恢復得較快" }, { name: "佛光普照法", desc: "開心、興奮、陽光的陽性能量，使能量充沛、法喜充滿" }, { name: "佛光補滿", desc: "適用練功後不舒服部位，手貼該處默唸此四字即可" }, { name: "金甘露", desc: "玉皇大帝賜予。氣凝聚為液態、消業障、通中脈、安眠" }, { name: "清淨自性", desc: "清洗因果業力，也可用於反思負面情緒或過錯" }, { name: "無形針", desc: "施用在穴位，不用實體針，以氣的能量模擬針灸效果" }, { name: "轉化調和令", desc: "調和能量分布。練功常打呵欠可用，加持胃經、腎經" }, { name: "靈性伴侶", desc: "使伴侶關係和諧。單身者可改善外在人緣與異性關係" }, { name: "靈性家人", desc: "使人間關係和諧圓滿，將周遭人(如同事)當家人對待" }, { name: "靈脈清理", desc: "從根本做起，以最高視角淡化減輕三世因果，使肉靈同化" }, { name: "靈氣充滿", desc: "使用前宜先使用靈脈清理，乾淨後再補充好能量" }, { name: "靈界干擾", desc: "諸多不順時梳理乙太體，預先化解未來3-6個月災厄" }];
+
+// 隨身隨身小卡太極長按發光功能
+function startGlow() { document.getElementById('taichi-node').classList.add('glow-active'); }
+function endGlow() { document.getElementById('taichi-node').classList.remove('glow-active'); }
+
+function initAll() {
+    renderGroup('source-group', sources, true);
+    renderGroup('host-group', hosts, true);
+    renderGroup('mode-group', modes, true);
+    renderGroup('mantra-group', mantras, false);
+    renderGroup('gongfa-group', gongfas, false);
+    
+    const catSelect = document.getElementById('category-select');
+    catSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
+    for (let cat in medicineData) catSelect.options.add(new Option(cat, cat));
+}
+
 function renderGroup(containerId, data, isRadio) {
     const container = document.getElementById(containerId);
-    data.forEach((item, index) => {
+    data.forEach((item) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `
-            <input type="${isRadio ? 'radio' : 'checkbox'}" name="${containerId}" value="${item.name}">
-            <div class="card-name">${item.name}</div>
-            <div class="card-desc">${item.desc}</div>
-        `;
-        
-        card.addEventListener('click', (e) => {
+        card.innerHTML = `<input type="${isRadio ? 'radio' : 'checkbox'}" name="${containerId}" value="${item.name}"><div class="card-name">${item.name}</div><div class="card-desc">${item.desc}</div>`;
+        card.addEventListener('click', () => {
             const input = card.querySelector('input');
             if (isRadio) {
-                const isChecked = input.checked;
                 document.querySelectorAll(`input[name="${containerId}"]`).forEach(i => i.parentElement.classList.remove('selected'));
-                if (!isChecked) {
-                    input.checked = true;
-                    card.classList.add('selected');
-                } else {
-                    input.checked = false;
-                }
+                input.checked = true; card.classList.add('selected');
             } else {
-                input.checked = !input.checked;
-                card.classList.toggle('selected', input.checked);
+                input.checked = !input.checked; card.classList.toggle('selected', input.checked);
             }
             generateSentence();
         });
@@ -432,133 +549,190 @@ function renderGroup(containerId, data, isRadio) {
     });
 }
 
-// 分頁切換機制
 function switchTab(evt, tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    
     document.getElementById(tabId).classList.add('active');
     evt.currentTarget.classList.add('active');
     
-    // 配合當前頁面切換複製按鈕顏色
     const copyBtn = document.getElementById('main-copy-btn');
-    if (tabId === 'buddha-tab') {
-        copyBtn.classList.add('buddha-copy-btn');
-    } else {
-        copyBtn.classList.remove('buddha-copy-btn');
-    }
+    copyBtn.classList.remove('buddha-copy-btn', 'qi-copy-btn');
+    if (tabId === 'buddha-tab') copyBtn.classList.add('buddha-copy-btn');
+    else if (tabId === 'qi-tab') copyBtn.classList.add('qi-copy-btn');
     clearAll();
 }
 
-// 藥師咒：更新症狀下拉選單
 function updateSymptoms() {
     const cat = document.getElementById('category-select').value;
     const symSelect = document.getElementById('symptom-select');
     symSelect.innerHTML = '<option value="">-- 請選擇症狀 --</option>';
-    
-    if (cat) {
-        for (let sym in medicineData[cat]) {
-            symSelect.options.add(new Option(sym, sym));
-        }
-    }
-    document.getElementById('m1').innerText = "藥名 1";
-    document.getElementById('m2').innerText = "藥名 2";
-    document.getElementById('m3').innerText = "藥名 3";
+    if (cat) for (let sym in medicineData[cat]) symSelect.options.add(new Option(sym, sym));
+    document.getElementById('m1').innerText = "藥名 1"; document.getElementById('m2').innerText = "藥名 2"; document.getElementById('m3').innerText = "藥名 3";
+    document.getElementById('taichi-block').classList.remove('show');
 }
 
-// 藥師咒：對症產生專屬藥方句子
 function generateMedSentence() {
     const cat = document.getElementById('category-select').value;
     const sym = document.getElementById('symptom-select').value;
     if (!cat || !sym) return;
-
     const meds = medicineData[cat][sym];
-    document.getElementById('m1').innerText = meds[0];
-    document.getElementById('m2').innerText = meds[1];
-    document.getElementById('m3').innerText = meds[2];
-
+    document.getElementById('m1').innerText = meds[0]; document.getElementById('m2').innerText = meds[1]; document.getElementById('m3').innerText = meds[2];
+    document.getElementById('taichi-block').classList.add('show');
     document.getElementById('output-text').innerText = `奉請藥師佛，針對「${sym}」，藥方為：${meds.join('、')}，藥師神咒，三界內外，百千倍，放光明。`;
 }
 
-// 幸福種子句：核心公式組裝邏輯 (保留你原本優化過的機制)
+// 氣功修煉動態面板邏輯 (加入任督十穴位循環、腺體器官結合與動態計時特效)
+let rotateInterval = null;
+function updateQiInstructions() {
+    const val = document.getElementById('qi-func-select').value;
+    const pnl = document.getElementById('qi-text-panel');
+    const path = document.getElementById('qi-main-path');
+    const lid = document.getElementById('lid-node');
+    const vortex = document.getElementById('vortex');
+    
+    const vTitle = document.getElementById('qi-visual-title');
+    const vSub = document.getElementById('qi-visual-sub');
+    const vDesc = document.getElementById('qi-visual-desc');
+
+    // 清除舊的定時循環動畫
+    clearInterval(rotateInterval);
+
+    // 重設隱藏所有結點
+    document.querySelectorAll('#meridian-svg-object circle').forEach(c => { if(c.id !== 'vortex') c.style.display = 'none'; });
+    path.setAttribute('d', ''); path.setAttribute('stroke', 'transparent');
+    lid.style.display = 'none'; vortex.style.display = 'none';
+    vTitle.innerText = "能量場狀態"; vSub.innerText = "尚未啟動"; vDesc.innerText = "";
+
+    if (!val) {
+        pnl.innerHTML = "選擇對應功法後，此處將顯現相應的心法秘訣、意念觀想引導、任督脈穴位順序，與高醫師氣功教室的關鍵提點。";
+        return;
+    }
+
+    if (val === "basic_cold") {
+        pnl.innerHTML = `<strong>🌀 肚臍採氣法【日常順行 / 溫補陽氣】</strong><br>• <strong>意念觀想</strong>：鼻吸氣時，觀想耀眼的<strong>太陽</strong>，溫熱能量從太陽進肚臍。<br>• <strong>氣流流向</strong>：氣由肚臍往下走，經腳底往背部上到頭部，再流回肚臍。<br>• <strong>好轉反應</strong>：若練習中感到頭腦熱熱、脹脹、或有旋渦感，恭喜是臍動脈打開的正常好現象，練習 5 分鐘即可。`;
+        path.setAttribute('d', 'M 50,55 A 15,15 0 1,1 50,85 A 25,25 0 1,1 50,15 L 50,55'); 
+        path.setAttribute('stroke', '#ff7675'); path.style.animationDirection = "normal";
+        document.getElementById('n-guanyuan').style.display = 'block';
+        vTitle.innerText = "太陽真氣順行"; vSub.innerText = "觀想：太陽溫熱"; vDesc.innerText = "順時針周天循環 (圖1-2)";
+        document.getElementById('output-text').innerText = "太陽真氣，肚臍採氣法，三界內外，百千倍，放光明。";
+    } 
+    else if (val === "basic_hot") {
+        pnl.innerHTML = `<strong>🌀 肚臍採氣法【反向逆行 / 煩躁調和】</strong><br>• <strong>意念觀想</strong>：若當下心情較為燥熱、過度興奮、或吵鬧不休，改觀想清涼柔和的<strong>月亮</strong>。<br>• <strong>氣流流向</strong>：意念引導氣由肚臍往上走到頭部，再從背部往下走回腳底、肚臍（反向清火）。<br>• <strong>修煉須知</strong>：此反向運行能高度促進生殖系統，<strong>切記不可天天練！</strong>`;
+        path.setAttribute('d', 'M 50,55 A 25,25 0 1,0 50,15 A 15,15 0 1,0 50,85 L 50,55'); 
+        path.setAttribute('stroke', '#0984e3'); path.style.animationDirection = "reverse";
+        document.getElementById('n-baihui').style.display = 'block';
+        vTitle.innerText = "月光清涼調和"; vSub.innerText = "觀想：月能清降"; vDesc.innerText = "逆時針清火調和 (圖1-3)";
+        document.getElementById('output-text').innerText = "請觀世音菩薩，清涼模式，肚臍採氣法，三界內外，百千倍，放光明。";
+    } 
+    else if (val === "kidney") {
+        pnl.innerHTML = `<strong>✨ 肚臍採氣法【雙手搓熱護腎版】</strong><br>• <strong>啟動時機</strong>：日常採氣五分鐘後，一旦感覺到頭脹脹、雙手發麻，代表能量充沛，可立刻做護腎法。<br>• <strong>動作要領</strong>：迅速將雙手搓熱，貼在身後兩側的<strong>腎臟</strong>上維持三十秒。<br>• <strong>核心意念</strong>：用意念感覺腎臟與手心、內心相連。這能幫我們把體內的電磁場與肌肉、筋膜完美對接，能量感截然不同。`;
+        path.setAttribute('d', 'M 50,55 L 50,80'); path.setAttribute('stroke', '#2ecc71');
+        document.getElementById('n-shanzhong').style.display = 'block';
+        vTitle.innerText = "護腎能量對接"; vSub.innerText = "意念手心連通腎臟"; vDesc.innerText = "電磁場與肌肉筋膜對接";
+        document.getElementById('output-text').innerText = "天地元神，肚臍採氣法，轉化調和令，三界內外，百千倍，放光明。";
+    } 
+    else if (val === "lazy_earth") {
+        pnl.innerHTML = `<strong>🧘‍♂️ 懶人版地樁法【重力思緒完全交付大地】</strong><br>• <strong>輕鬆動作</strong>：高醫師推崇大道至簡！輕鬆坐在椅子上，閉上眼睛、全身放鬆交付大地（圖2-1）。讓全身重力與想法全部毫無保留導引到地底。<br>• <strong>能量回饋</strong>：5分鐘後，慢坐正，感受地底把好的磁場重新回送到身上，全身會有亮亮的氣感。姿勢不重要，完全放心放鬆才是關鍵！`;
+        path.setAttribute('d', 'M 50,15 L 50,85 M 30,80 L 50,55 L 70,80'); path.setAttribute('stroke', '#e67e22');
+        document.getElementById('n-guanyuan').style.display = 'block';
+        vTitle.innerText = "重力交付大地"; vSub.innerText = "思緒釋放/靜心5分"; vDesc.innerText = "地底清淨能量回流 (圖2-1 / 2-2)";
+        document.getElementById('output-text').innerText = "天地元神，請地藏菩薩，懶人版地樁法，三界內外，百千倍，放光明。";
+    } 
+    else if (val === "tian_zhuang") {
+        pnl.innerHTML = `<strong>⚡ 天樁排情緒法【一招排情緒、修復細胞電位】</strong><br>• <strong>實體姿勢</strong>：閉上眼睛，雙手高高舉起，手掌朝天（腰稍微往後仰的姿勢最能100%被吸氣，如圖2-4）。<br>• <strong>火鍋蓋意念</strong>：不是你把情緒推出去，而是單純觀想「頭頂上方有一個物件（如鍋蓋）在吸你身上的負面情緒與壓力」，清空大腦。<br>• <strong>續航科學</strong>：心氣虛就像沒電的電池、電壓不穩。靠大自然的陽性之氣為細胞與蛋白質離子通道補電，解決灌氣續航力。`;
+        path.setAttribute('d', 'M 35,50 L 50,20 M 65,50 L 50,20 M 50,50 L 50,20'); path.setAttribute('stroke', '#f1c40f');
+        lid.style.display = 'block'; document.getElementById('n-baihui').style.display = 'block';
+        vTitle.innerText = "天樁陽能蓄電"; vSub.innerText = "手掌朝天・後仰順隨"; vDesc.innerText = "上方能量物件吸除壓力 (圖2-3 / 2-4)";
+        document.getElementById('output-text').innerText = "天地元神，天樁排情緒法，淨化模式，三界內外，百千倍，放光明。";
+    }
+    else if (val === "ren_mo") {
+        pnl.innerHTML = `<strong>🌸 開啟任脈五穴道【前身正面・微笑電流感】</strong><br>• <strong>開竅順序</strong>：頭頂中央<strong>百會</strong> ➔ 眉心<strong>印堂</strong> ➔ 胸口<strong>膻中</strong> ➔ 小腹胃間<strong>中脘</strong> ➔ 臍下三寸<strong>關元</strong>。<br>• <strong>觀想心法</strong>：依序對著每個穴道**觀想順時針漩渦旋轉 5 到 10 秒**，使其愈轉愈大、愈明亮充滿。<br>• <strong>成功反應</strong>：成功啟動時，體內會有如同春暖花開、微甜初戀般的溫熱電波流動感。`;
+        
+        const nodes = ['n-baihui', 'n-yintang', 'n-shanzhong', 'n-zhongwan', 'n-guanyuan'];
+        const yCoords = ['12', '24', '45', '62', '80'];
+        nodes.forEach(id => document.getElementById(id).style.display = 'block');
+        vortex.style.display = 'block';
+        
+        // 模擬五個穴位輪流漩渦旋轉的定時特效
+        let step = 0;
+        rotateInterval = setInterval(() => {
+            document.documentElement.style.setProperty('--vortex-y', yCoords[step] + 'px');
+            vortex.setAttribute('cy', yCoords[step]);
+            step = (step + 1) % nodes.length;
+        }, 1500);
+
+        vTitle.innerText = "任脈五穴旋轉開竅"; vSub.innerText = "心法：正面順時針"; vDesc.innerText = "春暖花開初戀電波 (圖3-8)";
+        document.getElementById('output-text').innerText = "準提佛母，三昧真火旺，任脈五穴開關竅，三界內外，百千倍，放光明。";
+    }
+    else if (val === "du_mo") {
+        pnl.innerHTML = `<strong>🔥 開啟督脈五穴道【後身背面・經絡全面通暢】</strong><br>• <strong>開竅順序</strong>：頭頂中央<strong>百會</strong> ➔ 後腦下凹陷<strong>風府</strong> ➔ 頸背椎交界<strong>大椎</strong> ➔ 兩肺脊椎間<strong>身柱</strong> ➔ 肚臍正後方<strong>命門</strong>。<br>• <strong>觀想心法</strong>：每穴觀想**旋轉 5 到 10 秒**，使其愈轉愈大、愈明亮、愈充滿。<br>• <strong>成功反應</strong>：五個大穴道都順利開啟後，脊椎背面能深刻感受到督脈熱熱、有電在流動通暢的狀態。`;
+        
+        const nodes = ['n-baihui', 'n-fengfu', 'n-dazhui', 'n-shenzhu', 'n-mingmen'];
+        const yCoords = ['12', '20', '32', '48', '72'];
+        nodes.forEach(id => document.getElementById(id).style.display = 'block');
+        vortex.style.display = 'block';
+        
+        let step = 0;
+        rotateInterval = setInterval(() => {
+            document.documentElement.style.setProperty('--vortex-y', yCoords[step] + 'px');
+            vortex.setAttribute('cy', yCoords[step]);
+            step = (step + 1) % nodes.length;
+        }, 1500);
+
+        vTitle.innerText = "督脈五穴電位流動"; vSub.innerText = "心法：背面旋轉充滿"; vDesc.innerText = "督脈大穴全面開啟 (圖3-14)";
+        document.getElementById('output-text').innerText = "天地元神，三昧真火旺，督脈五穴開關竅，三界內外，百千倍，放光明。";
+    }
+    else if (val === "organs") {
+        pnl.innerHTML = `<strong>🧬 進階功法：器官陰陽連連看結合</strong><br>• <strong>修煉原理</strong>：當地樁與天樁練熟之後，可以進一步引導天地好的磁場，去深度滋養與調整體內的精微器官。<br>• <strong>觀想對應</strong>：<br>
+                        1. <strong>女士</strong>：觀想將<strong>卵巢</strong>放在兩手掌之間，將好磁場分享給卵巢（圖2-10）。<br>
+                        2. <strong>男士</strong>：觀想將<strong>睪丸</strong>放在兩手之間分享好的磁場（圖2-9）。<br>
+                        3. <strong>通用器官</strong>：可進一步將意念集中觀想<strong>腎上腺</strong>（圖2-11）、<strong>腦下腺/腦下垂體</strong>（圖2-12），或將雙手合十、把磁場集中在<strong>會陰部</strong>（圖2-13）。`;
+        document.getElementById('n-glands').style.display = 'block';
+        path.setAttribute('d', 'M 50,15 L 50,53 L 50,85'); path.setAttribute('stroke', '#e84393');
+        vTitle.innerText = "體內精微器官加持"; vSub.innerText = "雙手掌意念合十聚焦"; vDesc.innerText = "腺體/生殖輪陰陽結合";
+        document.getElementById('output-text').innerText = "天地元神，準提佛母，修補內丹外丹，三界內外，百千倍，放光明。";
+    }
+}
+
 function generateSentence() {
     let elements = [];
-    
     const selectedSource = document.querySelector('input[name="source-group"]:checked');
     if (selectedSource) elements.push(selectedSource.value);
-
     const selectedHost = document.querySelector('input[name="host-group"]:checked');
     if (selectedHost) elements.push(`請${selectedHost.value}`);
-    
-    const selectedGongfas = Array.from(document.querySelectorAll('input[name="gongfa-group"]:checked')).map(i => i.value);
     const selectedMantras = Array.from(document.querySelectorAll('input[name="mantra-group"]:checked')).map(i => i.value);
-    let contents = [...selectedGongfas, ...selectedMantras];
-    if (contents.length > 0) {
-        elements.push(contents.join('，'));
-    }
-    
+    const selectedGongfas = Array.from(document.querySelectorAll('input[name="gongfa-group"]:checked')).map(i => i.value);
+    let contents = [...selectedMantras, ...selectedGongfas];
+    if (contents.length > 0) elements.push(contents.join('，'));
     const selectedMode = document.querySelector('input[name="mode-group"]:checked');
     if (selectedMode) {
         if (selectedMode.value === "特急急救模式") {
-            if(elements.length > 0) {
-                document.getElementById('output-text').innerText = elements.join('，') + '，特急急救模式，三界內外，超級放快光明。';
-            } else {
-                document.getElementById('output-text').innerText = '奉請特急金剛經急救模式三界內外超級放快光明。';
-            }
-            return;
+            elements.push('特急急救模式，超級放快光明');
         } else {
             elements.push(selectedMode.value);
         }    
     }
-    
     if (elements.length === 0) {
         document.getElementById('output-text').innerText = "請由上方選擇需求...";
         return;
     }
-    
-    let finalSentence = elements.join('，') + '，三界內外，百千倍，放光明。';
-    document.getElementById('output-text').innerText = finalSentence;
+    document.getElementById('output-text').innerText = elements.join('，') + '，三界內外，百千倍，放光明。';
 }
 
-// 初始化網頁與藥詩咒分類
-function initAll() {
-    renderGroup('source-group', sources, true);
-    renderGroup('host-group', hosts, true);
-    renderGroup('mode-group', modes, true);
-    renderGroup('gongfa-group', gongfas, false);
-    renderGroup('mantra-group', mantras, false);
-    
-    const catSelect = document.getElementById('category-select');
-    catSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
-    for (let cat in medicineData) {
-        catSelect.options.add(new Option(cat, cat));
-    }
-}
-
-// 重設
 function clearAll() {
-    document.querySelectorAll('input').forEach(i => {
-        i.checked = false;
-        i.parentElement.classList.remove('selected');
-    });
-    const catSelect = document.getElementById('category-select');
-    if(catSelect) catSelect.value = "";
-    updateSymptoms();
+    clearInterval(rotateInterval);
+    document.querySelectorAll('input').forEach(i => { i.checked = false; i.parentElement.classList.remove('selected'); });
+    if(document.getElementById('category-select')) document.getElementById('category-select').value = "";
+    if(document.getElementById('qi-func-select')) document.getElementById('qi-func-select').value = "";
+    updateSymptoms(); updateQiInstructions();
     document.getElementById('output-text').innerText = "請由上方選擇需求...";
 }
 
-// 複製功能
 function copySentence() {
-    const text = document.getElementById('output-text').innerText;
-    if (text === "請由上方選擇需求...") return;
-    navigator.clipboard.writeText(text).then(() => {
-        alert('終極種子句已成功複製！');
-    });
+    navigator.clipboard.writeText(document.getElementById('output-text').innerText).then(() => alert('種子句已成功複製！'));
 }
 
-// 啟動
 initAll();
 </script>
-
 </body>
 </html>
