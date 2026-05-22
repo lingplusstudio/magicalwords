@@ -185,7 +185,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .taichi-svg-wrapper {
-            width: 140px;
+            width: 160px;
             height: 90px;
             cursor: pointer;
             user-select: none;
@@ -193,7 +193,7 @@
         }
         .taichi-svg-wrapper:active { transform: scale(0.97); }
         
-        /* 太極雙半圈（左半上弧、右半下弧） */
+        /* 100% 依照手繪示意圖修正：左半上弧、右半下弧 */
         .taichi-curve {
             fill: none;
             stroke: #d4af37;
@@ -201,7 +201,7 @@
             stroke-linecap: round;
             transition: stroke 0.3s, filter 0.3s;
         }
-        /* 連接處三點構造代碼樣式 */
+        /* 連接處三點點構造 */
         .taichi-dot {
             fill: #d4af37;
             transition: fill 0.3s, filter 0.3s;
@@ -343,7 +343,7 @@
         }
         .clear-btn:hover { background: #2d3436; }
 
-        /* 📱 針對行動裝置 (手機版) 寬度優化 RWD RWD 限制 */
+        /* 手機版 RWD 排版修正 */
         @media (max-width: 768px) {
             body { padding: 10px; }
             .container { padding: 15px; border-radius: 12px; }
@@ -353,7 +353,6 @@
             .med-display { flex-direction: column; gap: 8px; }
             .card-container-flex { flex-direction: column; text-align: center; gap: 15px; padding: 15px; }
             
-            /* 關鍵修正：讓手機版的字體說明不再狹窄，改為上下排列，面板在最下方 */
             .qi-flex-layout { flex-direction: column; align-items: stretch; gap: 15px; }
             .qi-visual-panel { width: 100%; box-sizing: border-box; }
             .qi-instruction-box { font-size: 1.05rem; padding: 15px; }
@@ -398,7 +397,7 @@
 
     <div id="buddha-tab" class="tab-content">
         <h1>💙 藥師咒：專病專藥系統 💙</h1>
-        <div class="subtitle">【全圖鑑藥方更新】100% 精準對照書中各大類別病症與三味靈性藥名</div>
+        <div class="subtitle">【隨身小卡完整更新】100% 精準對照各大病症類別與三味靈性藥名</div>
 
         <div class="section">
             <div class="section-title buddha-title">1. 選擇病症類別</div>
@@ -426,12 +425,12 @@
                 </div>
                 
                 <svg id="taichi-node" class="taichi-svg-wrapper" viewBox="0 0 100 84" onmousedown="startGlow()" onmouseup="endGlow()" ontouchstart="startGlow()" ontouchend="endGlow()">
-                    <path class="taichi-curve" d="M 50,42 A 13,13 0 0,0 24,42 A 13,13 0 0,0 50,42" />
-                    <path class="taichi-curve" d="M 50,42 A 13,13 0 0,1 76,42 A 13,13 0 0,1 50,42" />
+                    <path class="taichi-curve" d="M 12,42 A 19,19 0 0,1 50,42" />
+                    <path class="taichi-curve" d="M 50,42 A 19,19 0 0,0 88,42" />
                     
-                    <circle class="taichi-dot" cx="24" cy="42" r="5" />
+                    <circle class="taichi-dot" cx="31" cy="23" r="5" />
                     <circle class="taichi-dot" cx="50" cy="42" r="5" />
-                    <circle class="taichi-dot" cx="76" cy="42" r="5" />
+                    <circle class="taichi-dot" cx="69" cy="61" r="5" />
                 </svg>
             </div>
         </div>
@@ -513,7 +512,7 @@ const medicineData = {
         "失眠": ["浮小麥", "砂仁", "五味子"], "懶散／拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怒氣": ["桃仁", "杏仁", "牡蠣"], "心情不好": ["玫瑰花", "竹瀝", "酸棗仁"], "記憶力": ["柏子仁", "紫蘇葉", "益母草"], "疲勞／注意力不集中": ["薄荷", "厚樸", "肉桂"], "嗜睡": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅馬洋甘菊"], "焦慮恐慌": ["石決明", "紫蘇葉", "地龍"]
     },
     "臟腑類": {
-        "心臟動力": ["人參", "大棗", "生地黃"], "心律不整／心悸": ["遠志", "木香", "炮附子"], "慢性高血壓": ["桑白皮", "葛根", "白茅根"], "氣喘": ["蛤觭", "石斛", "牛膝"], "氣管不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "蒼朮", "杜仲"], "止肚子瀉": ["童便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "薑參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒／肝臟排毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化／膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
+        "心臟動力": ["人參", "大棗", "生地黃"], "心律不整／心悸": ["遠志", "木香", "炮附子"], "慢性高血壓": ["桑白皮", "葛根", "白茅根"], "氣喘": ["蛤蚧", "石斛", "牛膝"], "氣管不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "蒼朮", "杜仲"], "止肚子瀉": ["童便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "薑參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒／肝臟排毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化／膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
     },
     "四肢筋骨肌肉類": {
         "網球肘／媽媽手／滑鼠手": ["伸筋草", "白朮", "益母草"], "膝蓋疼痛": ["威靈仙", "柏子仁", "杜仲"], "靜脈曲張／血栓": ["烏梢蛇", "川七", "巴戟天"], "足底筋膜炎": ["熟地黃", "柏子仁", "乳香"], "痛風／腎結石發作疼痛": ["知母", "砂仁", "淡竹葉"], "香港腳": ["海桐皮", "川椒", "烏梅"], "抽筋": ["白芍", "生薑", "虎杖"], "肌肉萎縮": ["炒甘草", "豬髓", "生地黃"], "下半身癱瘓": ["黃酒", "豬髓", "穿山甲"], "類風濕": ["通草", "當歸", "蒼朮"], "骨折疼痛": ["續斷", "麥冬", "茯苓"], "骨骼／長高": ["鹿茸", "枇杷葉", "紫蘇梗"], "腰痛／坐骨神經痛／腰無力／腳後跟痠痛／富貴包": ["骨碎補", "黨參", "天門冬"], "肩沾黏／肩膀痛／手臂無力抬舉": ["地鱉蟲", "紫菀", "獨活"], "肩背痠痛／落枕/膏肓痛": ["葛根", "枳實", "淫羊藿"], "手掌沾黏／手指無法完全伸展／手掌壓迫／扳機指": ["絡石藤", "黃耆", "菟絲子"], "手指腫脹痠": ["荊芥", "小魚乾", "千摺水"]
@@ -585,7 +584,7 @@ function updateSymptoms() {
     const symSelect = document.getElementById('symptom-select');
     symSelect.innerHTML = '<option value="">-- 請選擇症狀 --</option>';
     if (cat) for (let sym in medicineData[cat]) symSelect.options.add(new Option(sym, sym));
-    document.getElementById('m1').innerText = "藥名 1"; document.getElementById('m2').innerText = "藥名 2"; document.getElementById('m3').innerText = "藥名 3";
+    document.getElementById('m1').innerText = "薬名 1"; document.getElementById('m2').innerText = "薬名 2"; document.getElementById('m3').innerText = "薬名 3";
 }
 
 function generateMedSentence() {
