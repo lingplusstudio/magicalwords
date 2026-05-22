@@ -10,6 +10,7 @@
             --secondary: #ffeaa7;
             --dark: #2d3436;
             --light: #f9f9f9;
+            --buddha: #0984e3; /* 藥師法門專屬琉璃藍，用作功能區分 */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -26,10 +27,50 @@
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
+        
+        /* 分頁切換鈕排版 */
+        .tab-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .tab-btn.buddha-tab.active {
+            background: var(--buddha);
+            border-color: var(--buddha);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
         h1 {
             text-align: center;
             color: var(--primary);
             margin-bottom: 5px;
+        }
+        h1.buddha-h1 {
+            color: var(--buddha);
         }
         .subtitle {
             text-align: center;
@@ -58,6 +99,9 @@
             background: var(--primary);
             margin-right: 10px;
             border-radius: 3px;
+        }
+        .buddha-title::before {
+            background: var(--buddha) !important;
         }
         .grid {
             display: grid;
@@ -97,6 +141,39 @@
             color: #666;
             line-height: 1.4;
         }
+
+        /* 藥師咒專屬下拉與藥方方塊 */
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            background: white;
+            color: var(--dark);
+            outline: none;
+            margin-bottom: 15px;
+        }
+        select:focus {
+            border-color: var(--buddha);
+        }
+        .med-display {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .med-box {
+            flex: 1;
+            background: #e3fafc;
+            border: 2px dashed var(--buddha);
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--buddha);
+            border-radius: 8px;
+        }
+
         .result-box {
             position: sticky;
             bottom: 20px;
@@ -135,6 +212,9 @@
         .copy-btn:hover {
             background: #ff5252;
         }
+        .buddha-copy-btn {
+            background: var(--buddha) !important;
+        }
         .clear-btn {
             background: #636e72;
             border: none;
@@ -155,38 +235,69 @@
 <body>
 
 <div class="container">
-    <h1>✨ 幸福種子句調配器 ✨</h1>
-    <div class="subtitle">【全圖鑑終極完整版】100% 完整收錄書中 7 頁所有功法、模式與經咒</div>
-
-    <div class="section">
-        <div class="section-title">1. 選擇 權限等級 / 能量來源 (選填)</div>
-        <div class="grid" id="source-group"></div>
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'seed-tab')">🌱 幸福種子句調配</button>
+        <button class="tab-btn buddha-tab" onclick="switchTab(event, 'buddha-tab')">💙 藥師咒：對症下藥</button>
     </div>
 
-    <div class="section">
-        <div class="section-title">2. 奉請 主持人 / 主法者 (選填)</div>
-        <div class="grid" id="host-group"></div>
+    <div id="seed-tab" class="tab-content active">
+        <h1>✨ 幸福種子句調配器 ✨</h1>
+        <div class="subtitle">【全圖鑑終極完整版】100% 完整收錄書中 7 頁所有功法、模式與經咒</div>
+
+        <div class="section">
+            <div class="section-title">1. 選擇 權限等級 / 能量來源 (選填)</div>
+            <div class="grid" id="source-group"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. 奉請 主持人 / 主法者 (選填)</div>
+            <div class="grid" id="host-group"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. 搭配 經典 / 咒語 / 偈語 (可多選)</div>
+            <div class="grid" id="mantra-group"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. 設定 作用模式 (選填)</div>
+            <div class="grid" id="mode-group"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">5. 啟動 特定功法 (可多選)</div>
+            <div class="grid" id="gongfa-group"></div>
+        </div>
     </div>
 
-    <div class="section">
-        <div class="section-title">3. 搭配 經典 / 咒語 / 偈語 (可多選)</div>
-        <div class="grid" id="mantra-group"></div>
+    <div id="buddha-tab" class="tab-content">
+        <h1 class="buddha-h1">💙 藥師咒：專病專藥系統 💙</h1>
+        <div class="subtitle">【全書對照版】依照照片病症自動對應三位靈性藥名藥方</div>
+
+        <div class="section">
+            <div class="section-title buddha-title">1. 選擇病症類別</div>
+            <select id="category-select" onchange="updateSymptoms()"></select>
+        </div>
+
+        <div class="section">
+            <div class="section-title buddha-title">2. 選擇具體症狀</div>
+            <select id="symptom-select" onchange="generateMedSentence()">
+                <option value="">-- 請先選擇類別 --</option>
+            </select>
+        </div>
+
+        <div class="section" style="border:none; padding-bottom:0;">
+            <div class="section-title buddha-title">3. 對應之靈性藥方 (自動調配)</div>
+            <div class="med-display">
+                <div class="med-box" id="m1">藥名 1</div>
+                <div class="med-box" id="m2">藥名 2</div>
+                <div class="med-box" id="m3">藥名 3</div>
+            </div>
+        </div>
     </div>
-
-    <div class="section">
-        <div class="section-title">4. 設定 作用模式 (選填)</div>
-        <div class="grid" id="mode-group"></div>
-    </div>
-
-    <div class="section">
-        <div class="section-title">5. 啟動 特定功法 (可多選)</div>
-        <div class="grid" id="gongfa-group"></div>
-    </div>
-
-
 
     <div class="result-box">
-        <button class="copy-btn" onclick="copySentence()">複製句子</button>
+        <button class="copy-btn" id="main-copy-btn" onclick="copySentence()">複製句子</button>
         <button class="clear-btn" onclick="clearAll()">重設</button>
         <div class="result-title">🎯 你的專屬幸福種子句：</div>
         <div class="result-text" id="output-text">請由上方選擇需求...</div>
@@ -194,7 +305,7 @@
 </div>
 
 <script>
-// 100% 完整資料庫
+// 你的 100% 完整種子句資料庫
 const sources = [
     { name: "太陽真氣", desc: "太陽星君之真氣，帶有強大陽性能量" },
     { name: "上元神", desc: "連結連結高我能量層次" },
@@ -222,6 +333,7 @@ const mantras = [
     { name: "金剛經", desc: "般若類經書，能量場與護法神很穩定，適合正心正念者" },
     { name: "妙法蓮華經", desc: "經中之王，作者體會可用於開發第六感與醫術" }
 ];
+
 const modes = [
     { name: "祈福模式", desc: "灌入好能量。特定用法：請三官大帝主法並誠心懺悔彌補" },
     { name: "淨化模式", desc: "把汙濁的負面能量或干擾化開" },
@@ -262,8 +374,32 @@ const gongfas = [
     { name: "靈界干擾", desc: "諸多不順時梳理乙太體，預先化解未來3-6個月的災厄" }
 ];
 
+// 全新導入：流暢版藥師咒對症下藥資料庫
+const medicineData = {
+    "頭面類": {
+        "偏頭痛": ["川芎", "白芷", "生地黃"], "發燒": ["當歸", "炙甘草", "澤瀉"], "眼皮浮腫": ["草莉子", "蓮子", "阿膠"], "眼疾(紅眼)": ["當歸尾", "桑葉", "茯苓"], "黃斑部病變": ["蔓荊子", "枸杞", "熟地黃"], "老花眼/近視": ["木賊草", "蒸蔥", "荷葉"], "眼壓高": ["澤瀉", "桔梗", "覆盆子"], "對空間磁場敏感的耳鳴": ["磁石", "升麻", "白芍"], "耳聾/聽力不佳": ["地黃", "蔓荊子", "五味子"], "鼻塞/鼻過敏/鼻炎": ["蒼耳子", "飴糖", "五味子"], "流鼻血": ["天門冬", "桔梗", "茯苓"], "打呼與呼吸中止": ["紅栗大", "半月蓮", "山藥"], "牙痛/牙周病": ["板藍根", "野山椒", "連翹"], "喉嚨/咽喉發炎": ["冰片", "百合", "白豆蔻"], "強烈哈欠/打噴嚏": ["白靈根", "桔梗", "蓮子"], "三叉神經痛": ["紅土地", "全蠍", "防風"], "美容": ["珍珠粉", "桂枝", "玄參子"], "面部斑點": ["金銀花", "木香", "桑葉"], "美白": ["當歸", "浮小麥", "赤芍"], "女性荷爾蒙掉髮": ["當歸", "當歸身", "石黃"], "男性掉髮": ["肉桂", "靈芝", "大棗"], "甲狀腺亢進": ["龍膽石", "石膏", "燈心"], "白頭髮": ["白靈根", "甘草", "熟地黃"]
+    },
+    "情緒意志類": {
+        "失眠": ["浮小麥", "砂仁", "五味子"], "懶散/拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怨氣": ["青皮", "杏仁", "杜仲"], "心情不好": ["玫瑰花", "竹葉", "酸棗仁"], "記憶力不佳": ["柏子仁", "紫蘇葉", "羅漢果"], "疲勞/注意力不集中": ["薄荷", "厚樸", "肉桂"], "咳嗽": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅漢果油"], "焦慮恐慌": ["石英明", "紫蘇葉", "地龍"]
+    },
+    "臟腑類": {
+        "心臟動力": ["人參", "大棗", "生地黃"], "心情不佳/心悸": ["遠志", "木香", "酸棗仁"], "慢性貧血": ["桑白皮", "葛根", "白茅根"], "氣虛": ["蛤蚧", "石斛", "牛膝"], "胃氣不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "香附子", "肉桂"], "止吐": ["便便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "黨參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒/解酒/中毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化/膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
+    },
+    "四肢筋肉類(上半身)": {
+        "骨折修復": ["續斷", "麥冬", "茯苓"], "骨骼/長高": ["鹿茸", "枇杷葉", "紫蘇梗"], "腰痛/坐骨神經痛": ["骨碎補", "黨參", "天門冬"], "肩站痛/肩膀痛": ["地龍蟲", "紫院", "獨活"], "背部疼痛/落枕": ["葛根", "枳實", "淫羊藿"], "手掌沾黏/手指無法完全伸展": ["絡石藤", "黃耆", "菟絲子"], "手指關節痠麻": ["芥芥", "小魚乾", "千摺水"]
+    },
+    "四肢筋肉類(下半身)": {
+        "網球肘/媽媽手": ["伸筋草", "白朮", "益母草"], "膝蓋疼痛": ["威靈仙", "柏子仁", "杜仲"], "靜脈曲張/血栓": ["烏梢蛇", "川七", "巴戟天"], "足底筋膜炎": ["熟地黃", "枸杞子", "乳香"], "痛風/腎結石發作疼痛": ["知母", "砂仁", "淡竹葉"], "香港腳": ["海桐皮", "川椒", "烏梅"], "抽筋": ["白芍", "生地", "虎杖"], "筋肉萎縮": ["炒甘草", "豬髓", "生地黃"], "下半身瘡處": ["黃酒", "豬膽", "穿山甲"], "類風濕": ["通草", "當歸", "蒼朮"]
+    },
+    "生殖泌尿類": {
+        "經痛/經前症候群": ["丹參", "麥冬", "肉桂"], "經期不順/卵巢老化": ["益母草", "白朮", "肉桂"], "孕吐": ["枳殼", "藏麵", "澤瀉"], "胎動/腹部動氣": ["肉桂", "白豆蔻", "川芎"], "安胎": ["杜仲", "黃芩", "五味子"], "男性機能": ["硫磺", "竹茹", "燈心草"], "攝護腺": ["花生根", "鱉甲", "蟬蛻"], "尿道感染": ["茯苓", "柴胡", "升麻"]
+    },
+    "其他綜合類": {
+        "皮膚癢": ["地膚子", "枳殼", "山藥"], "腸胃平滑": ["醋", "生薑", "赤芍"], "暑熱/中暑": ["淡竹葉", "玉竹", "澤瀉"], "盜汗": ["女貞子", "薄荷", "遠志"], "發燒": ["山楂", "麻黃", "熟地黃"], "中風後遺症/復健": ["水蛭", "白朮", "薑草"], "水腫": ["花生", "通草", "人參"], "感冒": ["桔梗", "砂仁", "茯苓"], "帶狀疱疹": ["乳香", "柴胡", "杜仲"], "降血糖": ["熟地黃", "黃精", "陳皮"], "糖尿癌症": ["真人活血飲", "黃蓮", "黨參"], "術後康復": ["曼陀羅花", "冰糖", "威靈仙"]
+    }
+};
 
-// 渲染卡片邏輯
+// 渲染卡片邏輯 (保留你原本的手法)
 function renderGroup(containerId, data, isRadio) {
     const container = document.getElementById(containerId);
     data.forEach((item, index) => {
@@ -296,39 +432,75 @@ function renderGroup(containerId, data, isRadio) {
     });
 }
 
-// 初始化網頁
-renderGroup('source-group', sources, true);
-renderGroup('host-group', hosts, true);
-renderGroup('mode-group', modes, true);
-renderGroup('gongfa-group', gongfas, false);
-renderGroup('mantra-group', mantras, false);
+// 分頁切換機制
+function switchTab(evt, tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+    
+    // 配合當前頁面切換複製按鈕顏色
+    const copyBtn = document.getElementById('main-copy-btn');
+    if (tabId === 'buddha-tab') {
+        copyBtn.classList.add('buddha-copy-btn');
+    } else {
+        copyBtn.classList.remove('buddha-copy-btn');
+    }
+    clearAll();
+}
 
-// 核心公式組裝邏輯
+// 藥師咒：更新症狀下拉選單
+function updateSymptoms() {
+    const cat = document.getElementById('category-select').value;
+    const symSelect = document.getElementById('symptom-select');
+    symSelect.innerHTML = '<option value="">-- 請選擇症狀 --</option>';
+    
+    if (cat) {
+        for (let sym in medicineData[cat]) {
+            symSelect.options.add(new Option(sym, sym));
+        }
+    }
+    document.getElementById('m1').innerText = "藥名 1";
+    document.getElementById('m2').innerText = "藥名 2";
+    document.getElementById('m3').innerText = "藥名 3";
+}
+
+// 藥師咒：對症產生專屬藥方句子
+function generateMedSentence() {
+    const cat = document.getElementById('category-select').value;
+    const sym = document.getElementById('symptom-select').value;
+    if (!cat || !sym) return;
+
+    const meds = medicineData[cat][sym];
+    document.getElementById('m1').innerText = meds[0];
+    document.getElementById('m2').innerText = meds[1];
+    document.getElementById('m3').innerText = meds[2];
+
+    document.getElementById('output-text').innerText = `奉請藥師佛，針對「${sym}」，藥方為：${meds.join('、')}，藥師神咒，三界內外，百千倍，放光明。`;
+}
+
+// 幸福種子句：核心公式組裝邏輯 (保留你原本優化過的機制)
 function generateSentence() {
     let elements = [];
     
-    // 1. 權限來源
     const selectedSource = document.querySelector('input[name="source-group"]:checked');
     if (selectedSource) elements.push(selectedSource.value);
 
-    // 2. 主持人
     const selectedHost = document.querySelector('input[name="host-group"]:checked');
     if (selectedHost) elements.push(`請${selectedHost.value}`);
     
-    // 3. 功法與經咒核心
     const selectedGongfas = Array.from(document.querySelectorAll('input[name="gongfa-group"]:checked')).map(i => i.value);
     const selectedMantras = Array.from(document.querySelectorAll('input[name="mantra-group"]:checked')).map(i => i.value);
     let contents = [...selectedGongfas, ...selectedMantras];
     if (contents.length > 0) {
         elements.push(contents.join('，'));
     }
-   // 4. 作用模式
+    
     const selectedMode = document.querySelector('input[name="mode-group"]:checked');
     if (selectedMode) {
-        // 如果是特殊急救模式，依照書中原本的驚嘆號結尾
         if (selectedMode.value === "特急急救模式") {
             if(elements.length > 0) {
-                // 如果前面有選其他，進行組合
                 document.getElementById('output-text').innerText = elements.join('，') + '，特急急救模式，三界內外，超級放快光明。';
             } else {
                 document.getElementById('output-text').innerText = '奉請特急金剛經急救模式三界內外超級放快光明。';
@@ -337,18 +509,30 @@ function generateSentence() {
         } else {
             elements.push(selectedMode.value);
         }    
- 
     }
     
-    // 判斷是否為空
     if (elements.length === 0) {
         document.getElementById('output-text').innerText = "請由上方選擇需求...";
         return;
     }
     
-    // 5. 終極公式結尾
     let finalSentence = elements.join('，') + '，三界內外，百千倍，放光明。';
     document.getElementById('output-text').innerText = finalSentence;
+}
+
+// 初始化網頁與藥師咒分類
+function initAll() {
+    renderGroup('source-group', sources, true);
+    renderGroup('host-group', hosts, true);
+    renderGroup('mode-group', modes, true);
+    renderGroup('gongfa-group', gongfas, false);
+    renderGroup('mantra-group', mantras, false);
+    
+    const catSelect = document.getElementById('category-select');
+    catSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
+    for (let cat in medicineData) {
+        catSelect.options.add(new Option(cat, cat));
+    }
 }
 
 // 重設
@@ -357,6 +541,9 @@ function clearAll() {
         i.checked = false;
         i.parentElement.classList.remove('selected');
     });
+    const catSelect = document.getElementById('category-select');
+    if(catSelect) catSelect.value = "";
+    updateSymptoms();
     document.getElementById('output-text').innerText = "請由上方選擇需求...";
 }
 
@@ -368,6 +555,9 @@ function copySentence() {
         alert('終極種子句已成功複製！');
     });
 }
+
+// 啟動
+initAll();
 </script>
 
 </body>
