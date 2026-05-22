@@ -171,7 +171,7 @@
             border-radius: 8px;
         }
 
-        /* 隨身小卡黑金排版與 100% 圖片太極還原 */
+        /* 隨身小卡黑金排版 */
         .card-container-flex {
             display: flex;
             gap: 25px;
@@ -185,43 +185,45 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .taichi-svg-wrapper {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 90px;
             cursor: pointer;
             user-select: none;
             transition: transform 0.1s;
         }
-        .taichi-svg-wrapper:active { transform: scale(0.95); }
+        .taichi-svg-wrapper:active { transform: scale(0.97); }
         
-        /* 圖片太極線條樣式 */
+        /* 太極雙半圈（左半上弧、右半下弧） */
         .taichi-curve {
             fill: none;
             stroke: #d4af37;
-            stroke-width: 5;
+            stroke-width: 4.5;
             stroke-linecap: round;
             transition: stroke 0.3s, filter 0.3s;
         }
+        /* 連接處三點構造代碼樣式 */
         .taichi-dot {
             fill: #d4af37;
-            transition: fill 0.3s;
+            transition: fill 0.3s, filter 0.3s;
         }
         
-        /* 長按發光狀態（琉璃藍光） */
+        /* 長按琉璃藍光發光 */
         .glow-active .taichi-curve {
             stroke: #00cec9;
-            filter: drop-shadow(0 0 8px #0984e3);
+            filter: drop-shadow(0 0 6px #0984e3);
         }
         .glow-active .taichi-dot {
             fill: #00cec9;
+            filter: drop-shadow(0 0 4px #0984e3);
         }
 
-        /* 氣功修煉專區 */
+        /* 氣功修煉專區佈局 */
         .qi-flex-layout {
             display: flex;
             gap: 20px;
             align-items: flex-start;
         }
-        .qi-controls { flex: 1; }
+        .qi-controls { flex: 1; min-width: 0; }
         .qi-visual-panel {
             width: 320px;
             background: #2d3436;
@@ -230,15 +232,16 @@
             color: white;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            flex-shrink: 0;
         }
         .qi-instruction-box {
             background: #f1f2f6;
-            padding: 15px;
+            padding: 18px;
             border-radius: 8px;
             margin-top: 15px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.6;
-            border-left: 4px solid var(--qi);
+            border-left: 5px solid var(--qi);
         }
 
         /* 全動態脈絡畫布 */
@@ -275,7 +278,6 @@
             to { stroke-dashoffset: -20; }
         }
 
-        /* 漩渦粒子特效 (任督脈開竅觀想用) */
         .vortex-ring {
             fill: none;
             stroke: #f1c40f;
@@ -340,6 +342,23 @@
             margin-right: 10px;
         }
         .clear-btn:hover { background: #2d3436; }
+
+        /* 📱 針對行動裝置 (手機版) 寬度優化 RWD RWD 限制 */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; border-radius: 12px; }
+            .tab-nav { gap: 5px; margin-bottom: 15px; }
+            .tab-btn { padding: 10px 5px; font-size: 0.85rem; }
+            .grid { grid-template-columns: 1fr; gap: 8px; }
+            .med-display { flex-direction: column; gap: 8px; }
+            .card-container-flex { flex-direction: column; text-align: center; gap: 15px; padding: 15px; }
+            
+            /* 關鍵修正：讓手機版的字體說明不再狹窄，改為上下排列，面板在最下方 */
+            .qi-flex-layout { flex-direction: column; align-items: stretch; gap: 15px; }
+            .qi-visual-panel { width: 100%; box-sizing: border-box; }
+            .qi-instruction-box { font-size: 1.05rem; padding: 15px; }
+            .result-text { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
@@ -379,7 +398,7 @@
 
     <div id="buddha-tab" class="tab-content">
         <h1>💙 藥師咒：專病專藥系統 💙</h1>
-        <div class="subtitle">【隨身小卡完整更新】100% 精準對照各大病症類別與三味靈性藥名</div>
+        <div class="subtitle">【全圖鑑藥方更新】100% 精準對照書中各大類別病症與三味靈性藥名</div>
 
         <div class="section">
             <div class="section-title buddha-title">1. 選擇病症類別</div>
@@ -402,15 +421,17 @@
             <div class="card-container-flex">
                 <div style="flex:1; font-size:0.9rem; line-height:1.5;">
                     <strong>☯️ 藥詩咒・身心舒緩隨身小卡</strong><br>
-                    <span style="font-size:0.8rem; opacity:0.8;">① 使用方法：滑鼠長按右側太極點發願誦念，至症狀舒緩即停。</span><br>
+                    <span style="font-size:0.8rem; opacity:0.8;">① 使用方法：手按住太極點中心發願誦念，至症狀舒緩即停。</span><br>
                     <span style="font-size:0.8rem; opacity:0.8; color:#ff7675;">② 注意事項：藥詩咒為居家輔助工具，切勿盲目按此抓藥。</span>
                 </div>
                 
-                <svg id="taichi-node" class="taichi-svg-wrapper" viewBox="0 0 100 100" onmousedown="startGlow()" onmouseup="endGlow()" ontouchstart="startGlow()" ontouchend="endGlow()">
-                    <circle cx="50" cy="50" r="46" fill="#111" stroke="#d4af37" stroke-width="2"/>
-                    <path class="taichi-curve" d="M 50,16 A 17,17 0 0,0 50,50 A 17,17 0 0,1 50,84" />
-                    <circle class="taichi-dot" cx="50" cy="33" r="5" />
-                    <circle class="taichi-dot" cx="50" cy="67" r="5" />
+                <svg id="taichi-node" class="taichi-svg-wrapper" viewBox="0 0 100 84" onmousedown="startGlow()" onmouseup="endGlow()" ontouchstart="startGlow()" ontouchend="endGlow()">
+                    <path class="taichi-curve" d="M 50,42 A 13,13 0 0,0 24,42 A 13,13 0 0,0 50,42" />
+                    <path class="taichi-curve" d="M 50,42 A 13,13 0 0,1 76,42 A 13,13 0 0,1 50,42" />
+                    
+                    <circle class="taichi-dot" cx="24" cy="42" r="5" />
+                    <circle class="taichi-dot" cx="50" cy="42" r="5" />
+                    <circle class="taichi-dot" cx="76" cy="42" r="5" />
                 </svg>
             </div>
         </div>
@@ -492,7 +513,7 @@ const medicineData = {
         "失眠": ["浮小麥", "砂仁", "五味子"], "懶散／拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怒氣": ["桃仁", "杏仁", "牡蠣"], "心情不好": ["玫瑰花", "竹瀝", "酸棗仁"], "記憶力": ["柏子仁", "紫蘇葉", "益母草"], "疲勞／注意力不集中": ["薄荷", "厚樸", "肉桂"], "嗜睡": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅馬洋甘菊"], "焦慮恐慌": ["石決明", "紫蘇葉", "地龍"]
     },
     "臟腑類": {
-        "心臟動力": ["人參", "大棗", "生地黃"], "心律不整／心悸": ["遠志", "木香", "炮附子"], "慢性高血壓": ["桑白皮", "葛根", "白茅根"], "氣喘": ["蛤蚧", "石斛", "牛膝"], "氣管不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "蒼朮", "杜仲"], "止肚子瀉": ["童便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "薑參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒／肝臟排毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化／膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
+        "心臟動力": ["人參", "大棗", "生地黃"], "心律不整／心悸": ["遠志", "木香", "炮附子"], "慢性高血壓": ["桑白皮", "葛根", "白茅根"], "氣喘": ["蛤觭", "石斛", "牛膝"], "氣管不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "蒼朮", "杜仲"], "止肚子瀉": ["童便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "薑參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒／肝臟排毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化／膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
     },
     "四肢筋骨肌肉類": {
         "網球肘／媽媽手／滑鼠手": ["伸筋草", "白朮", "益母草"], "膝蓋疼痛": ["威靈仙", "柏子仁", "杜仲"], "靜脈曲張／血栓": ["烏梢蛇", "川七", "巴戟天"], "足底筋膜炎": ["熟地黃", "柏子仁", "乳香"], "痛風／腎結石發作疼痛": ["知母", "砂仁", "淡竹葉"], "香港腳": ["海桐皮", "川椒", "烏梅"], "抽筋": ["白芍", "生薑", "虎杖"], "肌肉萎縮": ["炒甘草", "豬髓", "生地黃"], "下半身癱瘓": ["黃酒", "豬髓", "穿山甲"], "類風濕": ["通草", "當歸", "蒼朮"], "骨折疼痛": ["續斷", "麥冬", "茯苓"], "骨骼／長高": ["鹿茸", "枇杷葉", "紫蘇梗"], "腰痛／坐骨神經痛／腰無力／腳後跟痠痛／富貴包": ["骨碎補", "黨參", "天門冬"], "肩沾黏／肩膀痛／手臂無力抬舉": ["地鱉蟲", "紫菀", "獨活"], "肩背痠痛／落枕/膏肓痛": ["葛根", "枳實", "淫羊藿"], "手掌沾黏／手指無法完全伸展／手掌壓迫／扳機指": ["絡石藤", "黃耆", "菟絲子"], "手指腫脹痠": ["荊芥", "小魚乾", "千摺水"]
@@ -608,7 +629,7 @@ function updateQiInstructions() {
         document.getElementById('output-text').innerText = "太陽真氣，肚臍採氣法，三界內外，百千倍，放光明。";
     } 
     else if (val === "basic_hot") {
-        pnl.innerHTML = `<strong>🌀 肚臍採氣法【反向逆行 / 煩躁調和】</strong><br>• <strong>意念觀想</strong>：若當下心情較為躁熱、過度興奮、或吵鬧不休，改觀想清涼柔和的<strong>月亮</strong>。<br>• <strong>氣流流向</strong>：意念引導氣由肚臍往上走到頭部，再從背部往下走回腳底、肚臍（反向清火）。<br>• <strong>修煉須知</strong>：此反向運行能高度促進生殖系統，<strong>切記不可天天練！</strong>`;
+        pnl.innerHTML = `<strong>🌀 肚臍採氣法【反向逆行 / 煩躁調和】</strong><br>• <strong>意念觀想</strong>：若當下心情較為燥熱、過度興奮、或吵鬧不休，改觀想清涼柔和的<strong>月亮</strong>。<br>• <strong>氣流流向</strong>：意念引導氣由肚臍往上走到頭部，再從背部往下走回腳底、肚臍（反向清火）。<br>• <strong>修煉須知</strong>：此反向運行能高度促進生殖系統，<strong>切記不可天天練！</strong>`;
         path.setAttribute('d', 'M 50,55 A 25,25 0 1,0 50,15 A 15,15 0 1,0 50,85 L 50,55'); 
         path.setAttribute('stroke', '#0984e3'); path.style.animationDirection = "reverse";
         document.getElementById('n-baihui').style.display = 'block';
@@ -634,7 +655,7 @@ function updateQiInstructions() {
         path.setAttribute('d', 'M 35,50 L 50,20 M 65,50 L 50,20 M 50,50 L 50,20'); path.setAttribute('stroke', '#f1c40f');
         lid.style.display = 'block'; document.getElementById('n-baihui').style.display = 'block';
         vTitle.innerText = "天樁陽能蓄電"; vSub.innerText = "手掌朝天・後仰順隨"; vDesc.innerText = "上方能量物件吸除壓力 (圖2-3 / 2-4)";
-        document.getElementById('output-text').innerText = "天地元神,天樁排情緒法,淨化模式,三界內外,百千倍,放光明.";
+        document.getElementById('output-text').innerText = "天地元神，天樁排情緒法，淨化模式，三界內外，百千倍，放光明。";
     }
     else if (val === "ren_mo") {
         pnl.innerHTML = `<strong>🌸 開啟任脈五穴道【前身正面・微笑電流感】</strong><br>• <strong>開竅順序</strong>：頭頂中央<strong>百會</strong> ➔ 眉心<strong>印堂</strong> ➔ 胸口<strong>膻中</strong> ➔ 小腹胃間<strong>中脘</strong> ➔ 臍下三寸<strong>關元</strong>。<br>• <strong>觀想心法</strong>：依序對著每個穴道**觀想順時針漩渦旋轉 5 到 10 秒**，使其愈轉愈大、愈明亮充滿。<br>• <strong>成功反應</strong>：成功啟動時，體內會有如同春暖花開、微甜初戀般的溫熱電波流動感。`;
