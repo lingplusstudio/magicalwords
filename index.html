@@ -165,7 +165,8 @@
             0% { transform: scale(0.9); opacity: 0.8; }
             100% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px var(--acu)); fill: #fff; }
         }
-        .acu-label { font-size: 6px; fill: white; text-anchor: middle; font-weight: bold; pointer-events: none;}
+        /* 移除強制置中，由 JS 動態控制對齊方向 */
+        .acu-label { font-size: 5.5px; fill: white; font-weight: bold; pointer-events: none;}
         
         .view-toggle {
             display: inline-block; background: #555; padding: 4px 12px; border-radius: 15px;
@@ -715,12 +716,26 @@ function drawAcuPoints(pointsList) {
     pointsList.forEach(pName => {
         const coord = acuCoords[pName];
         if (coord && coord.view === currentAcuView) {
-            group.innerHTML += `<circle class="acu-point-dot" cx="${coord.x}" cy="${coord.y}" r="3" />
-                                <text class="acu-label" x="${coord.x}" y="${coord.y - 5}">${pName}</text>`;
-            if (coord.x !== 50) {
+            
+            // 判斷是否為身體正中線的穴位 (x=50)
+            if (coord.x === 50) {
+                // 正中線穴位：文字在正上方置中
+                group.innerHTML += `
+                    <circle class="acu-point-dot" cx="50" cy="${coord.y}" r="2.5" />
+                    <text class="acu-label" x="50" y="${coord.y - 5}" text-anchor="middle">${pName}</text>
+                `;
+            } else {
+                // 雙側對稱穴位：文字向兩側推開，避免重疊
+                let leftX = coord.x;
                 let rightX = 100 - coord.x;
-                group.innerHTML += `<circle class="acu-point-dot" cx="${rightX}" cy="${coord.y}" r="3" />
-                                    <text class="acu-label" x="${rightX}" y="${coord.y - 5}">${pName}</text>`;
+                
+                group.innerHTML += `
+                    <circle class="acu-point-dot" cx="${leftX}" cy="${coord.y}" r="2.5" />
+                    <text class="acu-label" x="${leftX - 3}" y="${coord.y + 2}" text-anchor="end">${pName}</text>
+                    
+                    <circle class="acu-point-dot" cx="${rightX}" cy="${coord.y}" r="2.5" />
+                    <text class="acu-label" x="${rightX + 3}" y="${coord.y + 2}" text-anchor="start">${pName}</text>
+                `;
             }
         }
     });
