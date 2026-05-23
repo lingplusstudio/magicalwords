@@ -12,6 +12,7 @@
             --light: #f9f9f9;
             --buddha: #0984e3; 
             --qi: #2ecc71; 
+            --acu: #9b59b6; /* 中醫穴道專屬紫 */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -29,17 +30,20 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
+        /* 導覽列 */
         .tab-nav {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 25px;
             border-bottom: 2px solid #eee;
             padding-bottom: 10px;
+            flex-wrap: wrap;
         }
         .tab-btn {
             flex: 1;
+            min-width: 150px;
             padding: 12px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
             border: 2px solid #ddd;
@@ -47,304 +51,143 @@
             border-radius: 8px;
             color: #666;
             transition: all 0.2s;
+            text-align: center;
         }
         .tab-btn:hover { background: var(--light); }
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        .tab-btn.buddha-tab.active {
-            background: var(--buddha);
-            border-color: var(--buddha);
-        }
-        .tab-btn.qi-tab.active {
-            background: var(--qi);
-            border-color: var(--qi);
-            color: white;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .tab-btn.buddha-tab.active { background: var(--buddha); border-color: var(--buddha); color: white; }
+        .tab-btn.qi-tab.active { background: var(--qi); border-color: var(--qi); color: white; }
+        .tab-btn.acu-tab.active { background: var(--acu); border-color: var(--acu); color: white; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        h1 {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
+        h1 { text-align: center; color: var(--primary); margin-bottom: 5px; }
         h1.buddha-h1 { color: var(--buddha); }
         h1.qi-h1 { color: var(--qi); }
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-        }
-        .section {
-            margin-bottom: 25px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-        }
+        h1.acu-h1 { color: var(--acu); }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 0.9rem; }
+        
+        .section { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .section-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: var(--dark); display: flex; align-items: center; }
         .section-title::before {
-            content: "";
-            display: inline-block;
-            width: 6px;
-            height: 18px;
-            background: var(--primary);
-            margin-right: 10px;
-            border-radius: 3px;
+            content: ""; display: inline-block; width: 6px; height: 18px;
+            background: var(--primary); margin-right: 10px; border-radius: 3px;
         }
         .buddha-title::before { background: var(--buddha) !important; }
         .qi-title::before { background: var(--qi) !important; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 12px;
-        }
+        .acu-title::before { background: var(--acu) !important; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
         .card {
-            background: var(--light);
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: var(--light); padding: 12px; border-radius: 8px; cursor: pointer;
+            border: 2px solid transparent; transition: all 0.2s; position: relative;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
         .card:hover { background: #f0f0f0; }
         .card input { position: absolute; opacity: 0; }
-        .card.selected {
-            border-color: var(--primary);
-            background: #fff5f5;
-        }
-        .card-name {
-            font-weight: bold;
-            margin-bottom: 4px;
-            color: #2d3436;
-        }
-        .card-desc {
-            font-size: 0.8rem;
-            color: #666;
-            line-height: 1.4;
-        }
+        .card.selected { border-color: var(--primary); background: #fff5f5; }
+        .card-name { font-weight: bold; margin-bottom: 4px; color: #2d3436; }
+        .card-desc { font-size: 0.8rem; color: #666; line-height: 1.4; }
 
         select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-            font-size: 1rem;
-            background: white;
-            color: var(--dark);
-            outline: none;
-            margin-bottom: 15px;
+            width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #ddd;
+            font-size: 1rem; background: white; color: var(--dark); outline: none; margin-bottom: 15px;
         }
         select:focus { border-color: var(--buddha); }
-        .med-display {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
+        select.acu-select:focus { border-color: var(--acu); }
+
+        .med-display { display: flex; gap: 12px; margin-top: 15px; margin-bottom: 20px; }
         .med-box {
-            flex: 1;
-            background: #e3fafc;
-            border: 2px dashed var(--buddha);
-            padding: 15px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--buddha);
-            border-radius: 8px;
+            flex: 1; background: #e3fafc; border: 2px dashed var(--buddha); padding: 15px;
+            text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--buddha); border-radius: 8px;
         }
 
         /* 隨身小卡黑金排版 */
         .card-container-flex {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            justify-content: center;
-            background: #1e1e24;
-            padding: 25px 30px;
-            border-radius: 12px;
-            color: #ffeaa7;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; gap: 30px; align-items: center; justify-content: center;
+            background: #1e1e24; padding: 25px 30px; border-radius: 12px; color: #ffeaa7;
+            margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        /* 放大版太極圖容器 */
-        .taichi-svg-wrapper {
-            width: 240px; /* 從原本的 160px 放大 */
-            height: auto;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.1s;
-        }
+        .taichi-svg-wrapper { width: 240px; height: auto; cursor: pointer; user-select: none; transition: transform 0.1s; }
         .taichi-svg-wrapper:active { transform: scale(0.97); }
-        
-        /* 太極雙半圈（左半上弧、右半下弧） */
-        .taichi-curve {
-            fill: none;
-            stroke: #d4af37;
-            stroke-width: 3.5; /* 配合放大圖形微調粗細比例 */
-            stroke-linecap: round;
-            transition: stroke 0.3s, filter 0.3s;
-        }
-        /* 三顆點點構造代碼樣式 */
-        .taichi-dot {
-            fill: #d4af37;
-            transition: fill 0.3s, filter 0.3s;
-        }
-        
-        /* 長按發光狀態（琉璃藍光） */
-        .glow-active .taichi-curve {
-            stroke: #00cec9;
-            filter: drop-shadow(0 0 6px #0984e3);
-        }
-        .glow-active .taichi-dot {
-            fill: #00cec9;
-            filter: drop-shadow(0 0 6px #0984e3);
-        }
+        .taichi-curve { fill: none; stroke: #d4af37; stroke-width: 3.5; stroke-linecap: round; transition: stroke 0.3s, filter 0.3s; }
+        .taichi-dot { fill: #d4af37; transition: fill 0.3s, filter 0.3s; }
+        .glow-active .taichi-curve { stroke: #00cec9; filter: drop-shadow(0 0 6px #0984e3); }
+        .glow-active .taichi-dot { fill: #00cec9; filter: drop-shadow(0 0 6px #0984e3); }
 
-        /* 氣功修煉專區佈局 */
-        .qi-flex-layout {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
+        /* 氣功與穴道專區通用佈局 */
+        .qi-flex-layout { display: flex; gap: 20px; align-items: flex-start; }
         .qi-controls { flex: 1; min-width: 0; }
         .qi-visual-panel {
-            width: 320px;
-            background: #2d3436;
-            border-radius: 12px;
-            padding: 20px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            flex-shrink: 0;
+            width: 320px; background: #2d3436; border-radius: 12px; padding: 20px;
+            color: white; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); flex-shrink: 0;
         }
         .qi-instruction-box {
-            background: #f1f2f6;
-            padding: 18px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 1rem;
-            line-height: 1.6;
-            border-left: 5px solid var(--qi);
+            background: #f1f2f6; padding: 18px; border-radius: 8px; margin-top: 15px;
+            font-size: 1rem; line-height: 1.6; border-left: 5px solid var(--qi);
         }
+        .acu-instruction-box { border-left-color: var(--acu); }
 
         /* 全動態脈絡畫布 */
         .meridian-canvas {
-            width: 180px;
-            height: 260px;
-            margin: 15px auto;
-            position: relative;
-            background: #34495e;
-            border-radius: 12px;
-            overflow: hidden;
+            width: 180px; height: 260px; margin: 15px auto; position: relative;
+            background: #34495e; border-radius: 12px; overflow: hidden;
         }
         .lid-element {
-            position: absolute;
-            top: 5px; left: 50%;
-            transform: translateX(-50%);
-            width: 90px; height: 25px;
-            border: 2px solid #f1c40f;
-            border-radius: 50% 50% 0 0;
-            background: rgba(241, 196, 15, 0.2);
-            display: none;
+            position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+            width: 90px; height: 25px; border: 2px solid #f1c40f; border-radius: 50% 50% 0 0;
+            background: rgba(241, 196, 15, 0.2); display: none;
         }
         .lid-element::after {
             content: ''; position: absolute; top: -8px; left: 41px;
             width: 8px; height: 8px; background: #f1c40f; border-radius: 50%;
         }
-        .flow-line {
-            fill: none;
-            stroke-width: 3;
-            stroke-dasharray: 6 4;
-            animation: qiFlowAnimation 1.5s linear infinite;
-        }
-        @keyframes qiFlowAnimation {
-            to { stroke-dashoffset: -20; }
-        }
-
+        .flow-line { fill: none; stroke-width: 3; stroke-dasharray: 6 4; animation: qiFlowAnimation 1.5s linear infinite; }
+        @keyframes qiFlowAnimation { to { stroke-dashoffset: -20; } }
         .vortex-ring {
-            fill: none;
-            stroke: #f1c40f;
-            stroke-width: 2;
-            stroke-dasharray: 4 2;
-            transform-origin: 50px var(--vortex-y, 50px);
-            animation: vortexSpin 1.2s linear infinite;
-            display: none;
+            fill: none; stroke: #f1c40f; stroke-width: 2; stroke-dasharray: 4 2;
+            transform-origin: 50px var(--vortex-y, 50px); animation: vortexSpin 1.2s linear infinite; display: none;
         }
-        @keyframes vortexSpin {
-            to { transform: rotate(360deg); }
+        @keyframes vortexSpin { to { transform: rotate(360deg); } }
+
+        /* 中醫穴位專屬動態點 */
+        .acu-point-dot {
+            fill: #f1c40f; stroke: #fff; stroke-width: 1.5;
+            filter: drop-shadow(0 0 4px var(--acu)); animation: acuPulse 1.5s infinite alternate;
         }
+        @keyframes acuPulse {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px var(--acu)); fill: #fff; }
+        }
+        .acu-label { font-size: 6px; fill: white; text-anchor: middle; font-weight: bold; pointer-events: none;}
+        
+        .view-toggle {
+            display: inline-block; background: #555; padding: 4px 12px; border-radius: 15px;
+            font-size: 0.8rem; margin-bottom: 10px; cursor: pointer; color: white;
+        }
+        .view-toggle:hover { background: var(--acu); }
 
         .result-box {
-            position: sticky;
-            bottom: 20px;
-            background: var(--dark);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 1000;
+            position: sticky; bottom: 20px; background: var(--dark); color: white;
+            padding: 20px; border-radius: 12px; margin-top: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000;
         }
-        .result-title {
-            font-size: 0.9rem;
-            color: var(--secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-        .result-text {
-            font-size: 1.3rem;
-            font-weight: bold;
-            word-break: break-all;
-            line-height: 1.5;
-        }
+        .result-title { font-size: 0.9rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .result-text { font-size: 1.3rem; font-weight: bold; word-break: break-all; line-height: 1.5; }
         .copy-btn {
-            background: var(--primary);
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            float: right;
-            margin-top: -5px;
+            background: var(--primary); border: none; color: white; padding: 8px 16px;
+            border-radius: 6px; font-size: 0.9rem; cursor: pointer; float: right; margin-top: -5px;
         }
         .copy-btn:hover { background: #ff5252; }
         .buddha-copy-btn { background: var(--buddha) !important; }
         .qi-copy-btn { background: var(--qi) !important; color: white !important;}
+        .acu-copy-btn { background: var(--acu) !important; color: white !important;}
         .clear-btn {
-            background: #636e72;
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            float: right;
-            margin-top: -5px;
-            margin-right: 10px;
+            background: #636e72; border: none; color: white; padding: 8px 16px;
+            border-radius: 6px; font-size: 0.9rem; cursor: pointer; float: right; margin-top: -5px; margin-right: 10px;
         }
         .clear-btn:hover { background: #2d3436; }
 
-        /* 手機版 RWD 排版修正 */
         @media (max-width: 768px) {
             body { padding: 10px; }
             .container { padding: 15px; border-radius: 12px; }
@@ -352,11 +195,8 @@
             .tab-btn { padding: 10px 5px; font-size: 0.85rem; }
             .grid { grid-template-columns: 1fr; gap: 8px; }
             .med-display { flex-direction: column; gap: 8px; }
-            
-            /* 手機板：字在上方，太極圖在下方，置中對齊 */
             .card-container-flex { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
-            .taichi-svg-wrapper { width: 220px; } /* 手機板微微縮小以免滿版 */
-            
+            .taichi-svg-wrapper { width: 220px; }
             .qi-flex-layout { flex-direction: column; align-items: stretch; gap: 15px; }
             .qi-visual-panel { width: 100%; box-sizing: border-box; }
             .qi-instruction-box { font-size: 1.05rem; padding: 15px; }
@@ -371,6 +211,7 @@
         <button class="tab-btn active" onclick="switchTab(event, 'seed-tab')">🌱 幸福種子句調配</button>
         <button class="tab-btn buddha-tab" onclick="switchTab(event, 'buddha-tab')">💙 藥師咒：對症下藥</button>
         <button class="tab-btn qi-tab" onclick="switchTab(event, 'qi-tab')">🌀 氣功修練專區</button>
+        <button class="tab-btn acu-tab" onclick="switchTab(event, 'acu-tab')">📍 中醫對症穴位</button>
     </div>
 
     <div id="seed-tab" class="tab-content active">
@@ -400,7 +241,7 @@
     </div>
 
     <div id="buddha-tab" class="tab-content">
-        <h1>💙 藥師咒：專病專藥系統 💙</h1>
+        <h1 class="buddha-h1">💙 藥師咒：專病專藥系統 💙</h1>
         <div class="subtitle">【隨身小卡完整更新】100% 精準對照各大病症類別與三味靈性藥名</div>
 
         <div class="section">
@@ -431,7 +272,6 @@
                 <svg id="taichi-node" class="taichi-svg-wrapper" viewBox="0 0 100 84" onmousedown="startGlow()" onmouseup="endGlow()" ontouchstart="startGlow()" ontouchend="endGlow()">
                     <path class="taichi-curve" d="M 12,42 A 19,19 0 0,1 50,42" />
                     <path class="taichi-curve" d="M 50,42 A 19,19 0 0,0 88,42" />
-                    
                     <circle class="taichi-dot" cx="31" cy="42" r="4.5" />
                     <circle class="taichi-dot" cx="50" cy="42" r="4.5" />
                     <circle class="taichi-dot" cx="69" cy="42" r="4.5" />
@@ -441,7 +281,7 @@
     </div>
 
     <div id="qi-tab" class="tab-content">
-        <h1>🌀 氣功修練專區 </h1>
+        <h1 class="qi-h1">🌀 氣功修練專區 </h1>
         <div class="subtitle">【任督二脈開關竅大圓滿】整合肚臍採氣、天地樁與任督脈十穴道旋轉</div>
         
         <div class="qi-flex-layout">
@@ -489,11 +329,44 @@
                         <circle id="n-mingmen" cx="50" cy="72" r="4.5" fill="#f1c40f" style="display:none;"/>
                         
                         <circle id="n-glands" cx="50" cy="53" r="5" fill="#e84393" style="display:none;"/>
-                        
                         <circle id="vortex" cx="50" cy="12" r="7" class="vortex-ring"/>
                     </svg>
                 </div>
                 <div id="qi-visual-desc" style="font-size:0.85rem; margin-top:5px; color:#2ecc71; font-weight:bold;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="acu-tab" class="tab-content">
+        <h1 class="acu-h1">📍 中醫對症穴位圖鑑 </h1>
+        <div class="subtitle">【結合實體肉體療癒】針對各類症狀的真實中醫特效穴道與按摩心法</div>
+        
+        <div class="qi-flex-layout">
+            <div class="qi-controls">
+                <div class="section" style="border:none; padding-bottom:0;">
+                    <div class="section-title acu-title">1. 選擇病症類別與症狀</div>
+                    <select id="acu-category-select" class="acu-select" onchange="updateAcuSymptoms()"></select>
+                    <select id="acu-symptom-select" class="acu-select" onchange="renderAcuMap()">
+                        <option value="">-- 請先選擇類別 --</option>
+                    </select>
+                </div>
+                
+                <div class="qi-instruction-box acu-instruction-box" id="acu-text-panel">
+                    <strong style="color: var(--acu);">💡 穴位對症指南</strong><br><br>請由上方選擇您的症狀，系統將為您標示出對應的中醫大穴，以及日常自我按摩與照護的心法訣竅。
+                </div>
+            </div>
+
+            <div class="qi-visual-panel">
+                <div style="font-size:0.9rem; font-weight:bold; margin-bottom:5px;">人體穴道透視圖</div>
+                <div class="view-toggle" id="acu-view-toggle" onclick="toggleAcuView()">切換至背面視角</div>
+                
+                <div class="meridian-canvas" style="background:#2c3e50;">
+                    <svg width="180" height="260" viewBox="0 0 100 100" id="acu-svg-object">
+                        <path d="M 50,6 A 6,6 0 1,1 49.9,6 M 35,22 L 65,22 L 65,55 L 50,90 L 35,55 Z M 35,22 L 20,55 M 65,22 L 80,55" stroke="#576574" stroke-width="1.5" fill="none" stroke-linejoin="round" opacity="0.6"/>
+                        <g id="acu-points-group"></g>
+                    </svg>
+                </div>
+                <div id="acu-visual-desc" style="font-size:0.85rem; margin-top:5px; color:var(--secondary);"></div>
             </div>
         </div>
     </div>
@@ -546,8 +419,14 @@ function initAll() {
     renderGroup('gongfa-group', gongfas, false);
     
     const catSelect = document.getElementById('category-select');
+    const acuCatSelect = document.getElementById('acu-category-select');
     catSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
-    for (let cat in medicineData) catSelect.options.add(new Option(cat, cat));
+    acuCatSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
+    
+    for (let cat in medicineData) {
+        catSelect.options.add(new Option(cat, cat));
+        acuCatSelect.options.add(new Option(cat, cat));
+    }
 }
 
 function renderGroup(containerId, data, isRadio) {
@@ -577,9 +456,10 @@ function switchTab(evt, tabId) {
     evt.currentTarget.classList.add('active');
     
     const copyBtn = document.getElementById('main-copy-btn');
-    copyBtn.classList.remove('buddha-copy-btn', 'qi-copy-btn');
+    copyBtn.classList.remove('buddha-copy-btn', 'qi-copy-btn', 'acu-copy-btn');
     if (tabId === 'buddha-tab') copyBtn.classList.add('buddha-copy-btn');
     else if (tabId === 'qi-tab') copyBtn.classList.add('qi-copy-btn');
+    else if (tabId === 'acu-tab') copyBtn.classList.add('acu-copy-btn');
     clearAll();
 }
 
@@ -699,6 +579,118 @@ function updateQiInstructions() {
     }
 }
 
+// 📍 第四分頁：中醫穴位資料庫與邏輯
+const acupointData = {
+    "偏頭痛": { points: ["風池", "合谷", "太陽"], desc: "以大拇指指腹揉壓風池穴，配合按壓手部合谷穴，可疏風解表、通絡止痛。" },
+    "頭暈": { points: ["百會", "風池", "太衝"], desc: "輕敲頭頂百會穴，揉壓風池與足部太衝穴，能平肝潛陽、清利頭目。" },
+    "眼壓高": { points: ["風池", "太陽", "合谷"], desc: "輕柔按壓眼周的太陽穴與後腦風池穴，可放散眼部神經壓力。" },
+    "耳鳴": { points: ["風池", "合谷", "三陰交"], desc: "按壓風池與合谷疏通經氣，配合三陰交補益肝腎。" },
+    "鼻塞／鼻過敏／鼻炎": { points: ["迎香", "合谷", "大椎"], desc: "搓熱雙手按摩鼻翼兩側（迎香位置），配合大椎穴保暖散寒。" },
+    "牙痛／牙周病": { points: ["合谷", "內庭", "太衝"], desc: "「面口合谷收」，合谷穴是緩解牙痛的首選特效大穴。" },
+    "失眠": { points: ["神門", "內關", "三陰交"], desc: "睡前輕柔按壓手腕的神門與內關穴能寧心安神；三陰交能滋陰降火，助眠效果極佳。" },
+    "消除緊張": { points: ["內關", "神門", "太衝"], desc: "深呼吸並按壓內關穴，可寬胸理氣、緩解焦慮緊繃感。" },
+    "憂鬱症": { points: ["膻中", "太衝", "內關"], desc: "輕揉胸口膻中穴有助於寬胸解鬱，太衝穴可疏肝理氣。" },
+    "焦慮恐慌": { points: ["神門", "內關", "百會"], desc: "恐慌發作時，用力按壓內關穴與神門穴，能迅速穩定心神。" },
+    "心律不整／心悸": { points: ["內關", "膻中", "神門"], desc: "內關為心臟保健要穴，配合膻中穴可理氣寧心。" },
+    "消化不良": { points: ["中脘", "足三里", "天樞"], desc: "中脘穴與足三里為強健脾胃的核心大穴，飯後輕揉可助消化。" },
+    "便秘": { points: ["天樞", "支溝", "足三里"], desc: "順時針揉壓肚臍兩旁的天樞穴，配合手部支溝穴可潤腸通便。" },
+    "肩背痠痛／落枕/膏肓痛": { points: ["風池", "肩井", "膏肓"], desc: "按壓肩井與後背膏肓穴，可解除肌肉沾黏僵硬。" },
+    "腰痛／坐骨神經痛／腰無力／腳後跟痠痛／富貴包": { points: ["命門", "腎俞", "委中"], desc: "「腰背委中求」，除了溫敷命門與腎俞，按壓膝後的委中穴可解腰背痛。" },
+    "抽筋": { points: ["承山", "太衝", "陽陵泉"], desc: "小腿抽筋時強力按壓小腿肚的承山穴，可迅速緩解痙攣。" },
+    "經痛／經前症候群": { points: ["三陰交", "關元", "合谷"], desc: "熱敷下腹關元穴，並按壓三陰交，可溫經散寒、活血止痛。" },
+    "感冒": { points: ["大椎", "風池", "合谷"], desc: "初感冒時以吹風機溫熱後頸大椎穴與風池穴，能有效逼出寒氣。" },
+    "水腫": { points: ["水分", "足三里", "三陰交"], desc: "按壓足三里與三陰交可健脾利濕，加速水分代謝。" },
+    "降血糖": { points: ["足三里", "三陰交", "太衝"], desc: "日常保養三陰交與足三里，有助於調節內分泌與氣血循環。" },
+    "default": { points: ["足三里", "合谷", "百會"], desc: "此症狀之中醫輔助保養，建議從疏通全身氣血的基礎大穴（足三里、合谷、百會）開始揉壓盤整。" }
+};
+
+// 實體穴道座標庫 (x:左右0-100, y:上下0-100, view: front/back)
+const acuCoords = {
+    "百會": { x: 50, y: 5, view: 'front' }, "印堂": { x: 50, y: 12, view: 'front' }, "太陽": { x: 42, y: 11, view: 'front' }, "迎香": { x: 47, y: 15, view: 'front' },
+    "風池": { x: 45, y: 12, view: 'back' }, "大椎": { x: 50, y: 22, view: 'back' },
+    "肩井": { x: 38, y: 22, view: 'back' }, "膏肓": { x: 42, y: 32, view: 'back' },
+    "膻中": { x: 50, y: 32, view: 'front' }, "中脘": { x: 50, y: 45, view: 'front' }, "水分": { x: 50, y: 48, view: 'front' },
+    "天樞": { x: 45, y: 51, view: 'front' }, "關元": { x: 50, y: 58, view: 'front' },
+    "命門": { x: 50, y: 52, view: 'back' }, "腎俞": { x: 46, y: 52, view: 'back' },
+    "合谷": { x: 22, y: 55, view: 'front' }, "內關": { x: 26, y: 48, view: 'front' }, "神門": { x: 24, y: 50, view: 'front' }, "支溝": { x: 25, y: 45, view: 'back' },
+    "足三里": { x: 44, y: 75, view: 'front' }, "陽陵泉": { x: 42, y: 74, view: 'front' },
+    "三陰交": { x: 46, y: 85, view: 'front' }, "太衝": { x: 45, y: 95, view: 'front' }, "內庭": { x: 47, y: 95, view: 'front' },
+    "委中": { x: 46, y: 72, view: 'back' }, "承山": { x: 46, y: 82, view: 'back' }
+};
+
+let currentAcuView = 'front';
+
+function updateAcuSymptoms() {
+    const cat = document.getElementById('acu-category-select').value;
+    const symSelect = document.getElementById('acu-symptom-select');
+    symSelect.innerHTML = '<option value="">-- 請選擇症狀 --</option>';
+    if (cat) for (let sym in medicineData[cat]) symSelect.options.add(new Option(sym, sym));
+    document.getElementById('acu-points-group').innerHTML = '';
+    document.getElementById('acu-text-panel').innerHTML = '<strong style="color: var(--acu);">💡 穴位對症指南</strong><br><br>請由上方選擇您的症狀，系統將為您標示出對應的中醫大穴，以及日常自我按摩與照護的心法訣竅。';
+}
+
+function renderAcuMap() {
+    const sym = document.getElementById('acu-symptom-select').value;
+    if (!sym) return;
+    
+    let data = acupointData[sym] || acupointData["default"];
+    
+    // 判斷主要視角 (若背面穴位較多則切換至背面)
+    let backCount = 0;
+    data.points.forEach(pName => {
+        if(acuCoords[pName] && acuCoords[pName].view === 'back') backCount++;
+    });
+    currentAcuView = (backCount > data.points.length / 2) ? 'back' : 'front';
+    updateAcuToggleBtn();
+    
+    drawAcuPoints(data.points);
+    
+    document.getElementById('acu-text-panel').innerHTML = `
+        <strong style="color: var(--acu);">💡 穴位對症指南：${sym}</strong><br><br>
+        <strong>🎯 核心穴位：</strong>${data.points.join('、')}<br><br>
+        <strong>👐 按摩心法：</strong>${data.desc}
+    `;
+    
+    // 順便更新種子句
+    document.getElementById('output-text').innerText = `請藥師佛，針對「${sym}」，藥師神咒，三界內外，百千倍，放光明。`;
+}
+
+function toggleAcuView() {
+    currentAcuView = currentAcuView === 'front' ? 'back' : 'front';
+    updateAcuToggleBtn();
+    const sym = document.getElementById('acu-symptom-select').value;
+    if (sym) {
+        let data = acupointData[sym] || acupointData["default"];
+        drawAcuPoints(data.points);
+    }
+}
+
+function updateAcuToggleBtn() {
+    const btn = document.getElementById('acu-view-toggle');
+    btn.innerText = currentAcuView === 'front' ? '視角：正面 (點擊切換背面)' : '視角：背面 (點擊切換正面)';
+    document.getElementById('acu-visual-desc').innerText = currentAcuView === 'front' ? '目前顯示：人體正面穴位' : '目前顯示：人體背面穴位';
+}
+
+function drawAcuPoints(pointsList) {
+    const group = document.getElementById('acu-points-group');
+    group.innerHTML = '';
+    
+    pointsList.forEach(pName => {
+        const coord = acuCoords[pName];
+        if (coord && coord.view === currentAcuView) {
+            // 繪製左側點 (或中央點)
+            group.innerHTML += `<circle class="acu-point-dot" cx="${coord.x}" cy="${coord.y}" r="3" />
+                                <text class="acu-label" x="${coord.x}" y="${coord.y - 5}">${pName}</text>`;
+            // 對稱穴位繪製右側點 (非中軸線的穴位)
+            if (coord.x !== 50) {
+                let rightX = 100 - coord.x;
+                group.innerHTML += `<circle class="acu-point-dot" cx="${rightX}" cy="${coord.y}" r="3" />
+                                    <text class="acu-label" x="${rightX}" y="${coord.y - 5}">${pName}</text>`;
+            }
+        }
+    });
+}
+
 function generateSentence() {
     let elements = [];
     const selectedSource = document.querySelector('input[name="source-group"]:checked');
@@ -711,11 +703,8 @@ function generateSentence() {
     if (contents.length > 0) elements.push(contents.join('，'));
     const selectedMode = document.querySelector('input[name="mode-group"]:checked');
     if (selectedMode) {
-        if (selectedMode.value === "特急急救模式") {
-            elements.push('特急急救模式，超級放快光明');
-        } else {
-            elements.push(selectedMode.value);
-        }    
+        if (selectedMode.value === "特急急救模式") elements.push('特急急救模式，超級放快光明');
+        else elements.push(selectedMode.value);
     }
     if (elements.length === 0) {
         document.getElementById('output-text').innerText = "請由上方選擇需求...";
@@ -728,8 +717,9 @@ function clearAll() {
     clearInterval(rotateInterval);
     document.querySelectorAll('input').forEach(i => { i.checked = false; i.parentElement.classList.remove('selected'); });
     if(document.getElementById('category-select')) document.getElementById('category-select').value = "";
+    if(document.getElementById('acu-category-select')) document.getElementById('acu-category-select').value = "";
     if(document.getElementById('qi-func-select')) document.getElementById('qi-func-select').value = "";
-    updateSymptoms(); updateQiInstructions();
+    updateSymptoms(); updateAcuSymptoms(); updateQiInstructions();
     document.getElementById('output-text').innerText = "請由上方選擇需求...";
 }
 
@@ -738,6 +728,7 @@ function copySentence() {
 }
 
 initAll();
+updateAcuToggleBtn(); // 初始化穴道視角
 </script>
 </body>
 </html>
