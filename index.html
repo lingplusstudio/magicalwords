@@ -12,7 +12,7 @@
             --light: #f9f9f9;
             --buddha: #0984e3; 
             --qi: #2ecc71; 
-            --acu: #9b59b6; /* 中醫穴道專屬紫 */
+            --acu: #9b59b6; 
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -30,7 +30,6 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
-        /* 導覽列 */
         .tab-nav {
             display: flex;
             gap: 8px;
@@ -128,6 +127,12 @@
             font-size: 1rem; line-height: 1.6; border-left: 5px solid var(--qi);
         }
         .acu-instruction-box { border-left-color: var(--acu); }
+        
+        .acu-point-detail {
+            background: #fff; padding: 12px; border-radius: 8px; margin-top: 10px;
+            border: 1px solid #eee; font-size: 0.95rem; color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
 
         /* 全動態脈絡畫布 */
         .meridian-canvas {
@@ -339,7 +344,7 @@
 
     <div id="acu-tab" class="tab-content">
         <h1 class="acu-h1">📍 中醫對症穴位圖鑑 </h1>
-        <div class="subtitle">【結合實體肉體療癒】針對各類症狀的真實中醫特效穴道與按摩心法</div>
+        <div class="subtitle">【不怕找不到穴道】附上超白話文找穴指南，自己在家也能輕鬆按！</div>
         
         <div class="qi-flex-layout">
             <div class="qi-controls">
@@ -352,7 +357,7 @@
                 </div>
                 
                 <div class="qi-instruction-box acu-instruction-box" id="acu-text-panel">
-                    <strong style="color: var(--acu);">💡 穴位對症指南</strong><br><br>請由上方選擇您的症狀，系統將為您標示出對應的中醫大穴，以及日常自我按摩與照護的心法訣竅。
+                    <strong style="color: var(--acu);">💡 穴位對症指南</strong><br><br>請由上方選擇您的症狀，系統將為您標示出對應的中醫大穴，以及超白話文的「如何找到這個穴道」的定位說明。
                 </div>
             </div>
 
@@ -604,7 +609,35 @@ const acupointData = {
     "default": { points: ["足三里", "合谷", "百會"], desc: "此症狀之中醫輔助保養，建議從疏通全身氣血的基礎大穴（足三里、合谷、百會）開始揉壓盤整。" }
 };
 
-// 實體穴道座標庫 (x:左右0-100, y:上下0-100, view: front/back)
+// 白話文找穴精準定位指南庫
+const pointDetails = {
+    "合谷": "【合谷穴】大拇指與食指併攏，虎口肌肉凸起最高處。",
+    "風池": "【風池穴】後腦勺髮際線處，脖子兩側大筋外側的凹陷處。",
+    "神門": "【神門穴】手腕橫紋上，靠小指那一側的邊緣凹陷處。",
+    "三陰交": "【三陰交】腳內踝尖端往上，大約四根手指寬度，小腿骨後緣凹陷處。",
+    "內關": "【內關穴】手腕橫紋正中央，往手肘方向約三根手指寬，兩條筋的中間。",
+    "足三里": "【足三里】膝蓋外側凹陷處（外膝眼）往下，大約四根手指寬度。",
+    "太衝": "【太衝穴】腳背上，大腳趾與第二腳趾骨頭交接的凹陷處。",
+    "百會": "【百會穴】兩耳尖往上連線，與頭頂正中線的交會點（頭頂正中央）。",
+    "膻中": "【膻中穴】胸口正中央，兩乳頭連線的正中間。",
+    "中脘": "【中脘穴】肚臍正上方，大約六根手指寬（胸骨下端與肚臍連線中點）。",
+    "關元": "【關元穴】肚臍正下方，大約四根手指寬處。",
+    "命門": "【命門穴】肚臍正後方，背部脊椎骨上。",
+    "大椎": "【大椎穴】低頭時，頸部背後最突出的骨頭下方凹陷處。",
+    "太陽": "【太陽穴】眉尾與眼角延長線交會處的凹陷處。",
+    "迎香": "【迎香穴】鼻翼外側邊緣，微微凹陷的地方。",
+    "天樞": "【天樞穴】肚臍左右兩側，各約三根手指寬度處。",
+    "膏肓": "【膏肓穴】背部肩胛骨內側邊緣，約在第四胸椎旁（手往後摸肩胛骨內緣）。",
+    "委中": "【委中穴】膝蓋正後方，膝窩橫紋的正中點。",
+    "承山": "【承山穴】踮起腳尖時，小腿肚肌肉浮起的尾端凹陷處。",
+    "內庭": "【內庭穴】腳背第二與第三腳趾縫交界處。",
+    "肩井": "【肩井穴】脖子根部與肩膀外側連線的中點（肩膀最痠處）。",
+    "陽陵泉": "【陽陵泉】小腿外側，膝蓋下方突起骨頭（腓骨小頭）前下方的凹陷處。",
+    "水分": "【水分穴】肚臍正上方，大約一根拇指寬度處。",
+    "支溝": "【支溝穴】手背腕橫紋正中，往手肘方向約四根手指寬處。",
+    "腎俞": "【腎俞穴】背部與肚臍平行的脊椎旁開兩指寬處（雙手插腰時大拇指按壓處）。"
+};
+
 const acuCoords = {
     "百會": { x: 50, y: 5, view: 'front' }, "印堂": { x: 50, y: 12, view: 'front' }, "太陽": { x: 42, y: 11, view: 'front' }, "迎香": { x: 47, y: 15, view: 'front' },
     "風池": { x: 45, y: 12, view: 'back' }, "大椎": { x: 50, y: 22, view: 'back' },
@@ -626,7 +659,7 @@ function updateAcuSymptoms() {
     symSelect.innerHTML = '<option value="">-- 請選擇症狀 --</option>';
     if (cat) for (let sym in medicineData[cat]) symSelect.options.add(new Option(sym, sym));
     document.getElementById('acu-points-group').innerHTML = '';
-    document.getElementById('acu-text-panel').innerHTML = '<strong style="color: var(--acu);">💡 穴位對症指南</strong><br><br>請由上方選擇您的症狀，系統將為您標示出對應的中醫大穴，以及日常自我按摩與照護的心法訣竅。';
+    document.getElementById('acu-text-panel').innerHTML = '<strong style="color: var(--acu);">💡 穴位對症指南</strong><br><br>請由上方選擇您的症狀，系統將為您標示出對應的中醫大穴，以及超白話文的「如何找到這個穴道」的定位說明。';
 }
 
 function renderAcuMap() {
@@ -635,23 +668,27 @@ function renderAcuMap() {
     
     let data = acupointData[sym] || acupointData["default"];
     
-    // 判斷主要視角 (若背面穴位較多則切換至背面)
     let backCount = 0;
-    data.points.forEach(pName => {
-        if(acuCoords[pName] && acuCoords[pName].view === 'back') backCount++;
-    });
+    data.points.forEach(pName => { if(acuCoords[pName] && acuCoords[pName].view === 'back') backCount++; });
     currentAcuView = (backCount > data.points.length / 2) ? 'back' : 'front';
     updateAcuToggleBtn();
     
     drawAcuPoints(data.points);
     
+    // 組合白話文找穴指南
+    let detailsHtml = '';
+    data.points.forEach(pName => {
+        let desc = pointDetails[pName] || `【${pName}】請參考中醫相關經絡圖。`;
+        detailsHtml += `<div class="acu-point-detail">📍 ${desc}</div>`;
+    });
+    
     document.getElementById('acu-text-panel').innerHTML = `
-        <strong style="color: var(--acu);">💡 穴位對症指南：${sym}</strong><br><br>
-        <strong>🎯 核心穴位：</strong>${data.points.join('、')}<br><br>
-        <strong>👐 按摩心法：</strong>${data.desc}
+        <strong style="color: var(--acu); font-size:1.1rem;">💡 穴位對症指南：${sym}</strong><br><br>
+        <strong>👐 療癒心法：</strong>${data.desc}<br><br>
+        <strong>🎯 白話文找穴訣竅：</strong>
+        ${detailsHtml}
     `;
     
-    // 順便更新種子句
     document.getElementById('output-text').innerText = `請藥師佛，針對「${sym}」，藥師神咒，三界內外，百千倍，放光明。`;
 }
 
@@ -678,10 +715,8 @@ function drawAcuPoints(pointsList) {
     pointsList.forEach(pName => {
         const coord = acuCoords[pName];
         if (coord && coord.view === currentAcuView) {
-            // 繪製左側點 (或中央點)
             group.innerHTML += `<circle class="acu-point-dot" cx="${coord.x}" cy="${coord.y}" r="3" />
                                 <text class="acu-label" x="${coord.x}" y="${coord.y - 5}">${pName}</text>`;
-            // 對稱穴位繪製右側點 (非中軸線的穴位)
             if (coord.x !== 50) {
                 let rightX = 100 - coord.x;
                 group.innerHTML += `<circle class="acu-point-dot" cx="${rightX}" cy="${coord.y}" r="3" />
@@ -728,7 +763,7 @@ function copySentence() {
 }
 
 initAll();
-updateAcuToggleBtn(); // 初始化穴道視角
+updateAcuToggleBtn();
 </script>
 </body>
 </html>
