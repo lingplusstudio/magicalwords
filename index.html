@@ -150,11 +150,17 @@
         }
         .flow-line { fill: none; stroke-width: 3; stroke-dasharray: 6 4; animation: qiFlowAnimation 1.5s linear infinite; }
         @keyframes qiFlowAnimation { to { stroke-dashoffset: -20; } }
+        
         .vortex-ring {
             fill: none; stroke: #f1c40f; stroke-width: 2; stroke-dasharray: 4 2;
             transform-origin: 50px var(--vortex-y, 50px); animation: vortexSpin 1.2s linear infinite; display: none;
+            transition: stroke 0.3s;
         }
-        @keyframes vortexSpin { to { transform: rotate(360deg); } }
+        .vortex-ring-static {
+            fill: none; stroke-width: 2; stroke-dasharray: 4 2;
+            animation: vortexSpinStatic 1.2s linear infinite; display: none;
+        }
+        @keyframes vortexSpinStatic { to { transform: rotate(360deg); } }
 
         /* 中醫穴位專屬動態點 */
         .acu-point-dot {
@@ -165,7 +171,6 @@
             0% { transform: scale(0.9); opacity: 0.8; }
             100% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px var(--acu)); fill: #fff; }
         }
-        /* 移除強制置中，由 JS 動態控制對齊方向 */
         .acu-label { font-size: 5.5px; fill: white; font-weight: bold; pointer-events: none;}
         
         .view-toggle {
@@ -296,6 +301,7 @@
                     <div class="section-title qi-title">1. 選擇修煉功法</div>
                     <select id="qi-func-select" onchange="updateQiInstructions()">
                         <option value="">-- 請選擇功法 --</option>
+                        <option value="kou_chi">叩齒站樁法【六步驟圖解：頂天立地 ➔ 氣沉丹田】</option>
                         <option value="basic_cold">肚臍採氣法【身體冷感 / 日常順行周天】</option>
                         <option value="basic_hot">肚臍採氣法【燥熱易怒 / 反向逆行調和】</option>
                         <option value="kidney">肚臍採氣法【手麻心連・護腎版最高CP值】</option>
@@ -337,7 +343,24 @@
                         
                         <circle id="n-glands" cx="50" cy="53" r="5" fill="#e84393" style="display:none;"/>
                         
-                        <circle id="ch-crown" cx="50" cy="12" r="6" fill="#8e44ad" style="display:none;"/> <circle id="ch-third-eye" cx="50" cy="24" r="5" fill="#2c3e50" style="display:none;"/> <circle id="ch-throat" cx="50" cy="36" r="5" fill="#3498db" style="display:none;"/> <circle id="ch-heart" cx="50" cy="48" r="5" fill="#2ecc71" style="display:none;"/> <circle id="ch-solar" cx="50" cy="60" r="5" fill="#f1c40f" style="display:none;"/> <circle id="ch-sacral" cx="50" cy="72" r="5" fill="#e67e22" style="display:none;"/> <circle id="ch-root" cx="50" cy="84" r="6" fill="#e74c3c" style="display:none;"/> <circle id="vortex" cx="50" cy="12" r="7" class="vortex-ring"/>
+                        <circle id="ch-crown" cx="50" cy="12" r="5" fill="#8e44ad" style="display:none;"/>
+                        <circle id="ch-third-eye" cx="50" cy="24" r="5" fill="#2c3e50" style="display:none;"/>
+                        <circle id="ch-throat" cx="50" cy="36" r="5" fill="#3498db" style="display:none;"/>
+                        <circle id="ch-heart" cx="50" cy="48" r="5" fill="#2ecc71" style="display:none;"/>
+                        <circle id="ch-solar" cx="50" cy="60" r="5" fill="#f1c40f" style="display:none;"/>
+                        <circle id="ch-sacral" cx="50" cy="72" r="5" fill="#e67e22" style="display:none;"/>
+                        <circle id="ch-root" cx="50" cy="84" r="5" fill="#e74c3c" style="display:none;"/>
+                        
+                        <circle id="vortex" cx="50" cy="12" r="7" class="vortex-ring" stroke="#f1c40f"/>
+                        
+                        <circle id="vortex-0" cx="50" cy="12" r="8" class="vortex-ring-static" style="transform-origin: 50px 12px; stroke: #8e44ad;"/>
+                        <circle id="vortex-1" cx="50" cy="24" r="8" class="vortex-ring-static" style="transform-origin: 50px 24px; stroke: #2c3e50;"/>
+                        <circle id="vortex-2" cx="50" cy="36" r="8" class="vortex-ring-static" style="transform-origin: 50px 36px; stroke: #3498db;"/>
+                        <circle id="vortex-3" cx="50" cy="48" r="8" class="vortex-ring-static" style="transform-origin: 50px 48px; stroke: #2ecc71;"/>
+                        <circle id="vortex-4" cx="50" cy="60" r="8" class="vortex-ring-static" style="transform-origin: 50px 60px; stroke: #f1c40f;"/>
+                        <circle id="vortex-5" cx="50" cy="72" r="8" class="vortex-ring-static" style="transform-origin: 50px 72px; stroke: #e67e22;"/>
+                        <circle id="vortex-6" cx="50" cy="84" r="8" class="vortex-ring-static" style="transform-origin: 50px 84px; stroke: #e74c3c;"/>
+                        
                     </svg>
                 </div>
                 <div id="qi-visual-desc" style="font-size:0.85rem; margin-top:5px; color:#2ecc71; font-weight:bold;"></div>
@@ -388,26 +411,13 @@
 </div>
 
 <script>
-// 全病症對應資料庫
 const medicineData = {
-    "頭面類": {
-        "偏頭痛": ["川芎", "白朮", "生地黃"], "頭暈": ["當歸", "炙甘草", "澤瀉"], "眼皮浮腫": ["葶藶子", "蓮子", "阿膠"], "黑眼圈": ["當歸尾", "桑葉", "茯苓"], "養眼": ["蔓荊子", "枳殼", "熟地黃"], "老花眼／近遠視": ["木賊草", "燕窩", "荷葉"], "眼壓高": ["澤瀉", "桔梗", "覆盆子"], "耳鳴": ["磁石", "升麻", "白芍"], "對空間磁場敏感的耳鳴": ["代赭石", "蔓荊子", "五味子"], "耳聾／聽力不佳": ["麝香", "飴糖", "紫石英"], "鼻塞／鼻過敏／鼻炎": ["辛夷", "白扁豆", "五味子"], "流鼻血": ["天門冬", "桔梗", "茯苓"], "打呼與呼吸中止": ["紅景天", "半枝蓮", "山藥"], "牙痛／牙周病": ["板藍根", "虎杖", "升麻"], "嘴破／喉中腫潰": ["冰片", "意仁", "花生木"], "喉中如梗鼠／梅核氣": ["白殭蠶", "桔梗", "遠志"], "三叉神經痛": ["灶心土", "全蠍", "白芷"], "美容": ["珍珠粉", "桂枝", "女貞子"], "痘痘": ["金銀花", "木香", "菟線子"], "白頭髮": ["當歸", "透草", "熟地"], "女性更年期掉髮": ["女貞子", "浮小麥", "薑炙"], "女性年輕掉髮": ["肉桂", "當歸", "大棗"], "男性掉髮": ["陽起石", "石膏", "粳米"], "甲狀腺亢進": ["白殭蠶", "竹茹", "熟地黃"]
-    },
-    "情緒意志類": {
-        "失眠": ["浮小麥", "砂仁", "五味子"], "懶散／拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怒氣": ["桃仁", "杏仁", "牡蠣"], "心情不好": ["玫瑰花", "竹瀝", "酸棗仁"], "記憶力": ["柏子仁", "紫蘇葉", "益母草"], "疲勞／注意力不集中": ["薄荷", "厚樸", "肉桂"], "嗜睡": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅馬洋甘菊"], "焦慮恐慌": ["石決明", "紫蘇葉", "地龍"]
-    },
-    "臟腑類": {
-        "心臟動力": ["人參", "大棗", "生地黃"], "心律不整／心悸": ["遠志", "木香", "炮附子"], "慢性高血壓": ["桑白皮", "葛根", "白茅根"], "氣喘": ["蛤蚧", "石斛", "牛膝"], "氣管不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "蒼朮", "杜仲"], "止肚子瀉": ["童便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "薑參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒／肝臟排毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化／膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"]
-    },
-    "四肢筋骨肌肉類": {
-        "網球肘／媽媽手／滑鼠手": ["伸筋草", "白朮", "益母草"], "膝蓋疼痛": ["威靈仙", "柏子仁", "杜仲"], "靜脈曲張／血栓": ["烏梢蛇", "川七", "巴戟天"], "足底筋膜炎": ["熟地黃", "柏子仁", "乳香"], "痛風／腎結石發作疼痛": ["知母", "砂仁", "淡竹葉"], "香港腳": ["海桐皮", "川椒", "烏梅"], "抽筋": ["白芍", "生薑", "虎杖"], "肌肉萎縮": ["炒甘草", "豬髓", "生地黃"], "下半身癱瘓": ["黃酒", "豬髓", "穿山甲"], "類風濕": ["通草", "當歸", "蒼朮"], "骨折疼痛": ["續斷", "麥冬", "茯苓"], "骨骼／長高": ["鹿茸", "枇杷葉", "紫蘇梗"], "腰痛／坐骨神經痛／腰無力／腳後跟痠痛／富貴包": ["骨碎補", "黨參", "天門冬"], "肩沾黏／肩膀痛／手臂無力抬舉": ["地鱉蟲", "紫菀", "獨活"], "肩背痠痛／落枕/膏肓痛": ["葛根", "枳實", "淫羊藿"], "手掌沾黏／手指無法完全伸展／手掌壓迫／扳機指": ["絡石藤", "黃耆", "菟絲子"], "手指腫脹痠": ["荊芥", "小魚乾", "千摺水"]
-    },
-    "生殖泌尿類": {
-        "經痛／經前症候群": ["丹參", "麥冬", "肉桂"], "經期不順／卵巢老化、雌激素不足": ["益母草", "白朮", "肉桂"], "孕吐": ["枳殼", "藏紅", "澤瀉"], "助孕／腹部動氣": ["肉桂", "白豆蔻", "川芎"], "安胎": ["杜仲", "黃芩", "五味子"], "男性機能": ["硫磺", "竹茹", "燈心草"], "攝護腺": ["花生核", "鱉甲", "蟬蛻"], "尿道感染": ["茯苓", "柴胡", "升麻"]
-    },
-    "其他類": {
-        "皮膚癢": ["地膚子", "枳殼", "山藥"], "扁平疣": ["醋", "生薑", "赤芍"], "怕熱／中暑、頭汗流出": ["淡竹葉", "玉竹", "澤瀉"], "盜汗": ["女貞子", "薄荷", "遠志"], "瘦身": ["山楂", "麻黃", "熟地黃"], "中風後遺症／複視": ["水蛭", "白芍", "黨參"], "水腫": ["茯苓", "通草", "人參"], "感冒": ["桔梗", "砂仁", "茯苓"], "帶狀疱疹": ["乳香", "柴胡", "牡蠣"], "降血糖": ["熟地黃", "黃精", "陳皮"], "糖尿病足": ["真人活命飲", "黃蓮", "黨參"], "術後疼痛": ["曼陀羅花", "冰糖", "威靈仙"]
-    }
+    "頭面類": { "偏頭痛": ["川芎", "白朮", "生地黃"], "頭暈": ["當歸", "炙甘草", "澤瀉"], "眼皮浮腫": ["葶藶子", "蓮子", "阿膠"], "黑眼圈": ["當歸尾", "桑葉", "茯苓"], "養眼": ["蔓荊子", "枳殼", "熟地黃"], "老花眼／近遠視": ["木賊草", "燕窩", "荷葉"], "眼壓高": ["澤瀉", "桔梗", "覆盆子"], "耳鳴": ["磁石", "升麻", "白芍"], "對空間磁場敏感的耳鳴": ["代赭石", "蔓荊子", "五味子"], "耳聾／聽力不佳": ["麝香", "飴糖", "紫石英"], "鼻塞／鼻過敏／鼻炎": ["辛夷", "白扁豆", "五味子"], "流鼻血": ["天門冬", "桔梗", "茯苓"], "打呼與呼吸中止": ["紅景天", "半枝蓮", "山藥"], "牙痛／牙周病": ["板藍根", "虎杖", "升麻"], "嘴破／喉中腫潰": ["冰片", "意仁", "花生木"], "喉中如梗鼠／梅核氣": ["白殭蠶", "桔梗", "遠志"], "三叉神經痛": ["灶心土", "全蠍", "白芷"], "美容": ["珍珠粉", "桂枝", "女貞子"], "痘痘": ["金銀花", "木香", "菟絲子"], "白頭髮": ["當歸", "透草", "熟地"], "女性更年期掉髮": ["女貞子", "浮小麥", "薑炙"], "女性年輕掉髮": ["肉桂", "當歸", "大棗"], "男性掉髮": ["陽起石", "石膏", "粳米"], "甲狀腺亢進": ["白殭蠶", "竹茹", "熟地黃"] },
+    "情緒意志類": { "失眠": ["浮小麥", "砂仁", "五味子"], "懶散／拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怒氣": ["桃仁", "杏仁", "牡蠣"], "心情不好": ["玫瑰花", "竹瀝", "酸棗仁"], "記憶力": ["柏子仁", "紫蘇葉", "益母草"], "疲勞／注意力不集中": ["薄荷", "厚樸", "肉桂"], "嗜睡": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅馬洋甘菊"], "焦慮恐慌": ["石決明", "紫蘇葉", "地龍"] },
+    "臟腑類": { "心臟動力": ["人參", "大棗", "生地黃"], "心律不整／心悸": ["遠志", "木香", "炮附子"], "慢性高血壓": ["桑白皮", "葛根", "白茅根"], "氣喘": ["蛤蚧", "石斛", "牛膝"], "氣管不好": ["竹茹", "陳皮", "阿膠"], "消化不良": ["杏仁", "蒼朮", "杜仲"], "止肚子瀉": ["童便", "泥土", "小麥"], "便秘": ["黑芝麻", "枳實", "薑參"], "痔瘡": ["刺蝟皮", "桑白皮", "香附"], "解毒／肝臟排毒": ["甘草水", "川七", "綠豆黃"], "保肝": ["靈芝", "蜆", "香附"], "肝硬化／膽結石": ["茵陳蒿", "白朮", "葫蘆"], "肺擴大": ["瓜蔞仁", "地龍", "陽起石"] },
+    "四肢筋骨肌肉類": { "網球肘／媽媽手／滑鼠手": ["伸筋草", "白朮", "益母草"], "膝蓋疼痛": ["威靈仙", "柏子仁", "杜仲"], "靜脈曲張／血栓": ["烏梢蛇", "川七", "巴戟天"], "足底筋膜炎": ["熟地黃", "柏子仁", "乳香"], "痛風／腎結石發作疼痛": ["知母", "砂仁", "淡竹葉"], "香港腳": ["海桐皮", "川椒", "烏梅"], "抽筋": ["白芍", "生薑", "虎杖"], "肌肉萎縮": ["炒甘草", "豬髓", "生地黃"], "下半身癱瘓": ["黃酒", "豬髓", "穿山甲"], "類風濕": ["通草", "當歸", "蒼朮"], "骨折疼痛": ["續斷", "麥冬", "茯苓"], "骨骼／長高": ["鹿茸", "枇杷葉", "紫蘇梗"], "腰痛／坐骨神經痛／腰無力／腳後跟痠痛／富貴包": ["骨碎補", "黨參", "天門冬"], "肩沾黏／肩膀痛／手臂無力抬舉": ["地鱉蟲", "紫菀", "獨活"], "肩背痠痛／落枕/膏肓痛": ["葛根", "枳實", "淫羊藿"], "手掌沾黏／手指無法完全伸展／手掌壓迫／扳機指": ["絡石藤", "黃耆", "菟絲子"], "手指腫脹痠": ["荊芥", "小魚乾", "千摺水"] },
+    "生殖泌尿類": { "經痛／經前症候群": ["丹參", "麥冬", "肉桂"], "經期不順／卵巢老化、雌激素不足": ["益母草", "白朮", "肉桂"], "孕吐": ["枳殼", "藏紅", "澤瀉"], "助孕／腹部動氣": ["肉桂", "白豆蔻", "川芎"], "安胎": ["杜仲", "黃芩", "五味子"], "男性機能": ["硫磺", "竹茹", "燈心草"], "攝護腺": ["花生核", "鱉甲", "蟬蛻"], "尿道感染": ["茯苓", "柴胡", "升麻"] },
+    "其他類": { "皮膚癢": ["地膚子", "枳殼", "山藥"], "扁平疣": ["醋", "生薑", "赤芍"], "怕熱／中暑、頭汗流出": ["淡竹葉", "玉竹", "澤瀉"], "盜汗": ["女貞子", "薄荷", "遠志"], "瘦身": ["山楂", "麻黃", "熟地黃"], "中風後遺症／複視": ["水蛭", "白芍", "黨參"], "水腫": ["茯苓", "通草", "人參"], "感冒": ["桔梗", "砂仁", "茯苓"], "帶狀疱疹": ["乳香", "柴胡", "牡蠣"], "降血糖": ["熟地黃", "黃精", "陳皮"], "糖尿病足": ["真人活命飲", "黃蓮", "黨參"], "術後疼痛": ["曼陀羅花", "冰糖", "威靈仙"] }
 };
 
 const sources = [{ name: "太陽真氣", desc: "太陽星君之真氣" }, { name: "上元神", desc: "連結高我能量層次" }, { name: "天地元神", desc: "調動天地間高維元神能量協助主法" }];
@@ -501,8 +511,7 @@ function updateQiInstructions() {
     const vDesc = document.getElementById('qi-visual-desc');
 
     clearInterval(rotateInterval);
-    // 隱藏所有穴道和脈輪光點
-    document.querySelectorAll('#meridian-svg-object circle').forEach(c => { if(c.id !== 'vortex') c.style.display = 'none'; });
+    document.querySelectorAll('#meridian-svg-object circle').forEach(c => { c.style.display = 'none'; });
     path.setAttribute('d', ''); path.setAttribute('stroke', 'transparent');
     lid.style.display = 'none'; vortex.style.display = 'none';
     vTitle.innerText = "能量場狀態"; vSub.innerText = "尚未啟動"; vDesc.innerText = "";
@@ -512,7 +521,26 @@ function updateQiInstructions() {
         return;
     }
 
-    if (val === "basic_cold") {
+    if (val === "kou_chi") {
+        pnl.innerHTML = `<strong>🧘‍♀️ 快速有感的練身法：叩齒站樁法</strong><br>
+        • <strong>步驟一：頂天立地</strong> 左腳穩穩踩地，右腳穩穩踩地。調整身體站姿，脊椎挺直，從頭到腳呈一直線，與天地連接。雙腳與肩同寬，想像雙腳像樹根扎入大地。<br>
+        • <strong>步驟二：雙膝併攏</strong> 雙腳腳趾微微內旋，類似微內八。雙膝輕輕併攏，做這動作時感覺氣從膝蓋往上走，有提肛、夾緊會陰的感覺。<br>
+        • <strong>步驟三：雙肘靠攏</strong> 雙手舉起，雙肘輕輕靠攏，感覺兩側肩胛骨有撐開的感覺即可。<br>
+        • <strong>步驟四：雙手覆耳</strong> 雙手輕輕覆住耳朵，脊椎跟頭連成一直線，氣是暢通的。將臀部往前挺，不要往後翹。停留3~5分鐘。<br>
+        • <strong>步驟五：叩齒</strong> 上下排牙齒叩一下，三次即可。讓顱骨震動，讓頭部縫隙微開，氣往外散掉，不滯留在頭部。<br>
+        • <strong>步驟六：氣沉丹田</strong> 慢慢站直深吸氣，雙手向上不超過頭。呼氣雙手向下。雙手摸肚子順時針畫圓兩圈，感覺氣順順往下沉至丹田收功。`;
+        
+        // 氣降丹田動畫：金光從頭頂一路降到丹田
+        path.setAttribute('d', 'M 50,12 L 50,80'); 
+        path.setAttribute('stroke', '#f1c40f'); 
+        path.style.animationDirection = "normal";
+        document.getElementById('n-baihui').style.display = 'block';
+        document.getElementById('n-guanyuan').style.display = 'block';
+        
+        vTitle.innerText = "叩齒站樁法"; vSub.innerText = "觀想：氣不聚頭，氣沉丹田"; vDesc.innerText = "氣流由頭部往下沉至丹田";
+        document.getElementById('output-text').innerText = "天地元神，叩齒站樁法，三界內外，百千倍，放光明。";
+    }
+    else if (val === "basic_cold") {
         pnl.innerHTML = `<strong>🌀 肚臍採氣法【日常順行 / 溫補陽氣】</strong><br>• <strong>意念觀想</strong>：鼻吸氣時，觀想耀眼的<strong>太陽</strong>，溫熱能量從太陽進肚臍。<br>• <strong>氣流流向</strong>：氣由肚臍往下走，經腳底往背部上到頭部，再流回肚臍。<br>• <strong>好轉反應</strong>：若練習中感到頭腦熱熱、脹脹、或有旋渦感，恭喜是臍動脈打開的正常好現象，練習 5 分鐘即可。`;
         path.setAttribute('d', 'M 50,55 A 15,15 0 1,1 50,85 A 25,25 0 1,1 50,15 L 50,55'); 
         path.setAttribute('stroke', '#ff7675'); path.style.animationDirection = "normal";
@@ -555,6 +583,7 @@ function updateQiInstructions() {
         const yCoords = ['12', '24', '45', '62', '80'];
         nodes.forEach(id => document.getElementById(id).style.display = 'block');
         vortex.style.display = 'block';
+        vortex.setAttribute('stroke', '#f1c40f'); 
         let step = 0;
         rotateInterval = setInterval(() => {
             document.documentElement.style.setProperty('--vortex-y', yCoords[step] + 'px');
@@ -570,6 +599,7 @@ function updateQiInstructions() {
         const yCoords = ['12', '20', '32', '48', '72'];
         nodes.forEach(id => document.getElementById(id).style.display = 'block');
         vortex.style.display = 'block';
+        vortex.setAttribute('stroke', '#f1c40f'); 
         let step = 0;
         rotateInterval = setInterval(() => {
             document.documentElement.style.setProperty('--vortex-y', yCoords[step] + 'px');
@@ -581,7 +611,7 @@ function updateQiInstructions() {
     }
     else if (val === "chakras") {
         pnl.innerHTML = `<strong>🌈 進階功法：七大脈輪能量活化</strong><br><br>
-        <strong>1. 頂輪 (Crown Chakra)</strong><br>• <strong>位置</strong>：頭頂正中央。<br>• <strong>觀想</strong>：一束耀眼的**紫色光**由天而降進入頂輪，紫色光團在此旋轉並逐漸擴大，身體感到輕盈、智慧與連結更高意識。<br><br>
+        <strong>1. 頂輪 (Crown Chakra)</strong><br>• <strong>位置</strong>：頭頂正中央。<br>• <strong>觀想</strong>：一束耀眼的**紫色光**由天而降進入頂輪，光團在此旋轉並逐漸擴大，身體感到輕盈、智慧與連結更高意識。<br><br>
         <strong>2. 眉心輪 (Third Eye Chakra)</strong><br>• <strong>位置</strong>：兩眉中間上方。<br>• <strong>觀想</strong>：耀眼的**靛藍色光**進入眉心輪，光團旋轉，此處感到溫熱、清晰，增強直覺與洞察力。<br><br>
         <strong>3. 喉輪 (Throat Chakra)</strong><br>• <strong>位置</strong>：喉嚨中央。<br>• <strong>觀想</strong>：耀眼的**藍色光**進入喉輪，光團旋轉，喉嚨感到放鬆、通暢，增強溝通與表達能力。<br><br>
         <strong>4. 心輪 (Heart Chakra)</strong><br>• <strong>位置</strong>：胸口正中央。<br>• <strong>觀想</strong>：耀眼的**綠色光**進入心輪，光團旋轉，胸口感到溫暖、充滿愛與慈悲。<br><br>
@@ -592,6 +622,7 @@ function updateQiInstructions() {
 
         const nodes = ['ch-crown', 'ch-third-eye', 'ch-throat', 'ch-heart', 'ch-solar', 'ch-sacral', 'ch-root'];
         const colors = ['#8e44ad', '#2c3e50', '#3498db', '#2ecc71', '#f1c40f', '#e67e22', '#e74c3c'];
+        const chineseNames = ['頂輪 (紫光)', '眉心輪 (靛光)', '喉輪 (藍光)', '心輪 (綠光)', '胃輪 (黃光)', '臍輪 (橙光)', '海底輪 (紅光)'];
         const yCoords = ['12', '24', '36', '48', '60', '72', '84'];
         
         vTitle.innerText = "七大脈輪能量活化"; vSub.innerText = "觀想：彩虹光束由天而降";
@@ -600,16 +631,17 @@ function updateQiInstructions() {
         let loops = 0;
         
         rotateInterval = setInterval(() => {
-            document.querySelectorAll('#meridian-svg-object circle').forEach(c => { if(c.id !== 'vortex') c.style.display = 'none'; });
+            document.querySelectorAll('#meridian-svg-object circle').forEach(c => { c.style.display = 'none'; });
             vDesc.innerText = "";
-            vDesc.style.color = "#2ecc71";
             
-            if (loops < 2) {
-                // 依序活化單個脈輪
+            if (loops < 1) { 
                 document.getElementById(nodes[step]).style.display = 'block';
                 vortex.style.display = 'block';
                 vortex.setAttribute('cy', yCoords[step]);
-                vDesc.innerText = `${step + 1}. ${nodes[step].replace('ch-','')} ${colors[step]}`;
+                vortex.setAttribute('stroke', colors[step]); 
+                document.documentElement.style.setProperty('--vortex-y', yCoords[step] + 'px');
+                
+                vDesc.innerText = `${step + 1}. 活化：${chineseNames[step]}`;
                 vDesc.style.color = colors[step];
                 
                 step++;
@@ -618,17 +650,18 @@ function updateQiInstructions() {
                     loops++;
                 }
             } else {
-                // 收功：所有脈輪光點同時顯示，顯示彩虹結界動畫
                 nodes.forEach(id => document.getElementById(id).style.display = 'block');
-                vortex.style.display = 'none'; // 隱藏單個旋渦
-                // 顯示多個旋渦
+                vortex.style.display = 'none'; 
+                
                 nodes.forEach((id, index) => {
                     const chVortex = document.getElementById(`vortex-${index}`);
                     if (chVortex) chVortex.style.display = 'block';
                 });
+                
                 vDesc.innerText = "8. 收功：彩虹能量結界";
+                vDesc.style.color = "#d4af37"; 
                 loops++;
-                if (loops > 4) clearInterval(rotateInterval); // 收功持續一段時間後停止
+                if (loops > 4) clearInterval(rotateInterval); 
             }
             
         }, 1500);
@@ -735,7 +768,6 @@ function renderAcuMap() {
     
     drawAcuPoints(data.points);
     
-    // 組合白話文找穴指南
     let detailsHtml = '';
     data.points.forEach(pName => {
         let desc = pointDetails[pName] || `【${pName}】請參考中醫相關經絡圖。`;
@@ -776,15 +808,12 @@ function drawAcuPoints(pointsList) {
         const coord = acuCoords[pName];
         if (coord && coord.view === currentAcuView) {
             
-            // 判斷是否為身體正中線的穴位 (x=50)
             if (coord.x === 50) {
-                // 正中線穴位：文字在正上方置中
                 group.innerHTML += `
                     <circle class="acu-point-dot" cx="50" cy="${coord.y}" r="2.5" />
                     <text class="acu-label" x="50" y="${coord.y - 5}" text-anchor="middle">${pName}</text>
                 `;
             } else {
-                // 雙側對稱穴位：文字向兩側推開，避免重疊
                 let leftX = coord.x;
                 let rightX = 100 - coord.x;
                 
