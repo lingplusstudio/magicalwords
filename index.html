@@ -882,11 +882,11 @@ function drawAcuPoints(pointsList) {
     });
 }
 
-// 📖 第五分頁：統一經文資料庫
+// 📖 第五分頁：經文圖片資料庫 (直接對應檔名)
 const sutraConfig = {
-    "heart": { name: "般若波羅蜜多心經", folder: "心經", pages: 2 },
-    "diamond": { name: "金剛般若波羅蜜經", folder: "金剛經", pages: 26 },
-    "medicine": { name: "藥師琉璃光如來本願功德經", folder: "藥師經", pages: 40 }
+    "heart": { name: "般若波羅蜜多心經", prefix: "心經", pages: 2 },
+    "diamond": { name: "金剛般若波羅蜜經", prefix: "金剛經", pages: 26 },
+    "medicine": { name: "藥師琉璃光如來本願功德經", prefix: "藥師經", pages: 40 }
 };
 
 function renderSutra() {
@@ -896,12 +896,18 @@ function renderSutra() {
 
     if (!sutraKey) return;
 
+    // 加入讀誦小提示
+    container.innerHTML = `
+        <div style="text-align: center; color: #8e44ad; font-size: 0.95rem; margin-bottom: 20px; padding: 10px; background: #fff; border-radius: 8px;">
+            讀誦前：請先念「淨口業、淨身業、淨意業真言」各三遍。<br>
+            讀誦後：請默誦「迴向偈」，願功德圓滿。
+        </div>`;
+
     const book = sutraConfig[sutraKey];
-    // 統一邏輯：不管哪一本，都自動產生從 01 到 指定頁數 的圖片
     for (let i = 1; i <= book.pages; i++) {
-        let num = i.toString().padStart(2, '0');
-        // 注意：這裡假設圖片格式是 .jpg，若妳的檔名沒有 .jpg 副檔名，請刪除下方的 .jpg
-        container.innerHTML += `<img src="${book.folder}/${num}.jpg" alt="${book.name} ${num}">`;
+        let num = i.toString().padStart(2, '0'); // 自動產生 01, 02...
+        // 假設妳的檔案格式是 .jpg，若妳上傳的是 .png 請修改下方副檔名
+        container.innerHTML += `<img src="${book.prefix}${num}.jpg" alt="${book.name} ${num}">`;
     }
 }
 
