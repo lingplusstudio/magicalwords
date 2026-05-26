@@ -213,9 +213,10 @@
             .qi-instruction-box { font-size: 1.05rem; padding: 15px; }
             .result-text { font-size: 1.1rem; }
         }
-        /* 經文讀誦閣排版 */
+       /* 經文讀誦區樣式 */
 .sutra-paper { background-color: #fdf8e4; border: 1px solid #e0d6b8; padding: 20px; border-radius: 12px; height: 65vh; overflow-y: auto; text-align: center; }
 .sutra-paper img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.sutra-hint { text-align: center; color: #8e44ad; font-size: 0.95rem; margin-bottom: 20px; padding: 15px; background: #fff; border-radius: 8px; border: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -411,16 +412,18 @@
         <button class="clear-btn" onclick="clearAll()">重設</button>
         <div class="result-title">🎯 你的專屬幸福種子句：</div>
         <div class="result-text" id="output-text">請由上方選擇需求...</div>
-    </div>
-    <div id="sutra-tab" class="tab-content">
+   <div id="sutra-tab" class="tab-content">
     <h1>📖 靜心讀誦閣</h1>
     <select id="sutra-select" onchange="renderSutra()">
-        <option value="heart">般若波羅蜜多心經</option>
-        <option value="diamond">金剛般若波羅蜜經</option>
-        <option value="medicine">藥師琉璃光如來本願功德經</option>
+        <option value="">-- 請選擇經典 --</option>
+        <option value="心經">般若波羅蜜多心經</option>
+        <option value="金剛經">金剛般若波羅蜜經</option>
+        <option value="藥師經">藥師琉璃光如來本願功德經</option>
     </select>
-    <div id="sutra-paper" class="sutra-paper"></div>
-</div>
+    <div id="sutra-paper" class="sutra-paper">
+        <p style="text-align:center; margin-top:50px;">請選擇上方的經典開始讀誦。</p>
+    </div>
+
 </div>
 
 <script>
@@ -887,21 +890,30 @@ updateAcuToggleBtn();
 };
 
 function renderSutra() {
-    const sutraKey = document.getElementById('sutra-select').value;
+    const sutraName = document.getElementById('sutra-select').value;
     const container = document.getElementById('sutra-paper');
+    container.innerHTML = ''; 
+
+    if (!sutraName) return;
+
+    // 定義各經典的總頁數
+    const pagesConfig = { "心經": 2, "金剛經": 26, "藥師經": 40 };
+    const totalPages = pagesConfig[sutraName];
+
+    // 加入讀誦提示
     container.innerHTML = `
-        <div style="text-align: center; color: #8e44ad; font-size: 0.9rem; margin-bottom: 20px; padding: 10px; background: #fff; border-radius: 8px;">
+        <div class="sutra-hint">
             讀誦前：請先念「淨口業、淨身業、淨意業真言」各三遍。<br>
-            讀誦後：請默誦「迴向偈」，願功德圓滿。
+            讀誦後：請默誦「迴向偈: 願以此功德，莊嚴佛淨土；上報四重恩，下濟三途苦。若有見聞者，悉發菩提心；盡此一報身，同生極樂國。」，願功德圓滿。
         </div>`;
-    if (!sutraKey) return;
-    const book = sutraConfig[sutraKey];
-    for (let i = 1; i <= book.pages; i++) {
-        let num = i.toString().padStart(2, '0');
-        container.innerHTML += `<img src="${book.folder}/${num}.jpg" alt="${book.name} ${num}">`;
+
+    // 自動循環產生圖片標籤
+    for (let i = 1; i <= totalPages; i++) {
+        let num = i.toString().padStart(2, '0'); // 確保產生 01, 02...
+        // 這裡設定副檔名為 .jpg，若你的檔案是 .png，請改為 .png
+        container.innerHTML += `<img src="${sutraName}${num}.jpg" alt="${sutraName} ${num}">`;
     }
 }
-// 記得在 initAll() 函數裡面呼叫 renderSutra();
 </script>
 </body>
 </html>
