@@ -298,7 +298,12 @@
             </div>
         </div>
     </div>
-
+ <div class="result-box">
+        <button class="copy-btn" id="main-copy-btn" onclick="copySentence()">複製句子</button>
+        <button class="clear-btn" onclick="clearAll()">重設</button>
+        <div class="result-title">🎯 你的專屬幸福種子句：</div>
+        <div class="result-text" id="output-text">請由上方選擇需求...</div>
+    
     <div id="qi-tab" class="tab-content">
         <h1 class="qi-h1">🌀 氣功修練專區 </h1>
         <div class="subtitle">【任督二脈開關竅大圓滿】整合肚臍採氣、天地樁與任督脈十穴道旋轉</div>
@@ -424,21 +429,43 @@
         </div>
     </div>
 
-    <div id="ear-tab" class="tab-content">
-        <h1>👂 耳穴標準定位圖</h1>
-        <div class="sutra-paper" style="display: block;">
-            <img src="ear_front.jpg" alt="正面" style="width: 100%; max-width: 600px;">
-            <img src="ear_back.jpg" alt="背面" style="width: 100%; max-width: 600px;">
-        </div>
+   <div id="ear-tab" class="tab-content">
+    <h1>👂 耳穴對症智慧查詢</h1>
+    <div class="qi-controls">
+        <select id="ear-cat-select" onchange="updateEarSymptoms()">
+            <option value="">-- 請選擇病症類別 --</option>
+        </select>
+        <select id="ear-sym-select" onchange="renderEarResult()">
+            <option value="">-- 請先選擇類別 --</option>
+        </select>
+        <div id="ear-result-panel" class="acu-point-detail" style="display:none; background:#fff5f5; border:1px solid var(--acu);"></div>
     </div>
+    <div class="sutra-paper" style="display: block; margin-top:20px;">
+        <img src="ear_front.jpg" alt="正面" style="width: 100%; max-width: 600px;">
+        <img src="ear_back.jpg" alt="背面" style="width: 100%; max-width: 600px;">
+    </div>
+</div>
     
- <div class="result-box">
-        <button class="copy-btn" id="main-copy-btn" onclick="copySentence()">複製句子</button>
-        <button class="clear-btn" onclick="clearAll()">重設</button>
-        <div class="result-title">🎯 你的專屬幸福種子句：</div>
-        <div class="result-text" id="output-text">請由上方選擇需求...</div>
+
      
 <script>
+    const earSymptomData = {
+    "消化系統": {
+        "消化不良": { main: "腸、胰膽、脾、胃、內分泌", note: "建議搭配三焦穴" },
+        "便秘": { main: "大腸、角窩中、皮質下、直腸", note: "按摩時需輕柔" },
+        "腹瀉": { main: "大腸、小腸、交感、內分泌", note: "注意腹部保暖" }
+    },
+    "神經精神類": {
+        "失眠": { main: "神門、腎、心、枕、胃", note: "建議配合耳尖放血效果更佳" },
+        "偏頭痛": { main: "枕、神門、腎、皮質下、肝", note: "需確認頭痛具體區域" },
+        "焦慮恐慌": { main: "神門、心、枕、腦幹", note: "深呼吸配合按壓" }
+    },
+    "五官呼吸類": {
+        "感冒": { main: "內鼻、外鼻、肺、腎上腺、神門", note: "注意多喝水" },
+        "過敏性鼻炎": { main: "內鼻、腎上腺、額、內分泌、肺", note: "避免過敏原" },
+        "耳鳴": { main: "腎、枕、內耳、外耳、交感", note: "避免大聲環境" }
+    }
+};
 const medicineData = {
     "頭面類": { "偏頭痛": ["川芎", "白朮", "生地黃"], "頭暈": ["當歸", "炙甘草", "澤瀉"], "眼皮浮腫": ["葶藶子", "蓮子", "阿膠"], "黑眼圈": ["當歸尾", "桑葉", "茯苓"], "養眼": ["蔓荊子", "枳殼", "熟地黃"], "老花眼／近遠視": ["木賊草", "燕窩", "荷葉"], "眼壓高": ["澤瀉", "桔梗", "覆盆子"], "耳鳴": ["磁石", "升麻", "白芍"], "對空間磁場敏感的耳鳴": ["代赭石", "蔓荊子", "五味子"], "耳聾／聽力不佳": ["麝香", "飴糖", "紫石英"], "鼻塞／鼻過敏／鼻炎": ["辛夷", "白扁豆", "五味子"], "流鼻血": ["天門冬", "桔梗", "茯苓"], "打呼與呼吸中止": ["紅景天", "半枝蓮", "山藥"], "牙痛／牙周病": ["板藍根", "虎杖", "升麻"], "嘴破／喉中腫潰": ["冰片", "意仁", "花生木"], "喉中如梗鼠／梅核氣": ["白殭蠶", "桔梗", "遠志"], "三叉神經痛": ["灶心土", "全蠍", "白芷"], "美容": ["珍珠粉", "桂枝", "女貞子"], "痘痘": ["金銀花", "木香", "菟絲子"], "白頭髮": ["當歸", "透草", "熟地"], "女性更年期掉髮": ["女貞子", "浮小麥", "薑炙"], "女性年輕掉髮": ["肉桂", "當歸", "大棗"], "男性掉髮": ["陽起石", "石膏", "粳米"], "甲狀腺亢進": ["白殭蠶", "竹茹", "熟地黃"] },
     "情緒意志類": { "失眠": ["浮小麥", "砂仁", "五味子"], "懶散／拖延症": ["麻黃", "黃精", "車前子"], "消除緊張": ["甘菊", "砂仁", "五味子"], "解怒氣": ["桃仁", "杏仁", "牡蠣"], "心情不好": ["玫瑰花", "竹瀝", "酸棗仁"], "記憶力": ["柏子仁", "紫蘇葉", "益母草"], "疲勞／注意力不集中": ["薄荷", "厚樸", "肉桂"], "嗜睡": ["薄荷", "生薑", "紫石英"], "強迫症": ["胡桃", "白扁豆", "犀牛角"], "憂鬱症": ["浮小麥", "鬱金", "益智仁"], "自卑": ["茶樹", "檜木", "羅馬洋甘菊"], "焦慮恐慌": ["石決明", "紫蘇葉", "地龍"] },
@@ -466,13 +493,21 @@ function initAll() {
     
     const catSelect = document.getElementById('category-select');
     const acuCatSelect = document.getElementById('acu-category-select');
+    // 【新增這一行】取得耳穴類別選單
+    const earCatSelect = document.getElementById('ear-cat-select'); 
+
     catSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
     acuCatSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
+    // 【新增這一行】初始化耳穴選單
+    earCatSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>'; 
     
     for (let cat in medicineData) {
         catSelect.options.add(new Option(cat, cat));
         acuCatSelect.options.add(new Option(cat, cat));
     }
+    
+    // 【新增這一行】將耳穴資料填入選單
+    initEarSelect(); 
 }
 
 function renderGroup(containerId, data, isRadio) {
