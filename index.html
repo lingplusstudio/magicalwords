@@ -57,6 +57,8 @@
         .tab-btn.buddha-tab.active { background: var(--buddha); border-color: var(--buddha); color: white; }
         .tab-btn.qi-tab.active { background: var(--qi); border-color: var(--qi); color: white; }
         .tab-btn.acu-tab.active { background: var(--acu); border-color: var(--acu); color: white; }
+        .tab-btn.ear-tab.active { background: #e67e22; border-color: #e67e22; color: white; }        
+        
         
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -228,6 +230,7 @@
         <button class="tab-btn qi-tab" onclick="switchTab(event, 'qi-tab')">🌀 氣功修練專區</button>
         <button class="tab-btn acu-tab" onclick="switchTab(event, 'acu-tab')">📍 中醫對症穴位</button>
         <button class="tab-btn sutra-tab" onclick="switchTab(event, 'sutra-tab')">📖 靜心讀誦</button>
+        <button class="tab-btn ear-tab" onclick="switchTab(event, 'ear-tab')">👂 耳穴圖鑑</button>
     </div>
 
     <div id="seed-tab" class="tab-content active">
@@ -415,7 +418,7 @@
    <div id="sutra-tab" class="tab-content">
     <h1>📖 靜心讀誦閣</h1>
     <select id="sutra-select" onchange="renderSutra()">
-        <option value="">-- 請選擇經典 --</option>
+        <option value="">-- 請選擇經典或對照圖 --</option>
         <option value="心經">般若波羅蜜多心經</option>
         <option value="金剛經">金剛般若波羅蜜經</option>
         <option value="藥師經">藥師琉璃光如來本願功德經</option>
@@ -423,7 +426,16 @@
     <div id="sutra-paper" class="sutra-paper">
         <p style="text-align:center; margin-top:50px;">請選擇上方的經典開始讀誦。</p>
     </div>
-
+<div id="ear-tab" class="tab-content">
+    <h1>👂 耳穴標準定位圖</h1>
+    <div class="subtitle">將手機橫放或點擊放大，對照耳穴位置</div>
+    <div class="sutra-paper">
+        <h3 style="color:var(--acu);">耳穴正面圖</h3>
+        <img src="ear_front.jpg" alt="耳穴正面圖">
+        <hr style="margin: 20px 0;">
+        <h3 style="color:var(--acu);">耳穴背面圖</h3>
+        <img src="ear_back.jpg" alt="耳穴背面圖">
+    </div>
 </div>
 
 <script>
