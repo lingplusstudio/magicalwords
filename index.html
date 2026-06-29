@@ -410,35 +410,34 @@
         </div>
     </div>
 
-    <div class="result-box">
+   
+  </div> <div id="sutra-tab" class="tab-content">
+        <h1>📖 靜心讀誦閣</h1>
+        <select id="sutra-select" onchange="renderSutra()">
+            <option value="">-- 請選擇經典 --</option>
+            <option value="心經">般若波羅蜜多心經</option>
+            <option value="金剛經">金剛般若波羅蜜經</option>
+            <option value="藥師經">藥師琉璃光如來本願功德經</option>
+        </select>
+        <div id="sutra-paper" class="sutra-paper">
+            <p style="text-align:center; margin-top:50px;">請選擇上方的經典開始讀誦。</p>
+        </div>
+    </div>
+
+    <div id="ear-tab" class="tab-content">
+        <h1>👂 耳穴標準定位圖</h1>
+        <div class="sutra-paper" style="display: block;">
+            <img src="ear_front.jpg" alt="正面" style="width: 100%; max-width: 600px;">
+            <img src="ear_back.jpg" alt="背面" style="width: 100%; max-width: 600px;">
+        </div>
+    </div>
+    
+ <div class="result-box">
         <button class="copy-btn" id="main-copy-btn" onclick="copySentence()">複製句子</button>
         <button class="clear-btn" onclick="clearAll()">重設</button>
         <div class="result-title">🎯 你的專屬幸福種子句：</div>
         <div class="result-text" id="output-text">請由上方選擇需求...</div>
-   <div id="sutra-tab" class="tab-content">
-    <h1>📖 靜心讀誦閣</h1>
-    <select id="sutra-select" onchange="renderSutra()">
-        <option value="">-- 請選擇經典或對照圖 --</option>
-        <option value="心經">般若波羅蜜多心經</option>
-        <option value="金剛經">金剛般若波羅蜜經</option>
-        <option value="藥師經">藥師琉璃光如來本願功德經</option>
-    </select>
-    <div id="sutra-paper" class="sutra-paper">
-        <p style="text-align:center; margin-top:50px;">請選擇上方的經典開始讀誦。</p>
-    </div>
-<div id="ear-tab" class="tab-content">
-    <h1>👂 耳穴標準定位圖</h1>
-    <div class="sutra-paper" style="display: block;">
-        <h3 style="color:var(--acu);">耳穴正面圖</h3>
-        <img src="ear_front.jpg" alt="正面" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;">
-        
-        <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ccc;">
-        
-        <h3 style="color:var(--acu);">耳穴背面圖</h3>
-        <img src="ear_back.jpg" alt="背面" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;">
-    </div>
-</div>
-
+     
 <script>
 const medicineData = {
     "頭面類": { "偏頭痛": ["川芎", "白朮", "生地黃"], "頭暈": ["當歸", "炙甘草", "澤瀉"], "眼皮浮腫": ["葶藶子", "蓮子", "阿膠"], "黑眼圈": ["當歸尾", "桑葉", "茯苓"], "養眼": ["蔓荊子", "枳殼", "熟地黃"], "老花眼／近遠視": ["木賊草", "燕窩", "荷葉"], "眼壓高": ["澤瀉", "桔梗", "覆盆子"], "耳鳴": ["磁石", "升麻", "白芍"], "對空間磁場敏感的耳鳴": ["代赭石", "蔓荊子", "五味子"], "耳聾／聽力不佳": ["麝香", "飴糖", "紫石英"], "鼻塞／鼻過敏／鼻炎": ["辛夷", "白扁豆", "五味子"], "流鼻血": ["天門冬", "桔梗", "茯苓"], "打呼與呼吸中止": ["紅景天", "半枝蓮", "山藥"], "牙痛／牙周病": ["板藍根", "虎杖", "升麻"], "嘴破／喉中腫潰": ["冰片", "意仁", "花生木"], "喉中如梗鼠／梅核氣": ["白殭蠶", "桔梗", "遠志"], "三叉神經痛": ["灶心土", "全蠍", "白芷"], "美容": ["珍珠粉", "桂枝", "女貞子"], "痘痘": ["金銀花", "木香", "菟絲子"], "白頭髮": ["當歸", "透草", "熟地"], "女性更年期掉髮": ["女貞子", "浮小麥", "薑炙"], "女性年輕掉髮": ["肉桂", "當歸", "大棗"], "男性掉髮": ["陽起石", "石膏", "粳米"], "甲狀腺亢進": ["白殭蠶", "竹茹", "熟地黃"] },
@@ -923,26 +922,27 @@ updateAcuToggleBtn();
 function renderSutra() {
     const sutraName = document.getElementById('sutra-select').value;
     const container = document.getElementById('sutra-paper');
-    container.innerHTML = ''; 
+    
+    // 檢查是否選了東西
+    if (!sutraName) {
+        container.innerHTML = '<p style="text-align:center;">請選擇經典。</p>';
+        return;
+    }
 
-    if (!sutraName) return;
-
-    // 定義各經典的總頁數
     const pagesConfig = { "心經": 2, "金剛經": 26, "藥師經": 40 };
     const totalPages = pagesConfig[sutraName];
 
-    // 加入讀誦提示
+    // 先清空再加入
     container.innerHTML = `
         <div class="sutra-hint">
             讀誦前：請先念「淨口業、淨身業、淨意業真言」各三遍。<br>
-            讀誦後：請默誦「迴向偈: 願以此功德，莊嚴佛淨土；上報四重恩，下濟三途苦。若有見聞者，悉發菩提心；盡此一報身，同生極樂國。」，願功德圓滿。
+            讀誦後：請默誦「迴向偈」，願功德圓滿。
         </div>`;
 
-    // 自動循環產生圖片標籤
     for (let i = 1; i <= totalPages; i++) {
-        let num = i.toString().padStart(2, '0'); // 確保產生 01, 02...
-        // 這裡設定副檔名為 .jpg，若你的檔案是 .png，請改為 .png
-        container.innerHTML += `<img src="${sutraName}${num}.jpg" alt="${sutraName} ${num}">`;
+        let num = i.toString().padStart(2, '0');
+        // 路徑直接寫：心經01.jpg, 金剛經01.jpg...
+        container.innerHTML += `<img src="${sutraName}${num}.jpg" alt="${sutraName} ${num}" style="width:100%; margin-bottom:10px;">`;
     }
 }
 </script>
