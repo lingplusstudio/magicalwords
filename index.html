@@ -493,21 +493,22 @@ function initAll() {
     
     const catSelect = document.getElementById('category-select');
     const acuCatSelect = document.getElementById('acu-category-select');
-    // 【新增這一行】取得耳穴類別選單
     const earCatSelect = document.getElementById('ear-cat-select'); 
 
     catSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
     acuCatSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
-    // 【新增這一行】初始化耳穴選單
     earCatSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>'; 
     
+    // 1. 加入藥師咒與穴道類別
     for (let cat in medicineData) {
         catSelect.options.add(new Option(cat, cat));
         acuCatSelect.options.add(new Option(cat, cat));
     }
     
-    // 【新增這一行】將耳穴資料填入選單
-    initEarSelect(); 
+    // 2. 加入耳穴類別 (這裡修正了)
+    for (let cat in earSymptomData) {
+        earCatSelect.options.add(new Option(cat, cat));
+    }
 }
 
 function renderGroup(containerId, data, isRadio) {
@@ -979,6 +980,43 @@ function renderSutra() {
         // 路徑直接寫：心經01.jpg, 金剛經01.jpg...
         container.innerHTML += `<img src="${sutraName}${num}.jpg" alt="${sutraName} ${num}" style="width:100%; margin-bottom:10px;">`;
     }
+}
+    function initEarSelect() {
+    const catSelect = document.getElementById('ear-cat-select');
+    if (!catSelect) return;
+    
+    catSelect.innerHTML = '<option value="">-- 請選擇病症類別 --</option>';
+    for (let cat in earSymptomData) {
+        catSelect.options.add(new Option(cat, cat));
+    }
+}
+
+function updateEarSymptoms() {
+    const cat = document.getElementById('ear-cat-select').value;
+    const symSelect = document.getElementById('ear-sym-select');
+    symSelect.innerHTML = '<option value="">-- 請選擇症狀 --</option>';
+    if (cat && earSymptomData[cat]) {
+        for (let sym in earSymptomData[cat]) {
+            symSelect.options.add(new Option(sym, sym));
+        }
+    }
+    document.getElementById('ear-result-panel').style.display = 'none';
+}
+
+function renderEarResult() {
+    const cat = document.getElementById('ear-cat-select').value;
+    const sym = document.getElementById('ear-sym-select').value;
+    const panel = document.getElementById('ear-result-panel');
+    
+    if (!cat || !sym) return;
+    
+    const data = earSymptomData[cat][sym];
+    panel.style.display = 'block';
+    panel.innerHTML = `
+        <strong style="color:var(--acu);">🎯 ${sym} 對應穴位：</strong><br>
+        主穴：${data.main}<br>
+        <small>💡 提示：${data.note}</small>
+    `;
 }
 </script>
 </body>
