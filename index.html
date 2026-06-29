@@ -497,17 +497,35 @@ function renderGroup(containerId, data, isRadio) {
 }
 
 function switchTab(evt, tabId) {
+    // 1. 切換分頁顯示
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
+    
+    const target = document.getElementById(tabId);
+    if (target) target.classList.add('active');
     evt.currentTarget.classList.add('active');
     
+    // 2. 動態調整按鈕顏色 (使用陣列對應表，更簡潔)
     const copyBtn = document.getElementById('main-copy-btn');
+    const colorMap = {
+        'buddha-tab': 'buddha-copy-btn',
+        'qi-tab': 'qi-copy-btn',
+        'acu-tab': 'acu-copy-btn'
+    };
+    
+    // 清除舊顏色
     copyBtn.classList.remove('buddha-copy-btn', 'qi-copy-btn', 'acu-copy-btn');
-    if (tabId === 'buddha-tab') copyBtn.classList.add('buddha-copy-btn');
-    else if (tabId === 'qi-tab') copyBtn.classList.add('qi-copy-btn');
-    else if (tabId === 'acu-tab') copyBtn.classList.add('acu-copy-btn');
-    clearAll();
+    
+    // 如果現在選的分頁有對應的顏色，就加上去
+    if (colorMap[tabId]) {
+        copyBtn.classList.add(colorMap[tabId]);
+    }
+
+    // 3. 只有在「幸福種子句」或「藥師」、「穴位」分頁時才執行 clearAll
+    // 這樣在經文和耳穴分頁時，就不會因為切換頁面而導致顯示內容被重置
+    if (tabId === 'seed-tab' || tabId === 'buddha-tab' || tabId === 'acu-tab' || tabId === 'qi-tab') {
+        clearAll();
+    }
 }
 
 function updateSymptoms() {
