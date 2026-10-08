@@ -57,7 +57,8 @@
         .tab-btn.buddha-tab.active { background: var(--buddha); border-color: var(--buddha); color: white; }
         .tab-btn.qi-tab.active { background: var(--qi); border-color: var(--qi); color: white; }
         .tab-btn.acu-tab.active { background: var(--acu); border-color: var(--acu); color: white; }
-        .tab-btn.ear-tab.active { background: #e67e22; border-color: #e67e22; color: white; }        
+        .tab-btn.ear-tab.active { background: #e67e22; border-color: #e67e22; color: white; }    
+        
         
         
         .tab-content { display: none; }
@@ -231,6 +232,7 @@
         <button class="tab-btn acu-tab" onclick="switchTab(event, 'acu-tab')">📍 中醫對症穴位</button>
         <button class="tab-btn sutra-tab" onclick="switchTab(event, 'sutra-tab')">📖 靜心讀誦</button>
         <button class="tab-btn ear-tab" onclick="switchTab(event, 'ear-tab')">👂 耳穴圖鑑</button>
+        <button class="tab-btn flower-tab" onclick="switchTab(event, 'flower-tab')">🌸 花精療癒紀錄</button>
     </div>
 
     <div id="seed-tab" class="tab-content active">
@@ -441,7 +443,8 @@
         <img src="ear_back.jpg" alt="背面" style="width: 100%; max-width: 600px;">
     </div>
 </div>
-    
+
+     <div id="flower-tab" class="tab-content"></div>
  <div class="result-box">
         <button class="copy-btn" id="main-copy-btn" onclick="copySentence()">複製句子</button>
         <button class="clear-btn" onclick="clearAll()">重設</button>
@@ -1183,5 +1186,6 @@ function renderEarResult() {
     `;
 }
 </script>
+<script type="module" src="flower.js"></script>
 </body>
 </html>
