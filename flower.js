@@ -109,6 +109,16 @@ const DETAIL = {
  'Wild Rose': [['消極認命，覺得「就這樣吧」','提不起勁、冷漠','放棄努力，但不一定悲傷'], [['Gorse','荊豆是絕望，野玫瑰是淡淡地認命'],['Hornbeam','鵝耳櫪是對日常提不起勁，但動起來就好']], '生命力不是消失，只是睡著了；找回一件有興趣的小事，就能慢慢喚醒。'],
  'Willow': [['怨天尤人，覺得命運不公','感到委屈、愛記恨','把原因歸咎他人或環境'], [['Holly','冬青是針對特定對象的嫉恨'],['Pine','松樹是責怪自己，楊柳是責怪外界']], '握有選擇權的人，就有改變的力量；放下受害者視角，人生重新回到自己手中。'],
 };
+// 巴赫醫師原典的 7 大情緒分類
+const EMOTIONS = [
+ ['恐懼', 'Fear', ['Rock Rose','Mimulus','Cherry Plum','Aspen','Red Chestnut']],
+ ['不確定', 'Uncertainty', ['Cerato','Scleranthus','Gentian','Gorse','Hornbeam','Wild Oat']],
+ ['對當下缺乏興趣', 'Insufficient interest in present circumstances', ['Clematis','Honeysuckle','Wild Rose','Olive','White Chestnut','Mustard','Chestnut Bud']],
+ ['孤獨', 'Loneliness', ['Water Violet','Impatiens','Heather']],
+ ['對外界影響過度敏感', 'Oversensitive to influences and ideas', ['Agrimony','Centaury','Walnut','Holly']],
+ ['沮喪與絕望', 'Despondency or despair', ['Larch','Pine','Elm','Sweet Chestnut','Star of Bethlehem','Willow','Oak','Crab Apple']],
+ ['過度關心他人', 'Over-care for the welfare of others', ['Chicory','Vervain','Vine','Beech','Rock Water']],
+];
 // ---END DATA---
 
 const byEn = Object.fromEntries(FLOWERS.map(f => [f[2], { n: f[0], zh: f[1], en: f[2], slug: f[3], key: f[4] }]));
@@ -170,6 +180,8 @@ style.textContent = `
 .fl-lg{display:inline-flex;align-items:center;gap:3px}
 .fl-lg i{width:10px;height:10px;border-radius:50%;display:inline-block}
 .fl-chip sup{font-size:.62em;opacity:.8;margin-left:2px}
+.fl-grp{flex-basis:100%;width:100%;grid-column:1/-1;font-weight:bold;font-size:.82rem;color:#c2185b;margin:8px 0 2px;border-bottom:1px dashed #f3c6dd}
+.fl-grp small{color:#999;font-weight:normal;margin-left:6px}
 .fl-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2d3436;color:#fff;padding:10px 20px;border-radius:8px;z-index:3000;font-size:.9rem}
 `;
 document.head.appendChild(style);
@@ -226,6 +238,7 @@ host.innerHTML = `
 
 <div id="fl-info" style="display:none">
   <input type="text" class="fl-search" id="fl-isearch" placeholder="🔍 搜尋花精（中文、英文或關鍵字）…">
+  <button type="button" class="fl-btn gray sm" id="fl-igroup" style="margin-bottom:12px">改依情緒分類</button>
   <div class="fl-grid" id="fl-flowers"></div>
   <p style="font-size:.8rem;color:#888;margin-top:14px;line-height:1.6">「展開」內的三段是依巴赫花精一般通則自行整理的簡述，並非 Sunny 文章的摘要；想看她的完整論述請點連結（著作權屬原作者）。花精為情緒調理輔助，不能取代醫療。</p>
 </div>`;
@@ -242,10 +255,11 @@ $('fl-tracks').innerHTML = `<tr><th>軌道</th><th>第一層：溝通花精<smal
   + TRACKS.map((t, i) => `<tr><td>軌道 ${i + 1}</td>${t.map(en => `<td>${cell(en)}</td>`).join('')}</tr>`).join('');
 $('fl-ext').innerHTML = EXTERNAL.map(en => `<span class="fl-tag">${zhOf(en)} ${en}</span>`).join('');
 
+let infoGroup = false;
 function renderInfo() {
   const q = $('fl-isearch').value.trim().toLowerCase();
   const text = f => { const d = DETAIL[f[2]]; return (f[1] + f[2] + f[4] + d[0].join('') + d[1].map(x => x[1]).join('') + d[2]).toLowerCase(); };
-  $('fl-flowers').innerHTML = FLOWERS.filter(f => !q || text(f).includes(q)).map(f => {
+  const card = f => {
     const tr = trackOf[f[2]], badge = tr ? `軌道 ${tr.join('、')}` : '外在花精', d = DETAIL[f[2]], nm = short(f[1]);
     return `<div class="fl-card"><b>${String(f[0]).padStart(2, '0')} ${f[1]}</b><span class="en">${f[2]}</span>
       <p>${f[4]}</p><span class="fl-tag">${badge}</span>
@@ -255,8 +269,13 @@ function renderInfo() {
         <div class="fl-sec"><b>來自${nm}的人生智慧</b><p>${d[2]}</p></div>
       </details>
       <a href="https://store.sunshineinbottles.com/pages/sunny-on-${f[3]}" target="_blank" rel="noopener">看 Sunny 完整文章 →</a></div>`;
-  }).join('') || '<p style="color:#888">找不到符合的花精</p>';
+  };
+  const list = FLOWERS.filter(f => !q || text(f).includes(q));
+  $('fl-flowers').innerHTML = (infoGroup
+    ? EMOTIONS.map(([zh, en, names]) => { const c = list.filter(f => names.includes(f[2])); return c.length ? `<div class="fl-grp">${zh}<small>${en}</small></div>${c.map(card).join('')}` : ''; }).join('')
+    : list.map(card).join('')) || '<p style="color:#888">找不到符合的花精</p>';
 }
+$('fl-igroup').onclick = () => { infoGroup = !infoGroup; $('fl-igroup').textContent = infoGroup ? '改依編號排列' : '改依情緒分類'; renderInfo(); };
 $('fl-isearch').oninput = renderInfo;
 renderInfo();
 
@@ -292,18 +311,27 @@ function renderPicked() {
 function renderChips() {
   const q = $('fl-fsearch').value.trim().toLowerCase();
   const fl = en => ({ en, zh: short(byEn[en].zh), n: byEn[en].n });
-  const base = chipSort === 'track'
-    ? [...trackOrder, ...FLOWERS.map(f => f[2]).filter(en => !trackOf[en])].map(fl)
-    : FLOWERS.map(f => fl(f[2]));
-  const items = [...base, { en: 'Rescue', zh: '急救花精', n: 0 }];
-  $('fl-chips').innerHTML = items.filter(i => !q || i.zh.includes(q) || i.en.toLowerCase().includes(q)).map(i => {
+  const hit = i => !q || i.zh.includes(q) || i.en.toLowerCase().includes(q);
+  const rescue = { en: 'Rescue', zh: '急救花精', n: 0 };
+  const chip = i => {
     const on = picked.has(i.en), tr = trackOf[i.en];
     return `<button type="button" class="fl-chip${on ? ' on' : ''}" style="${chipStyle(i.en, on)}" data-en="${i.en}" title="${i.en}${tr ? '（軌道 ' + tr.join('、') + '）' : ''}">${i.n ? String(i.n).padStart(2, '0') + ' ' : ''}${i.zh}${tr ? `<sup>${tr.join('·')}</sup>` : ''}</button>`;
-  }).join('');
+  };
+  let html;
+  if (chipSort === 'emotion') {
+    html = EMOTIONS.map(([zh, en, list]) => { const c = list.map(fl).filter(hit); return c.length ? `<div class="fl-grp">${zh}<small>${en}</small></div>${c.map(chip).join('')}` : ''; }).join('');
+    if (hit(rescue)) html += `<div class="fl-grp">急救</div>${chip(rescue)}`;
+  } else {
+    const base = chipSort === 'track' ? [...trackOrder, ...FLOWERS.map(f => f[2]).filter(en => !trackOf[en])].map(fl) : FLOWERS.map(f => fl(f[2]));
+    html = [...base, rescue].filter(hit).map(chip).join('');
+  }
+  $('fl-chips').innerHTML = html;
   renderPicked();
 }
 $('fl-legend').innerHTML = TRACKS.map((_, i) => `<span class="fl-lg"><i style="background:${tcol(i)}"></i>${i + 1}</span>`).join('') + '<span class="fl-lg"><i style="background:#636e72"></i>外在</span>';
-$('fl-sort').onclick = () => { chipSort = chipSort === 'num' ? 'track' : 'num'; $('fl-sort').textContent = chipSort === 'num' ? '改依軌道排列' : '改依編號排列'; renderChips(); };
+const SORT_NEXT = { num: ['track', '改依軌道排列'], track: ['emotion', '改依情緒分類'], emotion: ['num', '改依編號排列'] };
+$('fl-sort').onclick = () => { const [next, label] = SORT_NEXT[chipSort]; chipSort = next; $('fl-sort').textContent = SORT_NEXT[next][1]; renderChips(); };
+$('fl-sort').textContent = SORT_NEXT[chipSort][1];
 $('fl-chips').onclick = e => {
   const c = e.target.closest('.fl-chip'); if (!c) return;
   const en = c.dataset.en; picked.has(en) ? picked.delete(en) : picked.add(en);
