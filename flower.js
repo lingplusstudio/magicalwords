@@ -166,6 +166,10 @@ style.textContent = `
 .fl-sec{margin-top:10px;font-size:.88rem;line-height:1.6}
 .fl-sec ul{margin:4px 0 0 18px;padding:0}
 .fl-sec p{margin:4px 0 0}
+.fl-legend{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.78rem;color:#666;margin:6px 0}
+.fl-lg{display:inline-flex;align-items:center;gap:3px}
+.fl-lg i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.fl-chip sup{font-size:.62em;opacity:.8;margin-left:2px}
 .fl-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2d3436;color:#fff;padding:10px 20px;border-radius:8px;z-index:3000;font-size:.9rem}
 `;
 document.head.appendChild(style);
@@ -192,6 +196,7 @@ host.innerHTML = `
       <datalist id="fl-persons"></datalist>
       <div class="fl-label">使用的花精（點選，可多選）</div>
       <input type="text" class="fl-search" id="fl-fsearch" placeholder="搜尋花精（中文或英文）…">
+      <div class="fl-legend"><span id="fl-legend" class="fl-legend" style="margin:0"></span><button type="button" class="fl-btn gray sm" id="fl-sort" style="margin:0">改依軌道排列</button></div>
       <div class="fl-chips" id="fl-chips"></div>
       <div id="fl-picked" style="margin-top:8px"></div>
       <div class="fl-warn" id="fl-warn" style="display:none"></div>
@@ -256,6 +261,21 @@ $('fl-isearch').oninput = renderInfo;
 renderInfo();
 
 /* ── 療癒紀錄 ── */
+/* ── 軌道配色：同一軌道同色；跨兩軌的花精用兩色拼接；外在花精為灰 ── */
+const tcol = i => `hsl(${i * 30},62%,42%)`, ttint = i => `hsl(${i * 30},75%,93%)`;
+function chipStyle(en, on) {
+  const tr = trackOf[en];
+  if (!tr) return on ? 'background:#636e72;border-color:#636e72;color:#fff' : '';
+  const [a, b = a] = tr.map(n => n - 1);
+  const bg = on ? (a === b ? tcol(a) : `linear-gradient(90deg,${tcol(a)} 50%,${tcol(b)} 50%)`)
+                : (a === b ? ttint(a) : `linear-gradient(90deg,${ttint(a)} 50%,${ttint(b)} 50%)`);
+  return `background:${bg};border:2px solid transparent;border-color:${tcol(a)} ${tcol(b)} ${tcol(b)} ${tcol(a)};color:${on ? '#fff' : '#333'}`;
+}
+const trackOrder = [];
+TRACKS.forEach(t => t.forEach(en => { if (!trackOrder.includes(en)) trackOrder.push(en); }));
+let chipSort = 'num';
+
+
 let user = null, unsub = null, records = [], picked = new Set(), editingId = null;
 const nowLocal = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
 const fmt = s => (s || '').replace('T', ' ').replace(/-/g, '/');
@@ -264,18 +284,26 @@ function toast(m) { const t = document.createElement('div'); t.className = 'fl-t
 function trackWarnings() { return TRACKS.map((t, i) => ({ t, i })).filter(({ t }) => t.every(en => picked.has(en))); }
 
 function renderPicked() {
-  $('fl-picked').innerHTML = picked.size ? '已選：' + [...picked].map(en => `<span class="fl-tag">${zhOf(en)}</span>`).join('') : '<small style="color:#888">尚未選擇花精</small>';
+  $('fl-picked').innerHTML = picked.size ? '已選：' + [...picked].map(en => `<span class="fl-tag" style="${chipStyle(en, true)}">${zhOf(en)}</span>`).join('') : '<small style="color:#888">尚未選擇花精</small>';
   const w = trackWarnings(), box = $('fl-warn');
   box.style.display = w.length ? 'block' : 'none';
   box.innerHTML = w.map(({ t, i }) => `⚠️ 軌道 ${i + 1}（${t.map(zhOf).join('、')}）三種都被選了。書中建議不要一次使用同一軌道的三種花精，請拿掉其中一種。`).join('<br>');
 }
 function renderChips() {
   const q = $('fl-fsearch').value.trim().toLowerCase();
-  const items = [...FLOWERS.map(f => ({ en: f[2], zh: short(f[1]), n: f[0] })), { en: 'Rescue', zh: '急救花精', n: 0 }];
-  $('fl-chips').innerHTML = items.filter(i => !q || i.zh.includes(q) || i.en.toLowerCase().includes(q))
-    .map(i => `<button type="button" class="fl-chip${picked.has(i.en) ? ' on' : ''}" data-en="${i.en}" title="${i.en}">${i.n ? String(i.n).padStart(2, '0') + ' ' : ''}${i.zh}</button>`).join('');
+  const fl = en => ({ en, zh: short(byEn[en].zh), n: byEn[en].n });
+  const base = chipSort === 'track'
+    ? [...trackOrder, ...FLOWERS.map(f => f[2]).filter(en => !trackOf[en])].map(fl)
+    : FLOWERS.map(f => fl(f[2]));
+  const items = [...base, { en: 'Rescue', zh: '急救花精', n: 0 }];
+  $('fl-chips').innerHTML = items.filter(i => !q || i.zh.includes(q) || i.en.toLowerCase().includes(q)).map(i => {
+    const on = picked.has(i.en), tr = trackOf[i.en];
+    return `<button type="button" class="fl-chip${on ? ' on' : ''}" style="${chipStyle(i.en, on)}" data-en="${i.en}" title="${i.en}${tr ? '（軌道 ' + tr.join('、') + '）' : ''}">${i.n ? String(i.n).padStart(2, '0') + ' ' : ''}${i.zh}${tr ? `<sup>${tr.join('·')}</sup>` : ''}</button>`;
+  }).join('');
   renderPicked();
 }
+$('fl-legend').innerHTML = TRACKS.map((_, i) => `<span class="fl-lg"><i style="background:${tcol(i)}"></i>${i + 1}</span>`).join('') + '<span class="fl-lg"><i style="background:#636e72"></i>外在</span>';
+$('fl-sort').onclick = () => { chipSort = chipSort === 'num' ? 'track' : 'num'; $('fl-sort').textContent = chipSort === 'num' ? '改依軌道排列' : '改依編號排列'; renderChips(); };
 $('fl-chips').onclick = e => {
   const c = e.target.closest('.fl-chip'); if (!c) return;
   const en = c.dataset.en; picked.has(en) ? picked.delete(en) : picked.add(en);
@@ -289,7 +317,7 @@ function renderList() {
   const rows = records.filter(r => !q || (r.person + (r.flowers || []).map(f => zhOf(f) + f).join('') + r.feedback + r.method + (r.methodNote || '')).toLowerCase().includes(q));
   $('fl-list').innerHTML = rows.map(r => `
     <div class="fl-rec"><div class="fl-rec-head"><b>👤 ${esc(r.person)}</b><small>🕒 ${esc(fmt(r.usedAt))}</small></div>
-      <div>${(r.flowers || []).map(f => `<span class="fl-tag">${esc(zhOf(f))}</span>`).join('')}</div>
+      <div>${(r.flowers || []).map(f => `<span class="fl-tag" style="${chipStyle(f, true)}">${esc(zhOf(f))}</span>`).join('')}</div>
       <div style="margin:6px 0;font-size:.9rem">💧 ${esc(r.method)}${r.methodNote ? '：' + esc(r.methodNote) : ''}</div>
       ${r.feedback ? `<div style="white-space:pre-wrap;font-size:.92rem;line-height:1.6">💬 ${esc(r.feedback)}</div>` : ''}
       <div style="margin-top:8px"><button class="fl-btn sm" data-edit="${r.id}">編輯</button><button class="fl-btn gray sm" data-del="${r.id}">刪除</button></div></div>`).join('')
