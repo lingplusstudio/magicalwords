@@ -51,7 +51,7 @@ const FLOWERS = [
   [31,'馬鞭草','Vervain','sweet-vervain','過度熱忱、愛說服、神經緊繃'],
   [32,'葡萄','Vine','vine','強勢支配，要人聽從'],
   [33,'胡桃','Walnut','walnut','轉換期、面對改變時需要保護'],
-  [34,'水堇','Water Violet','water-violet','孤傲疏離，獨來獨往'],
+  [34,'水菫','Water Violet','water-violet','孤傲疏離，獨來獨往'],
   [35,'白栗','White Chestnut','white-chestnut','腦中念頭停不下來'],
   [36,'野燕麥','Wild Oat','wild-oat','不知道人生方向'],
   [37,'野玫瑰','Wild Rose','wild-rose','消極認命，提不起勁'],
@@ -60,28 +60,24 @@ const FLOWERS = [
 
 // 12 條花精軌道（柯磊墨正統體系：溝通 → 代償 → 失調）
 const TRACKS = [
-  ['Centaury', 'Holly', 'Pine'],               // 軌道 1：矢車菊 → 冬青 → 松樹
-  ['Cerato', 'Vine', 'Wild Oat'],              // 軌道 2：水蕨 → 葡萄 → 野燕麥
-  ['Scleranthus', 'Rock Water', 'Crab Apple'], // 軌道 3：線球草 → 岩水 → 海棠
-  ['Gentian', 'Gorse', 'Willow'],              // 軌道 4：龍膽 → 荊豆 → 楊柳
-  ['Water Violet', 'Heather', 'Sweet Chestnut'], // 軌道 5：水菫 → 石楠 → 甜栗
-  ['Vervain', 'Vine', 'Wild Rose'],            // 軌道 6：馬鞭草 → 葡萄 → 野玫瑰
-  ['Agrimony', 'Vervain', 'White Chestnut'],   // 軌道 7：龍芽草 → 馬鞭草 → 白栗
-  ['Rock Rose', 'Cherry Plum', 'Aspen'],       // 軌道 8：岩薔薇 → 櫻桃李 → 白楊
-  ['Impatiens', 'Oak', 'Olive'],               // 軌道 9：鳳仙花 → 橡樹 → 橄欖
-  ['Chicory', 'Red Chestnut', 'Heather'],      // 軌道 10：菊苣 → 紅栗 → 石楠
-  ['Mimulus', 'Heather', 'Mustard'],           // 軌道 11：溝酸漿 → 石楠 → 芥末
-  ['Clematis', 'Chestnut Bud', 'Hornbeam'],    // 軌道 12：鐵線蓮 → 栗苞 → 鵝耳櫪
+  ['Centaury', 'Holly', 'Pine'],
+  ['Cerato', 'Vine', 'Wild Oat'],
+  ['Scleranthus', 'Rock Water', 'Crab Apple'],
+  ['Gentian', 'Gorse', 'Willow'],
+  ['Water Violet', 'Heather', 'Sweet Chestnut'],
+  ['Vervain', 'Vine', 'Wild Rose'],
+  ['Agrimony', 'Vervain', 'White Chestnut'],
+  ['Rock Rose', 'Cherry Plum', 'Aspen'],
+  ['Impatiens', 'Oak', 'Olive'],
+  ['Chicory', 'Red Chestnut', 'Heather'],
+  ['Mimulus', 'Heather', 'Mustard'],
+  ['Clematis', 'Chestnut Bud', 'Hornbeam'],
 ];
 
 const ROLES = ['溝通', '代償', '失調'];
-
-// 不在 12 軌道內者：5種外在花精 + 1種基礎花精(Larch)
 const EXTERNAL = ['Star of Bethlehem', 'Elm', 'Walnut', 'Gorse', 'Aspen', 'Larch'];
-
 const METHODS = ['舌下直接滴（原液）', '水杯稀釋飲用', '調配瓶', '噴霧（氣場／空間）', '外用（塗抹／敷布）', '其他'];
 
-// 以下三段為依巴赫花精一般通則自行整理的簡述（非 Sunny 文章摘要）
 const DETAIL = {
   'Agrimony': [['外表開朗愛說笑，內心其實焦慮不安','總說「沒事」，報喜不報憂','靠忙碌、飲酒、購物等方式轉移注意力'], [['Centaury','同樣怕衝突，但矢車菊是為了討好人，龍芽草是為了掩飾痛苦'],['White Chestnut','白栗是念頭停不下來，龍芽草是用行動躲開']], '示弱不是失敗，願意說「我現在不太好」，才開始真正被接住。'],
   'Aspen': [['說不出原因的害怕與不安','夜裡、睡前特別明顯','覺得有事要發生，卻講不出是什麼'], [['Mimulus','溝酸漿怕的東西很具體，白楊說不出來'],['Rock Rose','岩薔薇是當下的驚恐，白楊是持續的隱約不安']], '不安不一定有對象；先承認它存在，再慢慢分辨哪些是真的、哪些只是影子。'],
@@ -123,7 +119,6 @@ const DETAIL = {
   'Willow': [['怨天尤人，覺得命運不公','感到委屈、愛記恨','把原因歸咎他人或環境'], [['Holly','冬青是針對特定對象的嫉恨'],['Pine','松樹是責怪自己，楊柳是責怪外界']], '握有選擇權的人，就有改變的力量；放下受害者視角，人生重新回到自己手中。'],
 };
 
-// 巴赫醫師原典的 7 大情緒分類
 const EMOTIONS = [
   ['恐懼', 'Fear', ['Rock Rose','Mimulus','Cherry Plum','Aspen','Red Chestnut']],
   ['不確定', 'Uncertainty', ['Cerato','Scleranthus','Gentian','Gorse','Hornbeam','Wild Oat']],
@@ -192,7 +187,7 @@ style.textContent = `
 .fl-grp small{color:#999;font-weight:normal;margin-left:6px}
 .fl-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2d3436;color:#fff;padding:10px 20px;border-radius:8px;z-index:3000;font-size:.9rem}
 
-/* 附錄四 評估表樣式 */
+/* 附錄四 評估表專用樣式 */
 .fl-eval-tbl{width:100%;border-collapse:collapse;font-size:0.92rem;background:#fff;text-align:center;margin-top:8px}
 .fl-eval-tbl th,.fl-eval-tbl td{border:1.5px solid #4b6584;padding:8px 4px}
 .fl-eval-tbl th{background:#576574;color:#fff;font-weight:bold}
@@ -286,9 +281,17 @@ host.innerHTML = `
     <div class="fl-label">外用</div>
     <input type="text" id="ev-topical" placeholder="外用乳霜配方、塗抹反射區或穴位...">
     <div style="margin-top:14px">
-      <button type="button" class="fl-btn" id="ev-print">🖨️ 列印 / 匯出 PDF</button>
+      <button type="button" class="fl-btn" id="ev-save">💾 儲存評估表</button>
+      <button type="button" class="fl-btn" id="ev-print" style="background:#0984e3">🖨️ 列印 / 匯出 PDF</button>
       <button type="button" class="fl-btn gray" id="ev-clear">清空重填</button>
     </div>
+  </div>
+
+  <!-- 歷史評估表存檔列表 -->
+  <div class="fl-box">
+    <div class="fl-label" style="margin-top:0">📑 歷史評估紀錄存檔</div>
+    <input type="text" class="fl-search" id="ev-search" placeholder="🔍 搜尋姓名、處方、花精或備註…">
+    <div id="ev-history-list"></div>
   </div>
 </div>`;
 
@@ -328,7 +331,7 @@ $('fl-igroup').onclick = () => { infoGroup = !infoGroup; $('fl-igroup').textCont
 $('fl-isearch').oninput = renderInfo;
 renderInfo();
 
-/* ── 附錄四 評估表邏輯 ── */
+/* ── 附錄四 評估表邏輯（支援雲端存檔、讀取回填、刪除）── */
 const EVAL_DATA = {
   ext: ['伯利恆之星', '白楊', '榆樹', '金雀花', '胡桃'],
   block1: [
@@ -344,27 +347,30 @@ const EVAL_DATA = {
   basic: '落葉松'
 };
 
+let evalEditingId = null;
+let evalRecords = [];
+
 function renderEvalTable() {
   let html = `
     <tr>
       <th class="ev-head">外在花精</th>
-      ${EVAL_DATA.ext.map(f => `<th class="fl-eval-cell">${f}</th>`).join('')}
+      ${EVAL_DATA.ext.map(f => `<th class="fl-eval-cell" data-f="${f}">${f}</th>`).join('')}
       <th style="background:#576574"></th>
     </tr>
   `;
 
   // 第一區塊
   EVAL_DATA.block1.forEach(row => {
-    html += `<tr><td class="ev-head">${row.role}</td>${row.flowers.map(f => `<td class="fl-eval-cell">${f}</td>`).join('')}</tr>`;
+    html += `<tr><td class="ev-head">${row.role}</td>${row.flowers.map(f => `<td class="fl-eval-cell" data-f="${f}">${f}</td>`).join('')}</tr>`;
   });
 
   // 第二區塊
   EVAL_DATA.block2.forEach(row => {
-    html += `<tr><td class="ev-head">${row.role}</td>${row.flowers.map(f => `<td class="fl-eval-cell">${f}</td>`).join('')}</tr>`;
+    html += `<tr><td class="ev-head">${row.role}</td>${row.flowers.map(f => `<td class="fl-eval-cell" data-f="${f}">${f}</td>`).join('')}</tr>`;
   });
 
   // 基礎花精
-  html += `<tr><td class="ev-head">基礎花精</td><td colspan="6" class="fl-eval-cell ev-basic">${EVAL_DATA.basic}</td></tr>`;
+  html += `<tr><td class="ev-head">基礎花精</td><td colspan="6" class="fl-eval-cell ev-basic" data-f="${EVAL_DATA.basic}">${EVAL_DATA.basic}</td></tr>`;
 
   $('ev-table').innerHTML = html;
   $('ev-table').querySelectorAll('.fl-eval-cell').forEach(td => {
@@ -373,14 +379,117 @@ function renderEvalTable() {
 }
 renderEvalTable();
 $('ev-date').value = new Date().toISOString().slice(0, 10);
-$('ev-clear').onclick = () => {
+
+function getSelectedFlowers() {
+  const selected = [];
+  $('ev-table').querySelectorAll('.fl-eval-cell.selected').forEach(td => {
+    const f = td.dataset.f;
+    if (f && !selected.includes(f)) selected.push(f);
+  });
+  return selected;
+}
+
+function clearEvalForm() {
+  evalEditingId = null;
   $('ev-table').querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+  $('ev-name').value = '';
+  $('ev-date').value = new Date().toISOString().slice(0, 10);
+  $('ev-times').value = '';
   $('ev-notes').value = '';
   $('ev-topical').value = '';
-  $('ev-name').value = '';
-  $('ev-times').value = '';
-};
+  $('ev-save').textContent = '💾 儲存評估表';
+}
+$('ev-clear').onclick = clearEvalForm;
 $('ev-print').onclick = () => window.print();
+
+// 儲存至 Firestore
+$('ev-save').onclick = async () => {
+  if (!user) return toast('請先在「療癒紀錄」分頁登入 Google 帳號');
+  const name = $('ev-name').value.trim();
+  if (!name) return toast('請填寫個案姓名');
+  const flowers = getSelectedFlowers();
+  const data = {
+    name,
+    date: $('ev-date').value || new Date().toISOString().slice(0, 10),
+    times: $('ev-times').value.trim() || '第 1 次處方',
+    flowers,
+    notes: $('ev-notes').value.trim(),
+    topical: $('ev-topical').value.trim()
+  };
+
+  try {
+    const col = collection(db, 'users', user.uid, 'flowerEvals');
+    if (evalEditingId) {
+      await updateDoc(doc(col, evalEditingId), data);
+      toast('已更新評估表 📋');
+    } else {
+      await addDoc(col, { ...data, createdAt: serverTimestamp() });
+      toast('已儲存評估表 📋');
+    }
+    clearEvalForm();
+  } catch (e) {
+    console.error(e);
+    toast('儲存失敗：' + (e.code || e.message));
+  }
+};
+
+// 渲染歷史評估紀錄
+function renderEvalHistory() {
+  const q = ($('ev-search')?.value || '').trim().toLowerCase();
+  const rows = evalRecords.filter(r => !q || (r.name + r.date + r.times + (r.flowers || []).join('') + r.notes + r.topical).toLowerCase().includes(q));
+  $('ev-history-list').innerHTML = rows.map(r => `
+    <div class="fl-rec" style="border-left-color:#0984e3">
+      <div class="fl-rec-head">
+        <b>👤 ${esc(r.name)} (${esc(r.times)})</b>
+        <small>📅 ${esc(r.date)}</small>
+      </div>
+      <div>
+        ${(r.flowers || []).map(f => `<span class="fl-tag" style="background:#e84393;color:#fff">${esc(f)}</span>`).join('')}
+      </div>
+      ${r.notes ? `<div style="white-space:pre-wrap;font-size:.9rem;line-height:1.5;margin-top:6px">📝 自述：${esc(r.notes)}</div>` : ''}
+      ${r.topical ? `<div style="font-size:.9rem;color:#2c3e50;margin-top:4px">🧴 外用：${esc(r.topical)}</div>` : ''}
+      <div style="margin-top:10px">
+        <button class="fl-btn sm" data-loadeval="${r.id}">載入至上方表格</button>
+        <button class="fl-btn gray sm" data-deleval="${r.id}">刪除</button>
+      </div>
+    </div>
+  `).join('') || `<p style="text-align:center;color:#888;padding:16px">${q ? '找不到符合的評估表' : '尚無評估表存檔，填好上方表格後點擊「儲存評估表」即可永久保留 📋'}</p>`;
+}
+$('ev-search').oninput = renderEvalHistory;
+
+// 點擊載入歷史紀錄回填至表格
+$('ev-history-list').onclick = async e => {
+  const loadId = e.target.dataset.loadeval, delId = e.target.dataset.deleval;
+  if (loadId) {
+    const r = evalRecords.find(x => x.id === loadId);
+    if (!r) return;
+    evalEditingId = loadId;
+    $('ev-name').value = r.name || '';
+    $('ev-date').value = r.date || new Date().toISOString().slice(0, 10);
+    $('ev-times').value = r.times || '';
+    $('ev-notes').value = r.notes || '';
+    $('ev-topical').value = r.topical || '';
+    $('ev-save').textContent = '💾 儲存修改';
+
+    // 重設並重新高亮勾選的花朵
+    $('ev-table').querySelectorAll('.fl-eval-cell').forEach(td => {
+      const match = (r.flowers || []).includes(td.dataset.f);
+      td.classList.toggle('selected', match);
+    });
+
+    toast('已載入「' + r.name + '」的評估表！');
+    $('ev-name').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  if (delId && confirm('確定要刪除這筆評估表紀錄嗎？')) {
+    try {
+      await deleteDoc(doc(db, 'users', user.uid, 'flowerEvals', delId));
+      toast('已刪除評估紀錄');
+    } catch (err) {
+      toast('刪除失敗：' + (err.code || err.message));
+    }
+  }
+};
 
 /* ── 療癒紀錄 ── */
 const tcol = i => `hsl(${i * 30},62%,42%)`, ttint = i => `hsl(${i * 30},75%,93%)`;
@@ -396,7 +505,7 @@ const trackOrder = [];
 TRACKS.forEach(t => t.forEach(en => { if (!trackOrder.includes(en)) trackOrder.push(en); }));
 let chipSort = 'num';
 
-let user = null, unsub = null, records = [], picked = new Set(), editingId = null;
+let user = null, unsub = null, unsubEval = null, records = [], picked = new Set(), editingId = null;
 const nowLocal = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
 const fmt = s => (s || '').replace('T', ' ').replace(/-/g, '/');
 function toast(m) { const t = document.createElement('div'); t.className = 'fl-toast'; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2500); }
@@ -500,14 +609,5 @@ $('fl-signin').onclick = () => signInWithPopup(auth, new GoogleAuthProvider()).c
 $('fl-signout').onclick = () => signOut(auth);
 
 onAuthStateChanged(auth, u => {
-  user = u; unsub?.(); unsub = null; records = [];
-  $('fl-login').style.display = u ? 'none' : 'block';
-  $('fl-app').style.display = u ? 'block' : 'none';
-  if (!u) return;
-  $('fl-user').textContent = u.email || '';
-  resetForm();
-  const q = query(collection(db, 'users', u.uid, 'flowerRecords'), orderBy('usedAt', 'desc'));
-  unsub = onSnapshot(q, snap => { records = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderList(); },
-    err => { console.error(err); toast('讀取失敗，請檢查 Firestore 權限設定'); });
-});
-renderChips();
+  user = u; unsub?.(); unsub = null; unsubEval?.(); unsubEval = null; records = []; evalRecords = [];
+  $('
