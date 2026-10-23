@@ -140,6 +140,20 @@ const $ = id => document.getElementById(id);
 const host = document.getElementById('flower-tab');
 if (!host) throw new Error('找不到 #flower-tab');
 
+// ★ 專門提供外部一鍵跳轉身體地圖的方法 ★
+window.jumpToBodyMap = function(num) {
+  if (typeof window.switchMainTab === 'function') {
+    window.switchMainTab('body-map');
+  }
+  const sel = document.getElementById('bm-flower-select');
+  if (sel) {
+    sel.value = num;
+    if (typeof window.bmHighlightNum === 'function') {
+      window.bmHighlightNum(num);
+    }
+  }
+};
+
 const style = document.createElement('style');
 style.textContent = `
 .tab-btn.flower-tab.active{background:#e84393;border-color:#e84393;color:#fff}
@@ -312,14 +326,22 @@ function renderInfo() {
   const text = f => { const d = DETAIL[f[2]]; return (f[1] + f[2] + f[4] + d[0].join('') + d[1].map(x => x[1]).join('') + d[2]).toLowerCase(); };
   const card = f => {
     const tr = trackOf[f[2]], badge = tr ? `軌道 ${tr.join('、')}` : '外在花精', d = DETAIL[f[2]], nm = short(f[1]);
-    return `<div class="fl-card"><b>${String(f[0]).padStart(2, '0')} ${f[1]}</b><span class="en">${f[2]}</span>
-      <p>${f[4]}</p><span class="fl-tag">${badge}</span>
+    return `<div class="fl-card">
+      <b>${String(f[0]).padStart(2, '0')} ${f[1]}</b><span class="en">${f[2]}</span>
+      <p>${f[4]}</p>
+      <div>
+        <span class="fl-tag">${badge}</span>
+        <button type="button" class="fl-btn sm" style="background:#e84393;padding:2px 8px;font-size:0.75rem;margin:0 0 0 4px;" onclick="window.jumpToBodyMap(${f[0]})">🗺️ 查看身體反射區</button>
+      </div>
       <details><summary>展開：我需要它嗎？怎麼分辨？</summary>
         <div class="fl-sec"><b>我是否需要${nm}的支持？挑選的關鍵線索</b><ul>${d[0].map(x => `<li>${x}</li>`).join('')}</ul></div>
         <div class="fl-sec"><b>相似花精辨析：我該選哪一種？</b><ul>${d[1].map(([en, t]) => `<li><b>${zhOf(en)}</b>：${t}</li>`).join('')}</ul></div>
         <div class="fl-sec"><b>來自${nm}的人生智慧</b><p>${d[2]}</p></div>
       </details>
-      <a href="https://store.sunshineinbottles.com/pages/sunny-on-${f[3]}" target="_blank" rel="noopener">看 Sunny 完整文章 →</a></div>`;
+      <div style="margin-top:6px;">
+        <a href="https://store.sunshineinbottles.com/pages/sunny-on-${f[3]}" target="_blank" rel="noopener">看 Sunny 完整文章 →</a>
+      </div>
+    </div>`;
   };
   const list = FLOWERS.filter(f => !q || text(f).includes(q));
   $('fl-flowers').innerHTML = (infoGroup
@@ -549,7 +571,11 @@ function renderList() {
   const rows = records.filter(r => !q || (r.person + (r.flowers || []).map(f => zhOf(f) + f).join('') + r.feedback + r.method + (r.methodNote || '')).toLowerCase().includes(q));
   $('fl-list').innerHTML = rows.map(r => `
     <div class="fl-rec"><div class="fl-rec-head"><b>👤 ${esc(r.person)}</b><small>🕒 ${esc(fmt(r.usedAt))}</small></div>
-      <div>${(r.flowers || []).map(f => `<span class="fl-tag" style="${chipStyle(f, true)}">${esc(zhOf(f))}</span>`).join('')}</div>
+      <div>${(r.flowers || []).map(f => {
+        const flObj = byEn[f];
+        const numAttr = flObj ? `style="${chipStyle(f, true)};cursor:pointer;" onclick="window.jumpToBodyMap(${flObj.n})" title="點擊在地圖查看反射區"` : `style="${chipStyle(f, true)}"`;
+        return `<span class="fl-tag" ${numAttr}>${esc(zhOf(f))} 🗺️</span>`;
+      }).join('')}</div>
       <div style="margin:6px 0;font-size:.9rem">💧 ${esc(r.method)}${r.methodNote ? '：' + esc(r.methodNote) : ''}</div>
       ${r.feedback ? `<div style="white-space:pre-wrap;font-size:.92rem;line-height:1.6">💬 ${esc(r.feedback)}</div>` : ''}
       <div style="margin-top:8px"><button class="fl-btn sm" data-edit="${r.id}">編輯</button><button class="fl-btn gray sm" data-del="${r.id}">刪除</button></div></div>`).join('')
