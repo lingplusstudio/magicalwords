@@ -33,7 +33,7 @@ const FLOWERS = [
   [13,'荊豆','Gorse','gorse','絕望，覺得沒有希望'],
   [14,'石楠','Heather','heather','只想談自己，害怕孤單'],
   [15,'冬青','Holly','holly','嫉妒、猜疑、怨恨'],
-  [16,'忍冬','Honeysuckle','honeysuckle','活在過去，放不下回憶'],
+  [16,'忍冬','Honeysuckle','honeysuckle','活在過去，放放下回憶'],
   [17,'鵝耳櫪','Hornbeam','hornbeam','週一症候群，覺得沒力氣開始'],
   [18,'鳳仙花','Impatiens','impatiens','急躁、沒耐性'],
   [19,'落葉松','Larch','larch','缺乏自信，預期自己會失敗'],
@@ -51,11 +51,11 @@ const FLOWERS = [
   [31,'馬鞭草','Vervain','sweet-vervain','過度熱忱、愛說服、神經緊繃'],
   [32,'葡萄','Vine','vine','強勢支配，要人聽從'],
   [33,'胡桃','Walnut','walnut','轉換期、面對改變時需要保護'],
-  [34,'水菫','Water Violet','water-violet','孤傲疏離，獨來獨往'],
+  [34,'水堇','Water Violet','water-violet','孤傲疏離，獨來獨往'],
   [35,'白栗','White Chestnut','white-chestnut','腦中念頭停不下來'],
   [36,'野燕麥','Wild Oat','wild-oat','不知道人生方向'],
   [37,'野玫瑰','Wild Rose','wild-rose','消極認命，提不起勁'],
-  [38,'楊柳','Willow','willow','怨天尤人，覺得委屈不公平'],
+  [38,'楊柳','Willow','willow','怨天尤人，覺得委屈不公平']
 ];
 
 // 12 條花精軌道（柯磊墨正統體系：溝通 → 代償 → 失調）
@@ -71,7 +71,7 @@ const TRACKS = [
   ['Impatiens', 'Oak', 'Olive'],
   ['Chicory', 'Red Chestnut', 'Heather'],
   ['Mimulus', 'Heather', 'Mustard'],
-  ['Clematis', 'Chestnut Bud', 'Hornbeam'],
+  ['Clematis', 'Chestnut Bud', 'Hornbeam']
 ];
 
 const ROLES = ['溝通', '代償', '失調'];
@@ -116,7 +116,7 @@ const DETAIL = {
   'White Chestnut': [['腦袋像跑步機，念頭停不下來','睡前反覆思考','想擺脫思緒卻做不到'], [['Agrimony','龍芽草是靠外在行動分心，白栗是腦中停不下來'],['Red Chestnut','紅栗的念頭都是擔心別人']], '念頭只是來去的雲；給心一點安靜的空間，答案會自己浮現。'],
   'Wild Oat': [['不知道自己想要什麼、人生往哪走','可能性很多卻無法聚焦','對現況不滿足'], [['Scleranthus','線球草是兩個選項間搖擺'],['Cerato','水蕨是不信任自己的判斷']], '方向不是想出來的，是在嘗試中靠近；傾聽內心的喜悅，路會漸漸清晰。'],
   'Wild Rose': [['消極認命，覺得「就這樣吧」','提不起勁、冷漠','放棄努力，但不一定悲傷'], [['Gorse','荊豆是絕望，野玫瑰是淡淡地認命'],['Hornbeam','鵝耳櫪是對日常提不起勁，但動起來就好']], '生命力不是消失，只是睡著了；找回一件有興趣的小事，就能慢慢喚醒。'],
-  'Willow': [['怨天尤人，覺得命運不公','感到委屈、愛記恨','把原因歸咎他人或環境'], [['Holly','冬青是針對特定對象的嫉恨'],['Pine','松樹是責怪自己，楊柳是責怪外界']], '握有選擇權的人，就有改變的力量；放下受害者視角，人生重新回到自己手中。'],
+  'Willow': [['怨天尤人，覺得命運不公','感到委屈、愛記恨','把原因歸咎他人或環境'], [['Holly','冬青是針對特定對象的嫉恨'],['Pine','松樹是責怪自己，楊柳是責怪外界']], '握有選擇權的人，就有改變的力量；放下受害者視角，人生重新回到自己手中。']
 };
 
 const EMOTIONS = [
@@ -126,7 +126,7 @@ const EMOTIONS = [
   ['孤獨', 'Loneliness', ['Water Violet','Impatiens','Heather']],
   ['對外界影響過度敏感', 'Oversensitive to influences and ideas', ['Agrimony','Centaury','Walnut','Holly']],
   ['沮喪與絕望', 'Despondency or despair', ['Larch','Pine','Elm','Sweet Chestnut','Star of Bethlehem','Willow','Oak','Crab Apple']],
-  ['過度關心他人', 'Over-care for the welfare of others', ['Chicory','Vervain','Vine','Beech','Rock Water']],
+  ['過度關心他人', 'Over-care for the welfare of others', ['Chicory','Vervain','Vine','Beech','Rock Water']]
 ];
 
 const byEn = Object.fromEntries(FLOWERS.map(f => [f[2], { n: f[0], zh: f[1], en: f[2], slug: f[3], key: f[4] }]));
@@ -287,7 +287,6 @@ host.innerHTML = `
     </div>
   </div>
 
-  <!-- 歷史評估表存檔列表 -->
   <div class="fl-box">
     <div class="fl-label" style="margin-top:0">📑 歷史評估紀錄存檔</div>
     <input type="text" class="fl-search" id="ev-search" placeholder="🔍 搜尋姓名、處方、花精或備註…">
@@ -331,7 +330,7 @@ $('fl-igroup').onclick = () => { infoGroup = !infoGroup; $('fl-igroup').textCont
 $('fl-isearch').oninput = renderInfo;
 renderInfo();
 
-/* ── 附錄四 評估表邏輯（支援雲端存檔、讀取回填、刪除）── */
+/* ── 附錄四 評估表邏輯 ── */
 const EVAL_DATA = {
   ext: ['伯利恆之星', '白楊', '榆樹', '金雀花', '胡桃'],
   block1: [
@@ -359,17 +358,14 @@ function renderEvalTable() {
     </tr>
   `;
 
-  // 第一區塊
   EVAL_DATA.block1.forEach(row => {
     html += `<tr><td class="ev-head">${row.role}</td>${row.flowers.map(f => `<td class="fl-eval-cell" data-f="${f}">${f}</td>`).join('')}</tr>`;
   });
 
-  // 第二區塊
   EVAL_DATA.block2.forEach(row => {
     html += `<tr><td class="ev-head">${row.role}</td>${row.flowers.map(f => `<td class="fl-eval-cell" data-f="${f}">${f}</td>`).join('')}</tr>`;
   });
 
-  // 基礎花精
   html += `<tr><td class="ev-head">基礎花精</td><td colspan="6" class="fl-eval-cell ev-basic" data-f="${EVAL_DATA.basic}">${EVAL_DATA.basic}</td></tr>`;
 
   $('ev-table').innerHTML = html;
@@ -402,7 +398,6 @@ function clearEvalForm() {
 $('ev-clear').onclick = clearEvalForm;
 $('ev-print').onclick = () => window.print();
 
-// 儲存至 Firestore
 $('ev-save').onclick = async () => {
   if (!user) return toast('請先在「療癒紀錄」分頁登入 Google 帳號');
   const name = $('ev-name').value.trim();
@@ -433,7 +428,6 @@ $('ev-save').onclick = async () => {
   }
 };
 
-// 渲染歷史評估紀錄
 function renderEvalHistory() {
   const q = ($('ev-search')?.value || '').trim().toLowerCase();
   const rows = evalRecords.filter(r => !q || (r.name + r.date + r.times + (r.flowers || []).join('') + r.notes + r.topical).toLowerCase().includes(q));
@@ -457,7 +451,6 @@ function renderEvalHistory() {
 }
 $('ev-search').oninput = renderEvalHistory;
 
-// 點擊載入歷史紀錄回填至表格
 $('ev-history-list').onclick = async e => {
   const loadId = e.target.dataset.loadeval, delId = e.target.dataset.deleval;
   if (loadId) {
@@ -471,7 +464,6 @@ $('ev-history-list').onclick = async e => {
     $('ev-topical').value = r.topical || '';
     $('ev-save').textContent = '💾 儲存修改';
 
-    // 重設並重新高亮勾選的花朵
     $('ev-table').querySelectorAll('.fl-eval-cell').forEach(td => {
       const match = (r.flowers || []).includes(td.dataset.f);
       td.classList.toggle('selected', match);
@@ -610,4 +602,28 @@ $('fl-signout').onclick = () => signOut(auth);
 
 onAuthStateChanged(auth, u => {
   user = u; unsub?.(); unsub = null; unsubEval?.(); unsubEval = null; records = []; evalRecords = [];
-  $('
+  $('fl-login').style.display = u ? 'none' : 'block';
+  $('fl-app').style.display = u ? 'block' : 'none';
+  if (!u) {
+    renderEvalHistory();
+    return;
+  }
+  $('fl-user').textContent = u.email || '';
+  resetForm();
+
+  // 監聽療癒紀錄
+  const q = query(collection(db, 'users', u.uid, 'flowerRecords'), orderBy('usedAt', 'desc'));
+  unsub = onSnapshot(q, snap => {
+    records = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderList();
+  }, err => console.error(err));
+
+  // 監聽評估表紀錄
+  const qEval = query(collection(db, 'users', u.uid, 'flowerEvals'), orderBy('date', 'desc'));
+  unsubEval = onSnapshot(qEval, snap => {
+    evalRecords = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderEvalHistory();
+  }, err => console.error(err));
+});
+
+renderChips();
