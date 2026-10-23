@@ -71,7 +71,6 @@ window.BODY_STRUCTURE = {
 };
 
 window.MAP_DATABASE = {
-  // === 1. 頭頸部 ===
   head_front: {
     img: 'head_front.jpeg',
     dots: [
@@ -343,8 +342,6 @@ window.MAP_DATABASE = {
       { num: 29, x: 33.5, y: 81.0, desc: '胸骨左緣' }
     ]
   },
-
-  // === 2. 軀幹部 ===
   torso_front: {
     img: 'torso_front.jpeg',
     dots: [
@@ -499,8 +496,6 @@ window.MAP_DATABASE = {
       { num: 30, x: 75.0, y: 91.5, desc: '左臀後突部' }
     ]
   },
-
-  // === 3. 手臂部 ===
   arm_r_back: {
     img: 'arm_r_back.jpeg',
     dots: [
@@ -550,8 +545,6 @@ window.MAP_DATABASE = {
       { num: 30, x: 73.0, y: 71.0, desc: '左腕掌橫紋區' }
     ]
   },
-
-  // === 4. 下肢腿部 ===
   legs_front: {
     img: 'legs_front.jpeg',
     dots: [
@@ -670,7 +663,6 @@ window.MAP_DATABASE = {
   leg_r_dual: {
     img: 'leg_r_dual.jpeg',
     dots: [
-      // 左半圖：右腿外側
       { num: 38, x: 19.0, y: 10.5, desc: '[右外] 臀大肌上外' },
       { num: 17, x: 26.5, y: 10.5, desc: '[右外] 髂脊中段' },
       { num: 36, x: 33.5, y: 14.5, desc: '[右外] 腹斜肌下' },
@@ -696,7 +688,6 @@ window.MAP_DATABASE = {
       { num: 31, x: 14.0, y: 96.5, desc: '[右外] 足跟外側' },
       { num: 29, x: 26.5, y: 97.0, desc: '[右外] 第五蹠骨底' },
       { num: 30, x: 35.5, y: 94.5, desc: '[右外] 小趾外側緣' },
-      // 右半圖：右腿內側
       { num: 32, x: 62.0, y: 13.0, desc: '[右內] 鼠蹊部(女32/男37)' },
       { num: 37, x: 62.0, y: 15.0, desc: '[右內] 鼠蹊部(女32/男37)' },
       { num: 6, x: 66.5, y: 19.5, desc: '[右內] 恥骨結節內' },
@@ -725,7 +716,6 @@ window.MAP_DATABASE = {
   leg_l_dual: {
     img: 'leg_l_dual.jpeg',
     dots: [
-      // 左半圖：左腿內側
       { num: 32, x: 34.0, y: 11.5, desc: '[左內] 鼠蹊部(女32/男37)' },
       { num: 37, x: 34.0, y: 13.5, desc: '[左內] 鼠蹊部(女32/男37)' },
       { num: 26, x: 19.5, y: 16.5, desc: '[左內] 會陰坐骨支' },
@@ -752,7 +742,6 @@ window.MAP_DATABASE = {
       { num: 3, x: 13.5, y: 97.0, desc: '[左內] 足跟內側面' },
       { num: 35, x: 25.5, y: 97.0, desc: '[左內] 足弓第一蹠' },
       { num: 37, x: 36.0, y: 95.5, desc: '[左內] 大腳趾內側' },
-      // 右半圖：左腿外側
       { num: 26, x: 57.0, y: 9.0, desc: '[左外] 腹斜肌下' },
       { num: 20, x: 55.0, y: 14.5, desc: '[左外] 髂前上棘' },
       { num: 15, x: 69.0, y: 9.0, desc: '[左外] 髂脊中段' },
@@ -778,16 +767,12 @@ window.MAP_DATABASE = {
       { num: 9, x: 87.5, y: 96.5, desc: '[左外] 足跟外側' }
     ]
   },
-
-  // === 5. 手掌部 ===
   hand_r_dual: {
     img: 'hand_r_dual.jpeg',
     dots: [
-      // 上半圖：右手手背（大拇指在左）
       { num: 25, x: 14.5, y: 34.0, desc: '[右手背] 大拇指第一掌骨' },
       { num: 5, x: 26.5, y: 34.0, desc: '[右手背] 食中指手背中段' },
       { num: 19, x: 38.0, y: 34.0, desc: '[右手背] 無名小指尺側緣' },
-      // 下半圖：右手手心（大拇指在右）
       { num: 32, x: 57.5, y: 77.0, desc: '[右手心] 小魚際肌尺側' },
       { num: 4, x: 67.5, y: 77.0, desc: '[右手心] 掌心勞宮穴中' },
       { num: 15, x: 82.0, y: 77.0, desc: '[右手心] 大魚際肌拇指側' }
@@ -796,19 +781,15 @@ window.MAP_DATABASE = {
   hand_l_dual: {
     img: 'hand_l_dual.jpeg',
     dots: [
-      // 上半圖：左手手背（大拇指在右）
       { num: 8, x: 44.5, y: 32.0, desc: '[左手背] 大拇指掌指關節' },
       { num: 3, x: 32.0, y: 32.0, desc: '[左手背] 食中指手背橈側' },
       { num: 15, x: 17.5, y: 32.0, desc: '[左手背] 無名小指尺側緣' },
       { num: 15, x: 32.0, y: 44.5, desc: '[左手背] 手背近端腕橫紋' },
-      // 下半圖：左手手心（大拇指在左）
       { num: 31, x: 62.5, y: 80.0, desc: '[左手心] 大魚際肌拇指側' },
       { num: 3, x: 76.5, y: 80.0, desc: '[左手心] 掌心勞宮穴中' },
       { num: 22, x: 86.5, y: 80.0, desc: '[左手心] 小魚際肌尺側' }
     ]
   },
-
-  // === 6. 雙足底 ===
   foot_sole_r: {
     img: 'foot_sole_r.jpeg',
     dots: [
@@ -823,155 +804,138 @@ window.MAP_DATABASE = {
   }
 };
 
-// 身體地圖跨環境相容控制器 (自動偵測主網頁 bm- 前綴或獨立測試環境)
-(function() {
+// 核心初始化函式（由主網頁切換時呼叫）
+window.initBodyMapEngine = function() {
+  const groupNav = document.getElementById('bm-group-nav');
+  const viewNav = document.getElementById('bm-view-nav');
+  const selEl = document.getElementById('bm-flower-select');
+  const imgEl = document.getElementById('bm-map-img');
+  const dotsBox = document.getElementById('bm-dots-container');
+  const infoEl = document.getElementById('bm-info-box');
+
+  if (!groupNav || !viewNav || !selEl || !imgEl || !dotsBox) return;
+
   let curGrp = 'head';
   let curView = 'head_front';
 
-  function setup() {
-    const groupNav = document.getElementById('bm-group-nav') || document.getElementById('group-nav');
-    const viewNav = document.getElementById('bm-view-nav') || document.getElementById('view-nav');
-    const selEl = document.getElementById('bm-flower-select') || document.getElementById('fl-select');
-    const imgEl = document.getElementById('bm-map-img') || document.getElementById('map-img');
-    const dotsBox = document.getElementById('bm-dots-container') || document.getElementById('dots-container');
-    const infoEl = document.getElementById('bm-info-box') || document.getElementById('info-box');
+  // 1. 初始化下拉選單
+  let optHtml = '<option value="">-- 請選擇花精 (1 ~ 38 全花精) --</option>';
+  window.FLOWERS_LIST.forEach(([num, zh, en]) => {
+    optHtml += `<option value="${num}">${String(num).padStart(2, '0')}. ${zh} ${en}</option>`;
+  });
+  selEl.innerHTML = optHtml;
 
-    if (!groupNav || !viewNav || !selEl || !imgEl || !dotsBox) return;
-
-    const isMainSite = !!document.getElementById('bm-group-nav');
-    const prefix = isMainSite ? 'bm-' : '';
-
-    // 1. 初始化 1 ~ 38 花精下拉清單
-    let optHtml = '<option value="">-- 請選擇花精 (1 ~ 38 全花精) --</option>';
-    window.FLOWERS_LIST.forEach(([num, zh, en]) => {
-      optHtml += `<option value="${num}">${String(num).padStart(2, '0')}. ${zh} ${en}</option>`;
+  // 2. 渲染第一層按鈕
+  function renderGroups() {
+    groupNav.innerHTML = '';
+    Object.keys(window.BODY_STRUCTURE).forEach(grpKey => {
+      const btn = document.createElement('button');
+      btn.className = `bm-group-btn ${grpKey === curGrp ? 'active' : ''}`;
+      btn.textContent = window.BODY_STRUCTURE[grpKey].name;
+      btn.onclick = () => {
+        curGrp = grpKey;
+        groupNav.querySelectorAll('.bm-group-btn').forEach(b => b.classList.toggle('active', b === btn));
+        const firstView = window.BODY_STRUCTURE[grpKey].views[0].id;
+        renderViews(grpKey);
+        switchView(firstView);
+      };
+      groupNav.appendChild(btn);
     });
-    selEl.innerHTML = optHtml;
+  }
 
-    // 2. 建立第一層大部位選單
-    function renderGroups() {
-      groupNav.innerHTML = '';
-      Object.keys(window.BODY_STRUCTURE).forEach(grpKey => {
-        const btn = document.createElement('button');
-        btn.className = `${prefix}group-btn ${grpKey === curGrp ? 'active' : ''}`;
-        btn.dataset.grp = grpKey;
-        btn.textContent = window.BODY_STRUCTURE[grpKey].name;
-        btn.onclick = () => {
-          curGrp = grpKey;
-          groupNav.querySelectorAll(`.${prefix}group-btn`).forEach(b => b.classList.toggle('active', b === btn));
-          const firstView = window.BODY_STRUCTURE[grpKey].views[0].id;
-          renderViews(grpKey);
-          switchView(firstView);
-        };
-        groupNav.appendChild(btn);
-      });
+  // 3. 渲染第二層視角標籤
+  function renderViews(grpKey) {
+    viewNav.innerHTML = '';
+    const views = window.BODY_STRUCTURE[grpKey].views;
+    views.forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = `bm-view-btn ${v.id === curView ? 'active' : ''}`;
+      btn.textContent = v.name;
+      btn.onclick = () => switchView(v.id);
+      viewNav.appendChild(btn);
+    });
+  }
+
+  // 4. 切換具體視角並渲染
+  function switchView(viewKey) {
+    curView = viewKey;
+    viewNav.querySelectorAll('.bm-view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === viewKey));
+
+    const vData = window.MAP_DATABASE[viewKey];
+    if (!vData) return;
+
+    imgEl.src = vData.img;
+    dotsBox.innerHTML = '';
+
+    vData.dots.forEach(d => {
+      const dot = document.createElement('div');
+      dot.className = 'bm-zone-dot';
+      dot.dataset.num = d.num;
+      dot.dataset.desc = d.desc;
+      dot.style.left = d.x + '%';
+      dot.style.top = d.y + '%';
+      dot.title = `${d.num} 號：${d.desc}`;
+
+      dot.onclick = () => {
+        selEl.value = d.num;
+        highlightNum(d.num);
+      };
+      dotsBox.appendChild(dot);
+    });
+
+    if (selEl.value) highlightNum(selEl.value);
+  }
+
+  // 5. 命中高亮
+  function highlightNum(num) {
+    const dots = dotsBox.querySelectorAll('.bm-zone-dot');
+    let hitDescs = [];
+
+    dots.forEach(d => {
+      if (d.dataset.num === String(num)) {
+        d.classList.add('highlight');
+        hitDescs.push(d.dataset.desc);
+      } else {
+        d.classList.remove('highlight');
+      }
+    });
+
+    if (!num) {
+      if (infoEl) infoEl.innerHTML = '請選擇花精或點擊圖中的圓圈熱區進行定位。';
+      return;
     }
 
-    // 3. 建立第二層視角標籤
-    function renderViews(grpKey) {
-      viewNav.innerHTML = '';
-      const views = window.BODY_STRUCTURE[grpKey].views;
-      views.forEach(v => {
-        const btn = document.createElement('button');
-        btn.className = `${prefix}view-btn ${v.id === curView ? 'active' : ''}`;
-        btn.dataset.view = v.id;
-        btn.textContent = v.name;
-        btn.onclick = () => switchView(v.id);
-        viewNav.appendChild(btn);
-      });
-    }
+    const fl = window.FLOWERS_LIST.find(f => f[0] === Number(num));
+    const flTitle = fl ? `【${fl[0]}號 ${fl[1]} ${fl[2]}】` : `【${num} 號花精】`;
 
-    // 4. 切換具體視角並渲染
-    function switchView(viewKey) {
-      curView = viewKey;
-      viewNav.querySelectorAll(`.${prefix}view-btn`).forEach(b => b.classList.toggle('active', b.dataset.view === viewKey));
-
-      const vData = window.MAP_DATABASE[viewKey];
-      if (!vData) return;
-
-      imgEl.src = vData.img;
-      dotsBox.innerHTML = '';
-
-      vData.dots.forEach(d => {
-        const dot = document.createElement('div');
-        dot.className = `${prefix}zone-dot`;
-        dot.dataset.num = d.num;
-        dot.dataset.desc = d.desc;
-        dot.style.left = d.x + '%';
-        dot.style.top = d.y + '%';
-        dot.title = `${d.num} 號：${d.desc}`;
-
-        dot.onclick = () => {
-          selEl.value = d.num;
-          highlightNum(d.num);
-        };
-        dotsBox.appendChild(dot);
-      });
-
-      if (selEl.value) highlightNum(selEl.value);
-    }
-
-    // 5. 命中高亮與關聯提示
-    function highlightNum(num) {
-      const dots = dotsBox.querySelectorAll(`.${prefix}zone-dot`);
-      let hitDescs = [];
-
-      dots.forEach(d => {
-        if (d.dataset.num === String(num)) {
-          d.classList.add('highlight');
-          hitDescs.push(d.dataset.desc);
-        } else {
-          d.classList.remove('highlight');
+    const locs = [];
+    Object.keys(window.BODY_STRUCTURE).forEach(gKey => {
+      window.BODY_STRUCTURE[gKey].views.forEach(v => {
+        const vData = window.MAP_DATABASE[v.id];
+        if (vData && vData.dots.some(d => d.num === Number(num))) {
+          locs.push(`${window.BODY_STRUCTURE[gKey].name}-${v.name}`);
         }
       });
+    });
 
-      if (!num) {
-        if (infoEl) infoEl.innerHTML = '請選擇花精或點擊圖中的圓圈熱區進行定位。';
-        return;
-      }
-
-      const fl = window.FLOWERS_LIST.find(f => f[0] === Number(num));
-      const flTitle = fl ? `【${fl[0]}號 ${fl[1]} ${fl[2]}】` : `【${num} 號花精】`;
-
-      const locs = [];
-      Object.keys(window.BODY_STRUCTURE).forEach(gKey => {
-        window.BODY_STRUCTURE[gKey].views.forEach(v => {
-          const vData = window.MAP_DATABASE[v.id];
-          if (vData && vData.dots.some(d => d.num === Number(num))) {
-            locs.push(`${window.BODY_STRUCTURE[gKey].name}-${v.name}`);
-          }
-        });
-      });
-
-      let msg = `<b>${flTitle}</b><br>`;
-      if (hitDescs.length) {
-        msg += `📍 <b>當前視角亮燈部位：</b><br>• ` + hitDescs.join('<br>• ');
-      } else {
-        msg += `⚠️ 此視角無該花精反射區。`;
-      }
-
-      if (locs.length) {
-        msg += `<br><small style="color:#666;margin-top:6px;display:block;">🔎 本花精亦分佈於：${locs.join('、')}</small>`;
-      }
-      if (infoEl) infoEl.innerHTML = msg;
+    let msg = `<b>${flTitle}</b><br>`;
+    if (hitDescs.length) {
+      msg += `📍 <b>當前視角亮燈部位：</b><br>• ` + hitDescs.join('<br>• ');
+    } else {
+      msg += `⚠️ 此視角無該花精反射區。`;
     }
 
-    selEl.onchange = e => highlightNum(e.target.value);
-
-    // 暴露全域跳轉 API
-    window.bmHighlightNum = highlightNum;
-    window.initBodyMapEngine = setup;
-
-    // 啟動首頁渲染
-    renderGroups();
-    renderViews(curGrp);
-    switchView(curView);
+    if (locs.length) {
+      msg += `<br><small style="color:#666;margin-top:6px;display:block;">🔎 本花精亦分佈於：${locs.join('、')}</small>`;
+    }
+    if (infoEl) infoEl.innerHTML = msg;
   }
 
-  // 自動依載入時機啟動
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setup);
-  } else {
-    setup();
-  }
-})();
+  selEl.onchange = e => highlightNum(e.target.value);
+  window.bmHighlightNum = highlightNum;
+
+  // 執行首次生成
+  renderGroups();
+  renderViews(curGrp);
+  switchView(curView);
+};
