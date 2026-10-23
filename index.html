@@ -881,10 +881,9 @@ function switchTab(evt, tabId) {
         clearAll();
     }
 
-    // ★ 首次切換至身體地圖時，自動啟動引擎 ★
-    if (tabId === 'body-map-tab' && !window.bodyMapStarted && typeof initBodyMapEngine === 'function') {
-        initBodyMapEngine();
-        window.bodyMapStarted = true;
+    // ★ 切換到身體地圖時，確保啟動並重新繪製 ★
+    if (tabId === 'body-map-tab' && typeof window.initBodyMapEngine === 'function') {
+        window.initBodyMapEngine();
     }
 }
 
