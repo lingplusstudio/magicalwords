@@ -58,16 +58,28 @@ const FLOWERS = [
  [38,'楊柳','Willow','willow','怨天尤人，覺得委屈不公平'],
 ];
 // 12 條花精軌道（柯磊墨《新巴赫花精療法1》目錄）。順序 = 溝通 → 補償 → 失調
+// 12 條花精軌道（柯磊墨正統體系：溝通 → 代償 → 失調）
 const TRACKS = [
- ['Centaury','Holly','Pine'], ['Cerato','Vine','Wild Oat'], ['Scleranthus','Rock Water','Crab Apple'],
- ['Gentian','Willow','Wild Rose'], ['Water Violet','Chestnut Bud','Beech'], ['Vervain','Hornbeam','White Chestnut'],
- ['Agrimony','Vervain','Sweet Chestnut'], ['Rock Rose','Agrimony','Cherry Plum'], ['Impatiens','Olive','Oak'],
- ['Chicory','Red Chestnut','Honeysuckle'], ['Mimulus','Heather','Mustard'], ['Clematis','Impatiens','Mustard'],
+  ['Centaury', 'Holly', 'Pine'],               // 軌道 1：矢車菊 → 冬青 → 松樹
+  ['Cerato', 'Vine', 'Wild Oat'],              // 軌道 2：水蕨 → 葡萄 → 野燕麥
+  ['Scleranthus', 'Rock Water', 'Crab Apple'], // 軌道 3：線球草 → 岩水 → 海棠
+  ['Gentian', 'Gorse', 'Willow'],              // 軌道 4：龍膽 → 荊豆 → 楊柳
+  ['Water Violet', 'Heather', 'Sweet Chestnut'], // 軌道 5：水菫 → 石楠 → 甜栗
+  ['Vervain', 'Vine', 'Wild Rose'],            // 軌道 6：馬鞭草 → 葡萄 → 野玫瑰
+  ['Agrimony', 'Vervain', 'White Chestnut'],   // 軌道 7：龍芽草 → 馬鞭草 → 白栗
+  ['Rock Rose', 'Cherry Plum', 'Aspen'],       // 軌道 8：岩薔薇 → 櫻桃李 → 白楊
+  ['Impatiens', 'Oak', 'Olive'],               // 軌道 9：鳳仙花 → 橡樹 → 橄欖
+  ['Chicory', 'Red Chestnut', 'Heather'],      // 軌道 10：菊苣 → 紅栗 → 石楠
+  ['Mimulus', 'Heather', 'Mustard'],           // 軌道 11：溝酸漿 → 石楠 → 芥末
+  ['Clematis', 'Chestnut Bud', 'Hornbeam'],    // 軌道 12：鐵線蓮 → 栗苞 → 鵝耳櫪
 ];
-const ROLES = ['溝通', '代償', '失調'];
-const EXTERNAL = ['Larch', 'Star of Bethlehem', 'Elm', 'Walnut', 'Gorse', 'Aspen']; // 不在 12 軌道內者
-const METHODS = ['舌下直接滴（原液）', '水杯稀釋飲用', '調配瓶', '噴霧（氣場／空間）', '外用（塗抹／敷布）', '其他'];
 
+const ROLES = ['溝通', '代償', '失調'];
+
+// 不在 12 軌道內者：5種外在花精 + 1種基礎花精(Larch)
+const EXTERNAL = ['Star of Bethlehem', 'Elm', 'Walnut', 'Gorse', 'Aspen', 'Larch'];
+
+const METHODS = ['舌下直接滴（原液）', '水杯稀釋飲用', '調配瓶', '噴霧（氣場／空間）', '外用（塗抹／敷布）', '其他'];
 // 以下三段為依巴赫花精一般通則自行整理的簡述（非 Sunny 文章摘要）
 const DETAIL = {
  'Agrimony': [['外表開朗愛說笑，內心其實焦慮不安','總說「沒事」，報喜不報憂','靠忙碌、飲酒、購物等方式轉移注意力'], [['Centaury','同樣怕衝突，但矢車菊是為了討好人，龍芽草是為了掩飾痛苦'],['White Chestnut','白栗是念頭停不下來，龍芽草是用行動躲開']], '示弱不是失敗，願意說「我現在不太好」，才開始真正被接住。'],
