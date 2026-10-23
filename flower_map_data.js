@@ -1,5 +1,6 @@
-// 1 ~ 38 巴赫花精基本表
-const FLOWERS_LIST = [
+// 🌸 巴赫花精全身體地圖資料庫與控制器 (1 ~ 38 全花精 + 6 大部位 22 視角)
+
+window.FLOWERS_LIST = [
   [1,'龍芽草','Agrimony'],[2,'白楊','Aspen'],[3,'山毛櫸','Beech'],[4,'矢車菊','Centaury'],
   [5,'水蕨','Cerato'],[6,'櫻桃李','Cherry Plum'],[7,'栗苞','Chestnut Bud'],[8,'菊苣','Chicory'],
   [9,'鐵線蓮','Clematis'],[10,'酸蘋果','Crab Apple'],[11,'榆樹','Elm'],[12,'龍膽','Gentian'],
@@ -12,8 +13,7 @@ const FLOWERS_LIST = [
   [37,'野玫瑰','Wild Rose'],[38,'楊柳','Willow']
 ];
 
-// 6 大部位分類與視角結構
-const BODY_STRUCTURE = {
+window.BODY_STRUCTURE = {
   head: {
     name: '頭頸部',
     views: [
@@ -70,8 +70,7 @@ const BODY_STRUCTURE = {
   }
 };
 
-// 完整 22 視角反射區座標資料庫
-const MAP_DATABASE = {
+window.MAP_DATABASE = {
   // === 1. 頭頸部 ===
   head_front: {
     img: 'head_front.jpeg',
@@ -824,148 +823,155 @@ const MAP_DATABASE = {
   }
 };
 
-// 核心控制器
-let currentGroup = 'head';
-let currentView = 'head_front';
+// 身體地圖跨環境相容控制器 (自動偵測主網頁 bm- 前綴或獨立測試環境)
+(function() {
+  let curGrp = 'head';
+  let curView = 'head_front';
 
-const groupNav = document.getElementById('group-nav');
-const viewNav = document.getElementById('view-nav');
-const selEl = document.getElementById('fl-select');
-const imgEl = document.getElementById('map-img');
-const dotsBox = document.getElementById('dots-container');
-const infoEl = document.getElementById('info-box');
+  function setup() {
+    const groupNav = document.getElementById('bm-group-nav') || document.getElementById('group-nav');
+    const viewNav = document.getElementById('bm-view-nav') || document.getElementById('view-nav');
+    const selEl = document.getElementById('bm-flower-select') || document.getElementById('fl-select');
+    const imgEl = document.getElementById('bm-map-img') || document.getElementById('map-img');
+    const dotsBox = document.getElementById('bm-dots-container') || document.getElementById('dots-container');
+    const infoEl = document.getElementById('bm-info-box') || document.getElementById('info-box');
 
-// 初始化花精下拉清單
-function initSelect() {
-  let optHtml = '<option value="">-- 請選擇花精 (1 ~ 38 全花精) --</option>';
-  FLOWERS_LIST.forEach(([num, zh, en]) => {
-    optHtml += `<option value="${num}">${String(num).padStart(2, '0')}. ${zh} ${en}</option>`;
-  });
-  selEl.innerHTML = optHtml;
-}
+    if (!groupNav || !viewNav || !selEl || !imgEl || !dotsBox) return;
 
-// 建立第一層部位選單
-function initGroupNav() {
-  groupNav.innerHTML = '';
-  Object.keys(BODY_STRUCTURE).forEach(grpKey => {
-    const btn = document.createElement('button');
-    btn.className = `group-btn ${grpKey === currentGroup ? 'active' : ''}`;
-    btn.dataset.grp = grpKey;
-    btn.textContent = BODY_STRUCTURE[grpKey].name;
-    btn.onclick = () => switchGroup(grpKey);
-    groupNav.appendChild(btn);
-  });
-}
+    const isMainSite = !!document.getElementById('bm-group-nav');
+    const prefix = isMainSite ? 'bm-' : '';
 
-// 切換大部位
-function switchGroup(grpKey) {
-  currentGroup = grpKey;
-  document.querySelectorAll('.group-btn').forEach(b => b.classList.toggle('active', b.dataset.grp === grpKey));
-  const firstView = BODY_STRUCTURE[grpKey].views[0].id;
-  renderViewTabs(grpKey);
-  switchView(firstView);
-}
-
-// 建立第二層視角標籤
-function renderViewTabs(grpKey) {
-  viewNav.innerHTML = '';
-  const views = BODY_STRUCTURE[grpKey].views;
-  views.forEach(v => {
-    const btn = document.createElement('button');
-    btn.className = `view-btn ${v.id === currentView ? 'active' : ''}`;
-    btn.dataset.view = v.id;
-    btn.textContent = v.name;
-    btn.onclick = () => switchView(v.id);
-    viewNav.appendChild(btn);
-  });
-}
-
-// 切換具體視角並渲染
-function switchView(viewKey) {
-  currentView = viewKey;
-  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === viewKey));
-  
-  const vData = MAP_DATABASE[viewKey];
-  if (!vData) return;
-  
-  imgEl.src = vData.img;
-  dotsBox.innerHTML = '';
-
-  vData.dots.forEach(d => {
-    const dot = document.createElement('div');
-    dot.className = 'zone-dot';
-    dot.dataset.num = d.num;
-    dot.dataset.desc = d.desc;
-    dot.style.left = d.x + '%';
-    dot.style.top = d.y + '%';
-    dot.title = `${d.num} 號：${d.desc}`;
-
-    dot.onclick = () => {
-      selEl.value = d.num;
-      highlightNum(d.num);
-    };
-    dotsBox.appendChild(dot);
-  });
-
-  if (selEl.value) highlightNum(selEl.value);
-}
-
-// 查詢某花精出現在哪些部位圖
-function getFlowerLocations(num) {
-  const result = [];
-  Object.keys(BODY_STRUCTURE).forEach(grpKey => {
-    BODY_STRUCTURE[grpKey].views.forEach(v => {
-      const vData = MAP_DATABASE[v.id];
-      if (vData && vData.dots.some(d => d.num === Number(num))) {
-        result.push({ grp: BODY_STRUCTURE[grpKey].name, view: v.name, grpId: grpKey, viewId: v.id });
-      }
+    // 1. 初始化 1 ~ 38 花精下拉清單
+    let optHtml = '<option value="">-- 請選擇花精 (1 ~ 38 全花精) --</option>';
+    window.FLOWERS_LIST.forEach(([num, zh, en]) => {
+      optHtml += `<option value="${num}">${String(num).padStart(2, '0')}. ${zh} ${en}</option>`;
     });
-  });
-  return result;
-}
+    selEl.innerHTML = optHtml;
 
-// 高亮指定號碼
-function highlightNum(num) {
-  const dots = dotsBox.querySelectorAll('.zone-dot');
-  let hitDescs = [];
-
-  dots.forEach(d => {
-    if (d.dataset.num === String(num)) {
-      d.classList.add('highlight');
-      hitDescs.push(d.dataset.desc);
-    } else {
-      d.classList.remove('highlight');
+    // 2. 建立第一層大部位選單
+    function renderGroups() {
+      groupNav.innerHTML = '';
+      Object.keys(window.BODY_STRUCTURE).forEach(grpKey => {
+        const btn = document.createElement('button');
+        btn.className = `${prefix}group-btn ${grpKey === curGrp ? 'active' : ''}`;
+        btn.dataset.grp = grpKey;
+        btn.textContent = window.BODY_STRUCTURE[grpKey].name;
+        btn.onclick = () => {
+          curGrp = grpKey;
+          groupNav.querySelectorAll(`.${prefix}group-btn`).forEach(b => b.classList.toggle('active', b === btn));
+          const firstView = window.BODY_STRUCTURE[grpKey].views[0].id;
+          renderViews(grpKey);
+          switchView(firstView);
+        };
+        groupNav.appendChild(btn);
+      });
     }
-  });
 
-  if (!num) {
-    infoEl.innerHTML = '請選擇花精或點擊圖中的圓圈熱區進行定位。';
-    return;
+    // 3. 建立第二層視角標籤
+    function renderViews(grpKey) {
+      viewNav.innerHTML = '';
+      const views = window.BODY_STRUCTURE[grpKey].views;
+      views.forEach(v => {
+        const btn = document.createElement('button');
+        btn.className = `${prefix}view-btn ${v.id === curView ? 'active' : ''}`;
+        btn.dataset.view = v.id;
+        btn.textContent = v.name;
+        btn.onclick = () => switchView(v.id);
+        viewNav.appendChild(btn);
+      });
+    }
+
+    // 4. 切換具體視角並渲染
+    function switchView(viewKey) {
+      curView = viewKey;
+      viewNav.querySelectorAll(`.${prefix}view-btn`).forEach(b => b.classList.toggle('active', b.dataset.view === viewKey));
+
+      const vData = window.MAP_DATABASE[viewKey];
+      if (!vData) return;
+
+      imgEl.src = vData.img;
+      dotsBox.innerHTML = '';
+
+      vData.dots.forEach(d => {
+        const dot = document.createElement('div');
+        dot.className = `${prefix}zone-dot`;
+        dot.dataset.num = d.num;
+        dot.dataset.desc = d.desc;
+        dot.style.left = d.x + '%';
+        dot.style.top = d.y + '%';
+        dot.title = `${d.num} 號：${d.desc}`;
+
+        dot.onclick = () => {
+          selEl.value = d.num;
+          highlightNum(d.num);
+        };
+        dotsBox.appendChild(dot);
+      });
+
+      if (selEl.value) highlightNum(selEl.value);
+    }
+
+    // 5. 命中高亮與關聯提示
+    function highlightNum(num) {
+      const dots = dotsBox.querySelectorAll(`.${prefix}zone-dot`);
+      let hitDescs = [];
+
+      dots.forEach(d => {
+        if (d.dataset.num === String(num)) {
+          d.classList.add('highlight');
+          hitDescs.push(d.dataset.desc);
+        } else {
+          d.classList.remove('highlight');
+        }
+      });
+
+      if (!num) {
+        if (infoEl) infoEl.innerHTML = '請選擇花精或點擊圖中的圓圈熱區進行定位。';
+        return;
+      }
+
+      const fl = window.FLOWERS_LIST.find(f => f[0] === Number(num));
+      const flTitle = fl ? `【${fl[0]}號 ${fl[1]} ${fl[2]}】` : `【${num} 號花精】`;
+
+      const locs = [];
+      Object.keys(window.BODY_STRUCTURE).forEach(gKey => {
+        window.BODY_STRUCTURE[gKey].views.forEach(v => {
+          const vData = window.MAP_DATABASE[v.id];
+          if (vData && vData.dots.some(d => d.num === Number(num))) {
+            locs.push(`${window.BODY_STRUCTURE[gKey].name}-${v.name}`);
+          }
+        });
+      });
+
+      let msg = `<b>${flTitle}</b><br>`;
+      if (hitDescs.length) {
+        msg += `📍 <b>當前視角亮燈部位：</b><br>• ` + hitDescs.join('<br>• ');
+      } else {
+        msg += `⚠️ 此視角無該花精反射區。`;
+      }
+
+      if (locs.length) {
+        msg += `<br><small style="color:#666;margin-top:6px;display:block;">🔎 本花精亦分佈於：${locs.join('、')}</small>`;
+      }
+      if (infoEl) infoEl.innerHTML = msg;
+    }
+
+    selEl.onchange = e => highlightNum(e.target.value);
+
+    // 暴露全域跳轉 API
+    window.bmHighlightNum = highlightNum;
+    window.initBodyMapEngine = setup;
+
+    // 啟動首頁渲染
+    renderGroups();
+    renderViews(curGrp);
+    switchView(curView);
   }
 
-  const fl = FLOWERS_LIST.find(f => f[0] === Number(num));
-  const flTitle = fl ? `【${fl[0]}號 ${fl[1]} ${fl[2]}】` : `【${num} 號花精】`;
-  const locs = getFlowerLocations(num);
-
-  let msg = `<b>${flTitle}</b><br>`;
-  if (hitDescs.length) {
-    msg += `📍 <b>當前視角亮燈部位：</b><br>• ` + hitDescs.join('<br>• ');
+  // 自動依載入時機啟動
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
   } else {
-    msg += `⚠️ 此視角無該花精反射區。`;
+    setup();
   }
-
-  if (locs.length) {
-    const locNames = locs.map(l => `${l.grp}-${l.view}`);
-    msg += `<br><small style="color:#666;margin-top:6px;display:block;">🔎 本花精亦分佈於：${locNames.join('、')}</small>`;
-  }
-  infoEl.innerHTML = msg;
-}
-
-// 下拉選單連動
-selEl.onchange = e => highlightNum(e.target.value);
-
-// 頁面啟動
-initSelect();
-initGroupNav();
-renderViewTabs(currentGroup);
-switchView(currentView);
+})();
