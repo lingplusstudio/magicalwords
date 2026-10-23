@@ -13,6 +13,8 @@
             --buddha: #0984e3; 
             --qi: #2ecc71; 
             --acu: #9b59b6; 
+            --flower-map: #e84393;
+            --flower-map-light: #fce4f1;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -57,9 +59,8 @@
         .tab-btn.buddha-tab.active { background: var(--buddha); border-color: var(--buddha); color: white; }
         .tab-btn.qi-tab.active { background: var(--qi); border-color: var(--qi); color: white; }
         .tab-btn.acu-tab.active { background: var(--acu); border-color: var(--acu); color: white; }
-        .tab-btn.ear-tab.active { background: #e67e22; border-color: #e67e22; color: white; }    
-        
-        
+        .tab-btn.ear-tab.active { background: #e67e22; border-color: #e67e22; color: white; } 
+        .tab-btn.body-map-tab.active { background: var(--flower-map); border-color: var(--flower-map); color: white; }
         
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -68,6 +69,7 @@
         h1.buddha-h1 { color: var(--buddha); }
         h1.qi-h1 { color: var(--qi); }
         h1.acu-h1 { color: var(--acu); }
+        h1.flower-map-h1 { color: var(--flower-map); }
         .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 0.9rem; }
         
         .section { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
@@ -202,6 +204,124 @@
         }
         .clear-btn:hover { background: #2d3436; }
 
+        /* 經文讀誦區樣式 */
+        .sutra-paper { background-color: #fdf8e4; border: 1px solid #e0d6b8; padding: 20px; border-radius: 12px; height: 65vh; overflow-y: auto; text-align: center; }
+        .sutra-paper img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .sutra-hint { text-align: center; color: #8e44ad; font-size: 0.95rem; margin-bottom: 20px; padding: 15px; background: #fff; border-radius: 8px; border: 1px solid #eee; }
+
+        /* ★★★ 花精身體地圖專屬樣式 ★★★ */
+        .bm-card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .bm-group-nav {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+        .bm-group-btn {
+            flex: 1;
+            min-width: 72px;
+            padding: 8px 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #64748b;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .bm-group-btn.active {
+            background: var(--flower-map);
+            color: #ffffff;
+            border-color: var(--flower-map);
+            box-shadow: 0 2px 6px rgba(232, 67, 147, 0.35);
+        }
+        .bm-view-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+            justify-content: center;
+        }
+        .bm-view-btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            color: #475569;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .bm-view-btn.active {
+            background: var(--flower-map-light);
+            border-color: var(--flower-map);
+            color: var(--flower-map);
+        }
+        .bm-map-frame {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 580px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #ffffff;
+            min-height: 340px;
+            margin: 0 auto;
+        }
+        .bm-map-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .bm-zone-dot {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+        .bm-zone-dot:hover {
+            background: rgba(250, 211, 144, 0.9);
+            transform: translate(-50%, -50%) scale(1.4);
+        }
+        .bm-zone-dot.highlight {
+            background: var(--flower-map) !important;
+            border-color: #ffffff !important;
+            transform: translate(-50%, -50%) scale(1.9);
+            z-index: 10;
+            animation: bmPulseBeacon 1.3s infinite;
+        }
+        @keyframes bmPulseBeacon {
+            0% { box-shadow: 0 0 0 0 rgba(232, 67, 147, 0.85); }
+            70% { box-shadow: 0 0 0 11px rgba(232, 67, 147, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(232, 67, 147, 0); }
+        }
+        .bm-info-card {
+            margin-top: 16px;
+            padding: 12px 14px;
+            background: #fdf0f5;
+            border-left: 4px solid var(--flower-map);
+            border-radius: 6px;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
         @media (max-width: 768px) {
             body { padding: 10px; }
             .container { padding: 15px; border-radius: 12px; }
@@ -216,10 +336,6 @@
             .qi-instruction-box { font-size: 1.05rem; padding: 15px; }
             .result-text { font-size: 1.1rem; }
         }
-       /* 經文讀誦區樣式 */
-.sutra-paper { background-color: #fdf8e4; border: 1px solid #e0d6b8; padding: 20px; border-radius: 12px; height: 65vh; overflow-y: auto; text-align: center; }
-.sutra-paper img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-.sutra-hint { text-align: center; color: #8e44ad; font-size: 0.95rem; margin-bottom: 20px; padding: 15px; background: #fff; border-radius: 8px; border: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -233,8 +349,10 @@
         <button class="tab-btn sutra-tab" onclick="switchTab(event, 'sutra-tab')">📖 靜心讀誦</button>
         <button class="tab-btn ear-tab" onclick="switchTab(event, 'ear-tab')">👂 耳穴圖鑑</button>
         <button class="tab-btn flower-tab" onclick="switchTab(event, 'flower-tab')">🌸 花精療癒紀錄</button>
+        <button class="tab-btn body-map-tab" onclick="switchTab(event, 'body-map-tab')">🗺️ 花精身體地圖</button>
     </div>
 
+    <!-- 1. 幸福種子句 -->
     <div id="seed-tab" class="tab-content active">
         <h1>✨ 幸福種子句調配器 ✨</h1>
         <div class="subtitle">【全圖鑑終極大圓滿版】100% 完整收錄書中所有功法、模式與經咒</div>
@@ -261,6 +379,7 @@
         </div>
     </div>
 
+    <!-- 2. 藥師咒 -->
     <div id="buddha-tab" class="tab-content">
         <h1 class="buddha-h1">💙 藥師咒：專病專藥系統 💙</h1>
         <div class="subtitle">【隨身小卡完整更新】100% 精準對照各大病症類別與三味靈性藥名</div>
@@ -301,7 +420,7 @@
         </div>
     </div>
 
-    
+    <!-- 3. 氣功修練 -->
     <div id="qi-tab" class="tab-content">
         <h1 class="qi-h1">🌀 氣功修練專區 </h1>
         <div class="subtitle">【任督二脈開關竅大圓滿】整合肚臍採氣、天地樁與任督脈十穴道旋轉</div>
@@ -371,7 +490,6 @@
                         <circle id="vortex-4" cx="50" cy="60" r="8" class="vortex-ring-static" style="transform-origin: 50px 60px; stroke: #f1c40f;"/>
                         <circle id="vortex-5" cx="50" cy="72" r="8" class="vortex-ring-static" style="transform-origin: 50px 72px; stroke: #e67e22;"/>
                         <circle id="vortex-6" cx="50" cy="84" r="8" class="vortex-ring-static" style="transform-origin: 50px 84px; stroke: #e74c3c;"/>
-                        
                     </svg>
                 </div>
                 <div id="qi-visual-desc" style="font-size:0.85rem; margin-top:5px; color:#2ecc71; font-weight:bold;"></div>
@@ -379,6 +497,7 @@
         </div>
     </div>
 
+    <!-- 4. 中醫穴位 -->
     <div id="acu-tab" class="tab-content">
         <h1 class="acu-h1">📍 中醫對症穴位圖鑑 </h1>
         <div class="subtitle">【不怕找不到穴道】附上超白話文找穴指南，自己在家也能輕鬆按！</div>
@@ -413,8 +532,8 @@
         </div>
     </div>
 
-   
-  </div> <div id="sutra-tab" class="tab-content">
+    <!-- 5. 靜心讀誦 -->
+    <div id="sutra-tab" class="tab-content">
         <h1>📖 靜心讀誦閣</h1>
         <select id="sutra-select" onchange="renderSutra()">
             <option value="">-- 請選擇經典 --</option>
@@ -427,30 +546,65 @@
         </div>
     </div>
 
-   <div id="ear-tab" class="tab-content">
-    <h1>👂 耳穴對症智慧查詢</h1>
-    <div class="qi-controls">
-        <select id="ear-cat-select" onchange="updateEarSymptoms()">
-            <option value="">-- 請選擇病症類別 --</option>
-        </select>
-        <select id="ear-sym-select" onchange="renderEarResult()">
-            <option value="">-- 請先選擇類別 --</option>
-        </select>
-        <div id="ear-result-panel" class="acu-point-detail" style="display:none; background:#fff5f5; border:1px solid var(--acu);"></div>
+    <!-- 6. 耳穴查詢 -->
+    <div id="ear-tab" class="tab-content">
+        <h1>👂 耳穴對症智慧查詢</h1>
+        <div class="qi-controls">
+            <select id="ear-cat-select" onchange="updateEarSymptoms()">
+                <option value="">-- 請選擇病症類別 --</option>
+            </select>
+            <select id="ear-sym-select" onchange="renderEarResult()">
+                <option value="">-- 請先選擇類別 --</option>
+            </select>
+            <div id="ear-result-panel" class="acu-point-detail" style="display:none; background:#fff5f5; border:1px solid var(--acu);"></div>
+        </div>
+        <div class="sutra-paper" style="display: block; margin-top:20px;">
+            <img src="ear_front.jpg" alt="正面" style="width: 100%; max-width: 600px;">
+            <img src="ear_back.jpg" alt="背面" style="width: 100%; max-width: 600px;">
+        </div>
     </div>
-    <div class="sutra-paper" style="display: block; margin-top:20px;">
-        <img src="ear_front.jpg" alt="正面" style="width: 100%; max-width: 600px;">
-        <img src="ear_back.jpg" alt="背面" style="width: 100%; max-width: 600px;">
-    </div>
-</div>
 
-     <div id="flower-tab" class="tab-content"></div>
- <div class="result-box">
+    <!-- 7. 花精療癒紀錄 (flower.js 注入點) -->
+    <div id="flower-tab" class="tab-content"></div>
+
+    <!-- ★★★ 8. 身體地圖分頁容器「加在這邊」★★★ -->
+    <div id="body-map-tab" class="tab-content">
+        <div class="bm-card">
+            <h1 class="flower-map-h1">🌸 巴赫花精全身體地圖</h1>
+            <div class="subtitle" style="margin-bottom: 16px;">【柯磊墨全身 22 視角反射區全收錄】精準呼吸燈點位導引</div>
+
+            <!-- 第一層：大部位分類導覽 -->
+            <div class="bm-group-nav" id="bm-group-nav"></div>
+
+            <!-- 第二層：具體視角標籤 -->
+            <div class="bm-view-nav" id="bm-view-nav"></div>
+
+            <!-- 1 ~ 38 花精下拉選單 -->
+            <select id="bm-flower-select"></select>
+
+            <!-- 地圖檢視容器 -->
+            <div class="bm-map-frame">
+                <img id="bm-map-img" src="head_front.jpeg" alt="身體地圖">
+                <div id="bm-dots-container"></div>
+            </div>
+
+            <!-- 說明與關聯建議卡 -->
+            <div class="bm-info-card" id="bm-info-box">
+                請選擇花精或點擊圖中的圓圈熱區進行定位。
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部固定種子句卡片 -->
+    <div class="result-box">
         <button class="copy-btn" id="main-copy-btn" onclick="copySentence()">複製句子</button>
         <button class="clear-btn" onclick="clearAll()">重設</button>
         <div class="result-title">🎯 你的專屬幸福種子句：</div>
         <div class="result-text" id="output-text">請由上方選擇需求...</div>
-     
+    </div>
+
+</div>
+
 <script>
   const earSymptomData = {
       "自己常用": {
@@ -463,8 +617,7 @@
         "單純性鼻炎": { "main": "內鼻、腎上腺、額、內分泌、肺", "note": "" },
         "過敏性鼻炎": { "main": "內鼻、腎上腺、額、內分泌、肺", "note": "配穴：風溪" },
         "腸脹氣": { "main": "脾、大腸、小腸、胃、交感", "note": "配穴：三焦" },
-        "脫髮": { "main": "腎、肺、內分泌、枕", "note": "" },
-        
+        "脫髮": { "main": "腎、肺、內分泌、枕", "note": "" }
     },
     "頭面與五官": {
         "頭昏、頭痛": { "main": "枕、額、腦、神門、皮質下、肝", "note": "配穴：腎、耳尖(放血)" },
@@ -661,13 +814,11 @@ function initAll() {
     acuCatSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>';
     earCatSelect.innerHTML = '<option value="">-- 請選擇類別 --</option>'; 
     
-    // 1. 加入藥師咒與穴道類別
     for (let cat in medicineData) {
         catSelect.options.add(new Option(cat, cat));
         acuCatSelect.options.add(new Option(cat, cat));
     }
     
-    // 2. 加入耳穴類別 (這裡修正了)
     for (let cat in earSymptomData) {
         earCatSelect.options.add(new Option(cat, cat));
     }
@@ -693,25 +844,27 @@ function renderGroup(containerId, data, isRadio) {
     });
 }
 
+// 支援外部切換到身體地圖 (包含花精卡片聯動)
+window.switchMainTab = function(tabId) {
+    const fakeEvt = { currentTarget: document.querySelector('.tab-btn.body-map-tab') };
+    switchTab(fakeEvt, tabId === 'body-map' ? 'body-map-tab' : tabId);
+};
+
 function switchTab(evt, tabId) {
-    // 1. 切換分頁顯示
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
     
     const target = document.getElementById(tabId);
     if (target) target.classList.add('active');
-    evt.currentTarget.classList.add('active');
+    if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
     
-    // 2.【關鍵邏輯】控制「複製句子」區塊的顯示
     const resultBox = document.querySelector('.result-box');
-    // 只有在這兩個頁面顯示
     if (tabId === 'seed-tab' || tabId === 'buddha-tab') {
         resultBox.style.display = 'block';
     } else {
         resultBox.style.display = 'none';
     }
     
-    // 3. 動態調整按鈕顏色
     const copyBtn = document.getElementById('main-copy-btn');
     const colorMap = {
         'buddha-tab': 'buddha-copy-btn',
@@ -724,9 +877,14 @@ function switchTab(evt, tabId) {
         copyBtn.classList.add(colorMap[tabId]);
     }
 
-    // 4. 清除邏輯
     if (tabId === 'seed-tab' || tabId === 'buddha-tab' || tabId === 'acu-tab' || tabId === 'qi-tab') {
         clearAll();
+    }
+
+    // ★ 首次切換至身體地圖時，自動啟動引擎 ★
+    if (tabId === 'body-map-tab' && !window.bodyMapStarted && typeof initBodyMapEngine === 'function') {
+        initBodyMapEngine();
+        window.bodyMapStarted = true;
     }
 }
 
@@ -779,7 +937,6 @@ function updateQiInstructions() {
         • <strong>步驟五：叩齒</strong> 上下排牙齒叩一下，三次即可。讓顱骨震動，讓頭部縫隙微開，氣往外散掉，不滯留在頭部。<br>
         • <strong>步驟六：氣沉丹田</strong> 慢慢站直深吸氣，雙手向上不超過頭。呼氣雙手向下。雙手摸肚子順時針畫圓兩圈，感覺氣順順往下沉至丹田收功。`;
         
-        // 氣降丹田動畫：金光從頭頂一路降到丹田
         path.setAttribute('d', 'M 50,12 L 50,80'); 
         path.setAttribute('stroke', '#f1c40f'); 
         path.style.animationDirection = "normal";
@@ -926,7 +1083,6 @@ function updateQiInstructions() {
     }
 }
 
-// 📍 第四分頁：中醫穴位資料庫與邏輯
 const acupointData = {
     "偏頭痛": { points: ["風池", "合谷", "太陽"], desc: "以大拇指指腹揉壓風池穴，配合按壓手部合谷穴，可疏風解表、通絡止痛。" },
     "頭暈": { points: ["百會", "風池", "太衝"], desc: "輕敲頭頂百會穴，揉壓風池與足部太衝穴，能平肝潛陽、清利頭目。" },
@@ -951,7 +1107,6 @@ const acupointData = {
     "default": { points: ["足三里", "合谷", "百會"], desc: "此症狀之中醫輔助保養，建議從疏通全身氣血的基礎大穴（足三里、合谷、百會）開始揉壓盤整。" }
 };
 
-// 白話文找穴精準定位指南庫
 const pointDetails = {
     "合谷": "【合谷穴】大拇指與食指併攏，虎口肌肉凸起最高處。",
     "風池": "【風池穴】後腦勺髮際線處，脖子兩側大筋外側的凹陷處。",
@@ -1056,7 +1211,6 @@ function drawAcuPoints(pointsList) {
     pointsList.forEach(pName => {
         const coord = acuCoords[pName];
         if (coord && coord.view === currentAcuView) {
-            
             if (coord.x === 50) {
                 group.innerHTML += `
                     <circle class="acu-point-dot" cx="50" cy="${coord.y}" r="2.5" />
@@ -1065,11 +1219,9 @@ function drawAcuPoints(pointsList) {
             } else {
                 let leftX = coord.x;
                 let rightX = 100 - coord.x;
-                
                 group.innerHTML += `
                     <circle class="acu-point-dot" cx="${leftX}" cy="${coord.y}" r="2.5" />
                     <text class="acu-label" x="${leftX - 3}" y="${coord.y + 2}" text-anchor="end">${pName}</text>
-                    
                     <circle class="acu-point-dot" cx="${rightX}" cy="${coord.y}" r="2.5" />
                     <text class="acu-label" x="${rightX + 3}" y="${coord.y + 2}" text-anchor="start">${pName}</text>
                 `;
@@ -1116,26 +1268,17 @@ function copySentence() {
 
 initAll();
 updateAcuToggleBtn();
-    const sutraConfig = {
-    "heart": { name: "心經", folder: "心經", pages: 2 },
-    "diamond": { name: "金剛經", folder: "金剛經", pages: 26 },
-    "medicine": { name: "藥師經", folder: "藥師經", pages: 40 }
-};
 
 function renderSutra() {
     const sutraName = document.getElementById('sutra-select').value;
     const container = document.getElementById('sutra-paper');
-    
-    // 檢查是否選了東西
     if (!sutraName) {
         container.innerHTML = '<p style="text-align:center;">請選擇經典。</p>';
         return;
     }
-
     const pagesConfig = { "心經": 2, "金剛經": 26, "藥師經": 40 };
     const totalPages = pagesConfig[sutraName];
 
-    // 先清空再加入
     container.innerHTML = `
         <div class="sutra-hint">
             讀誦前：請先念「淨口業、淨身業、淨意業真言」各三遍。<br>
@@ -1144,17 +1287,7 @@ function renderSutra() {
 
     for (let i = 1; i <= totalPages; i++) {
         let num = i.toString().padStart(2, '0');
-        // 路徑直接寫：心經01.jpg, 金剛經01.jpg...
         container.innerHTML += `<img src="${sutraName}${num}.jpg" alt="${sutraName} ${num}" style="width:100%; margin-bottom:10px;">`;
-    }
-}
-    function initEarSelect() {
-    const catSelect = document.getElementById('ear-cat-select');
-    if (!catSelect) return;
-    
-    catSelect.innerHTML = '<option value="">-- 請選擇病症類別 --</option>';
-    for (let cat in earSymptomData) {
-        catSelect.options.add(new Option(cat, cat));
     }
 }
 
@@ -1174,9 +1307,7 @@ function renderEarResult() {
     const cat = document.getElementById('ear-cat-select').value;
     const sym = document.getElementById('ear-sym-select').value;
     const panel = document.getElementById('ear-result-panel');
-    
     if (!cat || !sym) return;
-    
     const data = earSymptomData[cat][sym];
     panel.style.display = 'block';
     panel.innerHTML = `
@@ -1185,7 +1316,141 @@ function renderEarResult() {
         <small>💡 提示：${data.note}</small>
     `;
 }
+
+// ★★★ 身體地圖控制引擎實作 ★★★
+let bmCurrentGroup = 'head';
+let bmCurrentView = 'head_front';
+
+function initBodyMapEngine() {
+    const groupNav = document.getElementById('bm-group-nav');
+    const viewNav = document.getElementById('bm-view-nav');
+    const selEl = document.getElementById('bm-flower-select');
+    const imgEl = document.getElementById('bm-map-img');
+    const dotsBox = document.getElementById('bm-dots-container');
+    const infoEl = document.getElementById('bm-info-box');
+
+    if (!groupNav || !window.BODY_STRUCTURE || !window.MAP_DATABASE) return;
+
+    // 1. 初始化 1~38 下拉選單
+    let optHtml = '<option value="">-- 請選擇花精 (1 ~ 38 全收錄) --</option>';
+    FLOWERS_LIST.forEach(([num, zh, en]) => {
+        optHtml += `<option value="${num}">${String(num).padStart(2, '0')}. ${zh} ${en}</option>`;
+    });
+    selEl.innerHTML = optHtml;
+
+    // 2. 渲染第一層 6 大部位分類按鈕
+    groupNav.innerHTML = '';
+    Object.keys(BODY_STRUCTURE).forEach(grpKey => {
+        const btn = document.createElement('button');
+        btn.className = `bm-group-btn ${grpKey === bmCurrentGroup ? 'active' : ''}`;
+        btn.textContent = BODY_STRUCTURE[grpKey].name;
+        btn.onclick = () => {
+            bmCurrentGroup = grpKey;
+            document.querySelectorAll('.bm-group-btn').forEach(b => b.classList.toggle('active', b === btn));
+            renderBmViewTabs(grpKey);
+            switchBmView(BODY_STRUCTURE[grpKey].views[0].id);
+        };
+        groupNav.appendChild(btn);
+    });
+
+    // 3. 渲染第二層具體視角標籤
+    function renderBmViewTabs(grpKey) {
+        viewNav.innerHTML = '';
+        BODY_STRUCTURE[grpKey].views.forEach(v => {
+            const btn = document.createElement('button');
+            btn.className = `bm-view-btn ${v.id === bmCurrentView ? 'active' : ''}`;
+            btn.textContent = v.name;
+            btn.onclick = () => switchBmView(v.id);
+            viewNav.appendChild(btn);
+        });
+    }
+
+    // 4. 切換具體視角並渲染點位
+    function switchBmView(viewKey) {
+        bmCurrentView = viewKey;
+        document.querySelectorAll('.bm-view-btn').forEach(b => b.classList.toggle('active', b.textContent === (MAP_DATABASE[viewKey] ? BODY_STRUCTURE[bmCurrentGroup].views.find(x => x.id === viewKey).name : '')));
+        
+        const vData = MAP_DATABASE[viewKey];
+        if (!vData) return;
+        
+        imgEl.src = vData.img;
+        dotsBox.innerHTML = '';
+
+        vData.dots.forEach(d => {
+            const dot = document.createElement('div');
+            dot.className = 'bm-zone-dot';
+            dot.dataset.num = d.num;
+            dot.dataset.desc = d.desc;
+            dot.style.left = d.x + '%';
+            dot.style.top = d.y + '%';
+            dot.title = `${d.num} 號：${d.desc}`;
+
+            dot.onclick = () => {
+                selEl.value = d.num;
+                bmHighlightNum(d.num);
+            };
+            dotsBox.appendChild(dot);
+        });
+
+        if (selEl.value) bmHighlightNum(selEl.value);
+    }
+
+    // 5. 命中高亮與智慧提示
+    window.bmHighlightNum = function(num) {
+        const dots = dotsBox.querySelectorAll('.bm-zone-dot');
+        let hitDescs = [];
+
+        dots.forEach(d => {
+            if (d.dataset.num === String(num)) {
+                d.classList.add('highlight');
+                hitDescs.push(d.dataset.desc);
+            } else {
+                d.classList.remove('highlight');
+            }
+        });
+
+        if (!num) {
+            infoEl.innerHTML = '請選擇花精或點擊圖中的圓圈熱區進行定位。';
+            return;
+        }
+
+        const fl = FLOWERS_LIST.find(f => f[0] === Number(num));
+        const flTitle = fl ? `【${fl[0]}號 ${fl[1]} ${fl[2]}】` : `【${num} 號花精】`;
+
+        // 全身跨視角統計
+        const locs = [];
+        Object.keys(BODY_STRUCTURE).forEach(grpKey => {
+            BODY_STRUCTURE[grpKey].views.forEach(v => {
+                const data = MAP_DATABASE[v.id];
+                if (data && data.dots.some(d => d.num === Number(num))) {
+                    locs.push(`${BODY_STRUCTURE[grpKey].name}-${v.name}`);
+                }
+            });
+        });
+
+        let msg = `<b>${flTitle}</b><br>`;
+        if (hitDescs.length) {
+            msg += `📍 <b>當前視角亮燈部位：</b><br>• ` + hitDescs.join('<br>• ');
+        } else {
+            msg += `⚠️ 此視角無該花精反射區。`;
+        }
+
+        if (locs.length) {
+            msg += `<br><small style="color:#666;margin-top:6px;display:block;">🔎 本花精亦分佈於：${locs.join('、')}</small>`;
+        }
+        infoEl.innerHTML = msg;
+    };
+
+    selEl.onchange = e => bmHighlightNum(e.target.value);
+
+    // 初始載入頭頸部正面
+    renderBmViewTabs(bmCurrentGroup);
+    switchBmView(bmCurrentView);
+}
 </script>
+
+<!-- ★★★ 外部資料檔與花精核心邏輯 ★★★ -->
+<script src="flower_map_data.js"></script>
 <script type="module" src="flower.js"></script>
 </body>
 </html>
