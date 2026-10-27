@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@600&display=swap" rel="stylesheet">
     <title>幸福種子句調配器-終極大圓滿版</title>
     <style>
         :root {
@@ -370,78 +370,81 @@
         }
     </style>
     <style id="theme">
-:root{--ink:#3E3A39;--paper:#FFFCF6;--coral:#F2A497;--yellow:#F6D27A;--blue:#A8D3E6;--green:#B9DAA5;
---primary:#F2A497;--secondary:#F6D27A;--dark:#3E3A39;--light:#FFFCF6;--buddha:#A8D3E6;--qi:#B9DAA5;--acu:#F6D27A;--flower-map:#F2A497;--flower-map-light:#FDE9E4}
+:root{--ink:#3E3A39;--paper:#FBF8F2;--cream:#F4EEE0;--rose:#F3E3DE;--line:1.5px;
+--coral:#E4B4A8;--yellow:#EBD9A5;--blue:#B9D2DB;--green:#C5D8B8;
+--primary:#E4B4A8;--secondary:#EBD9A5;--dark:#3E3A39;--light:#FBF8F2;--buddha:#B9D2DB;--qi:#C5D8B8;--acu:#EBD9A5;--flower-map:#E4B4A8;--flower-map-light:#F6E6E1}
 html{scroll-behavior:smooth}
-body{font-family:'Huninn','Noto Sans TC','PingFang TC',sans-serif;background:var(--paper);color:var(--ink);padding:70px 12px 20px;line-height:1.6}
+body{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;font-weight:400;background:var(--paper);color:var(--ink);padding:66px 12px 20px;line-height:1.7}
 .container{background:transparent;box-shadow:none;padding:6px 0;max-width:760px}
-:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
-.tab-nav{position:fixed;top:0;left:0;right:0;z-index:1100;margin:0;gap:8px;padding:8px 12px;background:var(--paper);border-bottom:3px solid var(--ink);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+:focus-visible{outline:2px dashed var(--ink);outline-offset:3px}
+.tab-nav{position:fixed;top:0;left:0;right:0;z-index:1100;margin:0;gap:6px;padding:8px 12px;background:var(--paper);border-bottom:var(--line) solid var(--ink);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .tab-nav::-webkit-scrollbar{display:none}
-.tab-btn{flex:0 0 auto;min-width:0;padding:4px 14px;font-family:inherit;font-size:.92rem;font-weight:400;color:var(--ink);background:var(--paper);border:3px solid var(--ink);border-radius:999px;white-space:nowrap}
-.tab-btn:hover{background:var(--secondary)}
-.tab-btn.active,.tab-btn.buddha-tab.active,.tab-btn.qi-tab.active,.tab-btn.acu-tab.active,.tab-btn.ear-tab.active,.tab-btn.body-map-tab.active{color:var(--ink);border-color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+.tab-btn{flex:0 0 auto;min-width:0;padding:3px 14px;font-family:inherit;font-size:.9rem;font-weight:400;color:var(--ink);background:transparent;border:var(--line) solid transparent;border-radius:999px;white-space:nowrap}
+.tab-btn:hover{background:var(--cream)}
+.tab-btn.active,.tab-btn.buddha-tab.active,.tab-btn.qi-tab.active,.tab-btn.acu-tab.active,.tab-btn.ear-tab.active,.tab-btn.body-map-tab.active{color:var(--ink);border-color:var(--ink)}
 .tab-btn.ear-tab.active{background:var(--blue)}
-.tab-btn.bounce{animation:tabpop .5s cubic-bezier(.3,1.6,.5,1)}
-@keyframes tabpop{0%{transform:scale(.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
-.tab-content.pop{animation:pop .55s cubic-bezier(.3,1.5,.5,1)}
-@keyframes pop{0%{opacity:0;transform:translateY(16px) scale(.96)}60%{opacity:1;transform:translateY(-4px)}100%{opacity:1;transform:none}}
-h1,h1.buddha-h1,h1.qi-h1,h1.acu-h1,h1.flower-map-h1{color:var(--ink);font-weight:400;font-size:1.6rem;text-wrap:balance}
-.subtitle{color:var(--ink);font-size:.9rem}
-.section{border-bottom:3px dashed var(--ink)}
-.section-title{font-weight:400}
-.section-title::before,.buddha-title::before,.qi-title::before,.acu-title::before{width:14px!important;height:14px!important;border:3px solid var(--ink);border-radius:50%!important}
-.card{background:var(--paper);border:3px solid var(--ink);border-radius:18px;padding:12px 14px}
-.card:hover{background:#FFF6DC}
-.card.selected{border-color:var(--ink);background:var(--secondary);box-shadow:0 3px 0 var(--ink)}
-.card-name{font-weight:400;color:var(--ink)}.card-desc{color:var(--ink);opacity:.8}
-select{font-family:inherit;border:3px solid var(--ink);border-radius:18px;background:var(--paper);color:var(--ink)}
+.tab-btn.bounce{animation:tabsoft .45s ease-out}
+@keyframes tabsoft{0%{transform:scale(.96)}100%{transform:scale(1)}}
+.tab-content.pop{animation:pop .45s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1,h1.buddha-h1,h1.qi-h1,h1.acu-h1,h1.flower-map-h1{font-family:'Noto Serif TC','Songti TC',serif;color:var(--ink);font-weight:600;font-size:1.5rem;letter-spacing:.06em;text-wrap:balance}
+.subtitle{color:var(--ink);opacity:.75;font-size:.88rem}
+.section{border-bottom:1px solid rgba(62,58,57,.2)}
+.section-title{font-family:'Noto Serif TC','Songti TC',serif;font-weight:600;letter-spacing:.04em}
+.section-title::before,.buddha-title::before,.qi-title::before,.acu-title::before{width:8px!important;height:8px!important;border:0;border-radius:50%!important;margin-right:10px}
+.card{background:var(--paper);border:var(--line) solid var(--ink);border-radius:14px;padding:12px 14px}
+.card:hover{background:var(--cream)}
+.card.selected{border-color:var(--ink);background:var(--rose);box-shadow:none}
+.card-name{font-weight:500;color:var(--ink)}.card-desc{color:var(--ink);opacity:.75}
+select{font-family:inherit;border:var(--line) solid var(--ink);border-radius:14px;background:var(--paper);color:var(--ink)}
 select:focus,select.acu-select:focus{border-color:var(--ink)}
-.med-box{background:var(--paper);border:3px dashed var(--ink);color:var(--ink);border-radius:18px;font-weight:400}
-.med-box:nth-child(1){background:var(--coral)}.med-box:nth-child(2){background:var(--secondary)}.med-box:nth-child(3){background:var(--green)}
-.card-container-flex{background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:24px;box-shadow:0 5px 0 var(--ink)}
-.taichi-curve{stroke:var(--ink);stroke-width:3.5}.taichi-dot{fill:var(--secondary);stroke:var(--ink);stroke-width:2}
-.glow-active .taichi-curve{stroke:#E8776A;filter:drop-shadow(0 0 5px var(--coral))}.glow-active .taichi-dot{fill:var(--coral);filter:drop-shadow(0 0 5px var(--coral))}
-.qi-visual-panel{background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:24px;box-shadow:0 5px 0 var(--ink)}
-.meridian-canvas{background:#FFF6DC!important;border:3px solid var(--ink);border-radius:20px}
-.meridian-canvas circle[id^="n-"],.meridian-canvas circle[id^="ch-"]{stroke:var(--ink);stroke-width:1.2}
-.lid-element{border-color:var(--ink);background:rgba(246,210,122,.5)}.lid-element::after{background:var(--ink)}
+.med-box{background:var(--paper);border:var(--line) solid var(--ink);color:var(--ink);border-radius:14px;font-weight:500}
+.med-box:nth-child(1){background:var(--rose)}.med-box:nth-child(2){background:var(--cream)}.med-box:nth-child(3){background:#E7EFDF}
+.card-container-flex{background:var(--cream);color:var(--ink);border:var(--line) solid var(--ink);border-radius:18px;box-shadow:none}
+.taichi-curve{stroke:var(--ink);stroke-width:3}.taichi-dot{fill:var(--yellow);stroke:var(--ink);stroke-width:2}
+.glow-active .taichi-curve{stroke:#D99A8D;filter:drop-shadow(0 0 4px var(--coral))}.glow-active .taichi-dot{fill:var(--coral);filter:drop-shadow(0 0 4px var(--coral))}
+.qi-visual-panel{background:var(--paper);color:var(--ink);border:var(--line) solid var(--ink);border-radius:18px;box-shadow:none}
+.meridian-canvas{background:var(--cream)!important;border:var(--line) solid var(--ink);border-radius:14px}
+.meridian-canvas circle[id^="n-"],.meridian-canvas circle[id^="ch-"]{stroke:var(--ink);stroke-width:1}
+.lid-element{border-color:var(--ink);background:rgba(235,217,165,.5)}.lid-element::after{background:var(--ink)}
 #qi-visual-desc{display:inline-block;background:var(--ink);padding:2px 12px;border-radius:999px}
 #acu-visual-desc{color:var(--ink)!important}
-.qi-instruction-box,.acu-instruction-box{background:#FFF6DC;border:3px solid var(--ink);border-radius:18px;color:var(--ink)}
-.acu-point-detail{background:var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:none;color:var(--ink)}
-#ear-result-panel{background:#FDE9E4!important;border:3px solid var(--ink)!important}
+.qi-instruction-box,.acu-instruction-box{background:var(--cream);border:var(--line) solid var(--ink);border-radius:14px;color:var(--ink)}
+.acu-point-detail{background:var(--paper);border:var(--line) solid var(--ink);border-radius:14px;box-shadow:none;color:var(--ink)}
+#ear-result-panel{background:var(--rose)!important;border:var(--line) solid var(--ink)!important}
 .acu-label{fill:var(--ink)}.acu-point-dot{fill:var(--coral);stroke:var(--ink);filter:none}
-#acu-svg-object path:first-child{stroke:var(--ink);opacity:.5}
-.view-toggle{background:var(--blue);color:var(--ink);border:3px solid var(--ink);padding:2px 14px}.view-toggle:hover{background:var(--secondary)}
-.result-box{background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:24px;box-shadow:0 5px 0 var(--ink)}
-.result-title{color:var(--ink);text-transform:none;letter-spacing:0}.result-text{font-weight:400}
-.copy-btn,.clear-btn{font-family:inherit;color:var(--ink)!important;border:3px solid var(--ink);border-radius:999px;padding:3px 16px;margin-top:-6px}
-.copy-btn{background:var(--coral)}.buddha-copy-btn{background:var(--blue)!important}.qi-copy-btn{background:var(--green)!important}.acu-copy-btn{background:var(--secondary)!important}
-.clear-btn{background:var(--paper)}.copy-btn:hover,.clear-btn:hover{filter:brightness(.96)}
-.sutra-paper{background:#FFF6DC;border:3px solid var(--ink);border-radius:24px}
-.sutra-hint{color:var(--ink);background:var(--paper);border:3px solid var(--ink);border-radius:18px}
+#acu-svg-object path:first-child{stroke:var(--ink);opacity:.45}
+.view-toggle{background:var(--blue);color:var(--ink);border:var(--line) solid var(--ink);padding:2px 14px}.view-toggle:hover{background:var(--yellow)}
+.result-box{background:var(--paper);color:var(--ink);border:var(--line) solid var(--ink);border-radius:18px;box-shadow:0 4px 18px rgba(62,58,57,.08)}
+.result-title{color:var(--ink);opacity:.75;text-transform:none;letter-spacing:.04em}.result-text{font-weight:500}
+.copy-btn,.clear-btn{font-family:inherit;color:var(--ink)!important;border:var(--line) solid var(--ink);border-radius:999px;padding:3px 16px;margin-top:-6px}
+.copy-btn{background:var(--coral)}.buddha-copy-btn{background:var(--blue)!important}.qi-copy-btn{background:var(--green)!important}.acu-copy-btn{background:var(--yellow)!important}
+.clear-btn{background:var(--paper)}.copy-btn:hover,.clear-btn:hover{filter:brightness(.97)}
+.sutra-paper{background:var(--cream);border:var(--line) solid var(--ink);border-radius:18px}
+.sutra-hint{color:var(--ink);background:var(--paper);border:var(--line) solid var(--ink);border-radius:14px}
 .bm-card{background:var(--paper)}
-.bm-group-btn,.bm-view-btn{font-family:inherit;font-weight:400;color:var(--ink);background:var(--paper);border:3px solid var(--ink);border-radius:999px}
-.bm-group-btn.active{background:var(--coral);color:var(--ink);border-color:var(--ink);box-shadow:0 3px 0 var(--ink)}
-.bm-view-btn.active{background:var(--secondary);border-color:var(--ink);color:var(--ink)}
-.bm-map-frame{border:3px solid var(--ink);border-radius:20px}
-.bm-zone-dot{border:2px solid var(--ink)}
-.bm-info-card{background:#FDE9E4;border:3px solid var(--ink);border-radius:18px;color:var(--ink)}
-.hero-card{border:3px solid var(--ink);border-radius:24px;overflow:hidden;box-shadow:0 5px 0 var(--ink);margin-bottom:12px}
+.bm-group-btn,.bm-view-btn{font-family:inherit;font-weight:400;color:var(--ink);background:var(--paper);border:var(--line) solid var(--ink);border-radius:999px}
+.bm-group-btn.active{background:var(--coral);color:var(--ink);border-color:var(--ink);box-shadow:none}
+.bm-view-btn.active{background:var(--yellow);border-color:var(--ink);color:var(--ink)}
+.bm-map-frame{border:var(--line) solid var(--ink);border-radius:14px}
+.bm-zone-dot{border:1.5px solid var(--ink)}
+.bm-info-card{background:var(--rose);border:var(--line) solid var(--ink);border-radius:14px;color:var(--ink)}
+.hero-card{border:var(--line) solid var(--ink);border-radius:18px;overflow:hidden;margin-bottom:12px}
 .hero-card svg{display:block;width:100%;height:auto}
-.sway{transform-origin:180px 168px;animation:sw 3.4s ease-in-out infinite alternate}
-@keyframes sw{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
-.hdrift{animation:hd 7s ease-in-out infinite alternate}.hdrift.b{animation-duration:9s;animation-delay:-3s}
-@keyframes hd{from{transform:translateX(-10px)}to{transform:translateX(12px)}}
-.hbob{animation:hb 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes hb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.hspin{animation:hs 24s linear infinite;transform-box:fill-box;transform-origin:center}
-@keyframes hs{to{transform:rotate(360deg)}}
-.twk{animation:tw 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes tw{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+.sway{transform-origin:180px 168px;animation:sw 6s ease-in-out infinite alternate}
+@keyframes sw{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.hdrift{animation:hd 12s ease-in-out infinite alternate}.hdrift.b{animation-duration:15s;animation-delay:-5s}
+@keyframes hd{from{transform:translateX(-8px)}to{transform:translateX(10px)}}
+.hbob{animation:hb 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes hb{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.twk{animation:tw 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes tw{0%,100%{opacity:.9}50%{opacity:.35}}
 .pet{animation:pt linear infinite}
-@keyframes pt{from{transform:translate(0,calc(-12px - var(--y))) rotate(0)}to{transform:translate(18px,calc(205px - var(--y))) rotate(200deg)}}
+@keyframes pt{from{transform:translate(0,calc(-12px - var(--y))) rotate(0)}to{transform:translate(14px,calc(205px - var(--y))) rotate(160deg)}}
+.hspin{animation:hs 40s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes hs{to{transform:rotate(360deg)}}
+.rise{animation:ri linear infinite}
+@keyframes ri{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-100px)}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
     </style>
 </head>
@@ -461,19 +464,15 @@ select:focus,select.acu-select:focus{border-color:var(--ink)}
 
     <!-- 1. 幸福種子句 -->
     <div id="seed-tab" class="tab-content active">
-<div class="hero-card"><svg viewBox="0 0 360 205" role="img" aria-label="發芽的幸福種子、小花、太陽與花瓣的插圖" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-<rect width="360" height="205" fill="#FFFCF6" stroke="none"/>
-<g transform="translate(60 52)"><g class="hspin" stroke-dasharray="2 12" fill="none"><circle r="38"/></g><circle r="24" fill="#F6D27A" class="hbob"/></g>
-<g class="hdrift"><path d="M205 46c0-9 9-14 16-11 4-7 16-7 20 2 9-2 14 6 12 13h-46c-4 0-4-3-2-4z" fill="#fff"/></g>
-<g class="hdrift b"><path d="M290 84c0-7 7-11 12-8 3-5 12-5 15 2 7-1 10 4 9 9h-33c-3 0-3-2-3-3z" fill="#fff"/></g>
-<path d="M0 172Q90 150 180 166T360 160V205H0Z" fill="#B9DAA5"/>
-<g class="hbob" style="animation-delay:-1s"><path d="M92 168V138" fill="none"/><g fill="#A8D3E6"><circle cx="92" cy="128" r="8"/><circle cx="102" cy="136" r="8"/><circle cx="82" cy="136" r="8"/><circle cx="86" cy="147" r="8"/><circle cx="98" cy="147" r="8"/></g><circle cx="92" cy="138" r="6" fill="#F6D27A"/></g>
-<g class="hbob" style="animation-delay:-2s"><path d="M272 166V136" fill="none"/><g fill="#F2A497"><circle cx="272" cy="124" r="9"/><circle cx="283" cy="132" r="9"/><circle cx="261" cy="132" r="9"/><circle cx="265" cy="145" r="9"/><circle cx="279" cy="145" r="9"/></g><circle cx="272" cy="136" r="7" fill="#F6D27A"/></g>
-<g class="sway"><path d="M180 168C180 145 176 128 180 104" fill="none" stroke-width="4"/>
-<path d="M180 128C160 126 148 112 146 98C164 98 178 108 180 128Z" fill="#B9DAA5"/><path d="M180 116C200 114 214 100 216 86C198 86 182 96 180 116Z" fill="#B9DAA5"/>
-<path d="M180 100c-9-12-25 2-11 13l11 9 11-9c14-11-2-25-11-13z" fill="#F2A497"/></g>
-<g fill="#F6D27A" stroke-width="2"><path class="twk" d="M130 70l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path class="twk" style="animation-delay:-.8s" d="M240 104l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path class="twk" style="animation-delay:-1.6s" d="M310 50l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g>
-<g class="pets"><ellipse cx="40" cy="40" rx="4" ry="2.6" style="--y:40px;animation-duration:9s;animation-delay:-2s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="110" cy="90" rx="4" ry="2.6" style="--y:90px;animation-duration:11s;animation-delay:-6s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="160" cy="30" rx="4" ry="2.6" style="--y:30px;animation-duration:10s;animation-delay:-4s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="250" cy="60" rx="4" ry="2.6" style="--y:60px;animation-duration:12s;animation-delay:-8s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="300" cy="20" rx="4" ry="2.6" style="--y:20px;animation-duration:9s;animation-delay:-1s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="330" cy="110" rx="4" ry="2.6" style="--y:110px;animation-duration:11s;animation-delay:-5s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="205" cy="120" rx="4" ry="2.6" style="--y:120px;animation-duration:10s;animation-delay:-3s" fill="#F2A497" stroke-width="1.5"/></g></svg></div>
+<div class="hero-card"><svg viewBox="0 0 360 205" role="img" aria-label="太陽、發芽的嫩芽與五朵小花的插圖" stroke="#3E3A39" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="360" height="205" fill="#FBF8F2" stroke="none"/>
+<g transform="translate(64 54)"><g class="hspin" fill="none" stroke-dasharray="2 9"><circle r="36"/></g><circle r="24" fill="#EBD9A5" class="hbob"/></g>
+<g class="hdrift"><path d="M215 52c0-8 8-12 14-10 4-6 14-6 18 2 8-2 12 5 10 11h-40c-3 0-3-2-2-3z" fill="#fff"/></g>
+<g class="hdrift b"><path d="M290 90c0-6 6-9 11-7 3-4 10-4 13 2 6-1 9 3 8 8h-30c-2 0-2-2-2-3z" fill="#fff"/></g>
+<g class="hbob" style="animation-delay:-1s"><path d="M92 174V142" fill="none"/><circle cx="92.0" cy="125.0" r="7" fill="#E4B4A8"/><circle cx="100.6" cy="131.2" r="7" fill="#E4B4A8"/><circle cx="97.3" cy="141.3" r="7" fill="#E4B4A8"/><circle cx="86.7" cy="141.3" r="7" fill="#E4B4A8"/><circle cx="83.4" cy="131.2" r="7" fill="#E4B4A8"/><circle cx="92" cy="134" r="5.5" fill="#EBD9A5"/></g><g class="hbob" style="animation-delay:-3s"><path d="M138 174V152" fill="none"/><circle cx="138.0" cy="136.0" r="6" fill="#B9D2DB"/><circle cx="145.6" cy="141.5" r="6" fill="#B9D2DB"/><circle cx="142.7" cy="150.5" r="6" fill="#B9D2DB"/><circle cx="133.3" cy="150.5" r="6" fill="#B9D2DB"/><circle cx="130.4" cy="141.5" r="6" fill="#B9D2DB"/><circle cx="138" cy="144" r="4.5" fill="#EBD9A5"/></g><g class="sway"><path d="M180 174C180 150 177 130 180 108" fill="none" stroke-width="2.5"/><path d="M180 134C162 132 150 120 148 106C165 106 178 116 180 134Z" fill="#C5D8B8"/><path d="M180 122C198 120 210 108 212 94C195 94 182 104 180 122Z" fill="#C5D8B8"/><path d="M180 108C172 100 174 90 180 84C186 90 188 100 180 108Z" fill="#E4B4A8"/></g><g class="hbob" style="animation-delay:-2s"><path d="M226 174V142" fill="none"/><path d="M226 144C214 142 212 126 216 118L221 124L226 116L231 124L236 118C240 126 238 142 226 144Z" fill="#EBD9A5"/></g><g class="hbob" style="animation-delay:-5s"><path d="M272 174V142" fill="none"/><path d="M272 142C258 140 250 128 252 114C264 118 272 128 272 142Z" fill="#F3E3DE"/><path d="M272 142C286 140 294 128 292 114C280 118 272 128 272 142Z" fill="#F3E3DE"/><path d="M272 142C264 134 262 118 272 104C282 118 280 134 272 142Z" fill="#E4B4A8"/></g><g class="hbob" style="animation-delay:-4s"><path d="M320 174V150" fill="none"/><circle cx="320.0" cy="134.0" r="6" fill="#F3E3DE"/><circle cx="327.6" cy="139.5" r="6" fill="#F3E3DE"/><circle cx="324.7" cy="148.5" r="6" fill="#F3E3DE"/><circle cx="315.3" cy="148.5" r="6" fill="#F3E3DE"/><circle cx="312.4" cy="139.5" r="6" fill="#F3E3DE"/><circle cx="320" cy="142" r="4.5" fill="#EBD9A5"/></g>
+<path d="M0 172Q90 154 180 168T360 162V205H0Z" fill="#C5D8B8"/>
+<g fill="#EBD9A5" stroke-width="1.5"><path class="twk" d="M130 74l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z"/><path class="twk" style="animation-delay:-2s" d="M236 96l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z"/></g>
+<g><circle class="rise" cx="110" cy="150" r="2.2" fill="#EBD9A5" stroke-width="1" style="animation-duration:11s;animation-delay:-2s"/><circle class="rise" cx="160" cy="140" r="2.2" fill="#EBD9A5" stroke-width="1" style="animation-duration:13s;animation-delay:-7s"/><circle class="rise" cx="205" cy="148" r="2.2" fill="#EBD9A5" stroke-width="1" style="animation-duration:12s;animation-delay:-4s"/><circle class="rise" cx="250" cy="146" r="2.2" fill="#EBD9A5" stroke-width="1" style="animation-duration:14s;animation-delay:-9s"/><circle class="rise" cx="300" cy="150" r="2.2" fill="#EBD9A5" stroke-width="1" style="animation-duration:12s;animation-delay:-1s"/></g></svg></div>
         <h1>✨ 幸福種子句調配器 ✨</h1>
         <div class="subtitle">【全圖鑑終極大圓滿版】100% 完整收錄書中所有功法、模式與經咒</div>
 
