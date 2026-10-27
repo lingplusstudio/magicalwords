@@ -2,7 +2,11 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
     <title>幸福種子句調配器-終極大圓滿版</title>
     <style>
         :root {
@@ -365,6 +369,81 @@
             .result-text { font-size: 1.1rem; }
         }
     </style>
+    <style id="theme">
+:root{--ink:#3E3A39;--paper:#FFFCF6;--coral:#F2A497;--yellow:#F6D27A;--blue:#A8D3E6;--green:#B9DAA5;
+--primary:#F2A497;--secondary:#F6D27A;--dark:#3E3A39;--light:#FFFCF6;--buddha:#A8D3E6;--qi:#B9DAA5;--acu:#F6D27A;--flower-map:#F2A497;--flower-map-light:#FDE9E4}
+html{scroll-behavior:smooth}
+body{font-family:'Huninn','Noto Sans TC','PingFang TC',sans-serif;background:var(--paper);color:var(--ink);padding:70px 12px 20px;line-height:1.6}
+.container{background:transparent;box-shadow:none;padding:6px 0;max-width:760px}
+:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+.tab-nav{position:fixed;top:0;left:0;right:0;z-index:1100;margin:0;gap:8px;padding:8px 12px;background:var(--paper);border-bottom:3px solid var(--ink);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex:0 0 auto;min-width:0;padding:4px 14px;font-family:inherit;font-size:.92rem;font-weight:400;color:var(--ink);background:var(--paper);border:3px solid var(--ink);border-radius:999px;white-space:nowrap}
+.tab-btn:hover{background:var(--secondary)}
+.tab-btn.active,.tab-btn.buddha-tab.active,.tab-btn.qi-tab.active,.tab-btn.acu-tab.active,.tab-btn.ear-tab.active,.tab-btn.body-map-tab.active{color:var(--ink);border-color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+.tab-btn.ear-tab.active{background:var(--blue)}
+.tab-btn.bounce{animation:tabpop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes tabpop{0%{transform:scale(.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+.tab-content.pop{animation:pop .55s cubic-bezier(.3,1.5,.5,1)}
+@keyframes pop{0%{opacity:0;transform:translateY(16px) scale(.96)}60%{opacity:1;transform:translateY(-4px)}100%{opacity:1;transform:none}}
+h1,h1.buddha-h1,h1.qi-h1,h1.acu-h1,h1.flower-map-h1{color:var(--ink);font-weight:400;font-size:1.6rem;text-wrap:balance}
+.subtitle{color:var(--ink);font-size:.9rem}
+.section{border-bottom:3px dashed var(--ink)}
+.section-title{font-weight:400}
+.section-title::before,.buddha-title::before,.qi-title::before,.acu-title::before{width:14px!important;height:14px!important;border:3px solid var(--ink);border-radius:50%!important}
+.card{background:var(--paper);border:3px solid var(--ink);border-radius:18px;padding:12px 14px}
+.card:hover{background:#FFF6DC}
+.card.selected{border-color:var(--ink);background:var(--secondary);box-shadow:0 3px 0 var(--ink)}
+.card-name{font-weight:400;color:var(--ink)}.card-desc{color:var(--ink);opacity:.8}
+select{font-family:inherit;border:3px solid var(--ink);border-radius:18px;background:var(--paper);color:var(--ink)}
+select:focus,select.acu-select:focus{border-color:var(--ink)}
+.med-box{background:var(--paper);border:3px dashed var(--ink);color:var(--ink);border-radius:18px;font-weight:400}
+.med-box:nth-child(1){background:var(--coral)}.med-box:nth-child(2){background:var(--secondary)}.med-box:nth-child(3){background:var(--green)}
+.card-container-flex{background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:24px;box-shadow:0 5px 0 var(--ink)}
+.taichi-curve{stroke:var(--ink);stroke-width:3.5}.taichi-dot{fill:var(--secondary);stroke:var(--ink);stroke-width:2}
+.glow-active .taichi-curve{stroke:#E8776A;filter:drop-shadow(0 0 5px var(--coral))}.glow-active .taichi-dot{fill:var(--coral);filter:drop-shadow(0 0 5px var(--coral))}
+.qi-visual-panel{background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:24px;box-shadow:0 5px 0 var(--ink)}
+.meridian-canvas{background:#FFF6DC!important;border:3px solid var(--ink);border-radius:20px}
+.meridian-canvas circle[id^="n-"],.meridian-canvas circle[id^="ch-"]{stroke:var(--ink);stroke-width:1.2}
+.lid-element{border-color:var(--ink);background:rgba(246,210,122,.5)}.lid-element::after{background:var(--ink)}
+#qi-visual-desc{display:inline-block;background:var(--ink);padding:2px 12px;border-radius:999px}
+#acu-visual-desc{color:var(--ink)!important}
+.qi-instruction-box,.acu-instruction-box{background:#FFF6DC;border:3px solid var(--ink);border-radius:18px;color:var(--ink)}
+.acu-point-detail{background:var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:none;color:var(--ink)}
+#ear-result-panel{background:#FDE9E4!important;border:3px solid var(--ink)!important}
+.acu-label{fill:var(--ink)}.acu-point-dot{fill:var(--coral);stroke:var(--ink);filter:none}
+#acu-svg-object path:first-child{stroke:var(--ink);opacity:.5}
+.view-toggle{background:var(--blue);color:var(--ink);border:3px solid var(--ink);padding:2px 14px}.view-toggle:hover{background:var(--secondary)}
+.result-box{background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:24px;box-shadow:0 5px 0 var(--ink)}
+.result-title{color:var(--ink);text-transform:none;letter-spacing:0}.result-text{font-weight:400}
+.copy-btn,.clear-btn{font-family:inherit;color:var(--ink)!important;border:3px solid var(--ink);border-radius:999px;padding:3px 16px;margin-top:-6px}
+.copy-btn{background:var(--coral)}.buddha-copy-btn{background:var(--blue)!important}.qi-copy-btn{background:var(--green)!important}.acu-copy-btn{background:var(--secondary)!important}
+.clear-btn{background:var(--paper)}.copy-btn:hover,.clear-btn:hover{filter:brightness(.96)}
+.sutra-paper{background:#FFF6DC;border:3px solid var(--ink);border-radius:24px}
+.sutra-hint{color:var(--ink);background:var(--paper);border:3px solid var(--ink);border-radius:18px}
+.bm-card{background:var(--paper)}
+.bm-group-btn,.bm-view-btn{font-family:inherit;font-weight:400;color:var(--ink);background:var(--paper);border:3px solid var(--ink);border-radius:999px}
+.bm-group-btn.active{background:var(--coral);color:var(--ink);border-color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+.bm-view-btn.active{background:var(--secondary);border-color:var(--ink);color:var(--ink)}
+.bm-map-frame{border:3px solid var(--ink);border-radius:20px}
+.bm-zone-dot{border:2px solid var(--ink)}
+.bm-info-card{background:#FDE9E4;border:3px solid var(--ink);border-radius:18px;color:var(--ink)}
+.hero-card{border:3px solid var(--ink);border-radius:24px;overflow:hidden;box-shadow:0 5px 0 var(--ink);margin-bottom:12px}
+.hero-card svg{display:block;width:100%;height:auto}
+.sway{transform-origin:180px 168px;animation:sw 3.4s ease-in-out infinite alternate}
+@keyframes sw{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.hdrift{animation:hd 7s ease-in-out infinite alternate}.hdrift.b{animation-duration:9s;animation-delay:-3s}
+@keyframes hd{from{transform:translateX(-10px)}to{transform:translateX(12px)}}
+.hbob{animation:hb 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes hb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.hspin{animation:hs 24s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes hs{to{transform:rotate(360deg)}}
+.twk{animation:tw 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes tw{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+.pet{animation:pt linear infinite}
+@keyframes pt{from{transform:translate(0,calc(-12px - var(--y))) rotate(0)}to{transform:translate(18px,calc(205px - var(--y))) rotate(200deg)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+    </style>
 </head>
 <body>
 
@@ -382,6 +461,19 @@
 
     <!-- 1. 幸福種子句 -->
     <div id="seed-tab" class="tab-content active">
+<div class="hero-card"><svg viewBox="0 0 360 205" role="img" aria-label="發芽的幸福種子、小花、太陽與花瓣的插圖" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<rect width="360" height="205" fill="#FFFCF6" stroke="none"/>
+<g transform="translate(60 52)"><g class="hspin" stroke-dasharray="2 12" fill="none"><circle r="38"/></g><circle r="24" fill="#F6D27A" class="hbob"/></g>
+<g class="hdrift"><path d="M205 46c0-9 9-14 16-11 4-7 16-7 20 2 9-2 14 6 12 13h-46c-4 0-4-3-2-4z" fill="#fff"/></g>
+<g class="hdrift b"><path d="M290 84c0-7 7-11 12-8 3-5 12-5 15 2 7-1 10 4 9 9h-33c-3 0-3-2-3-3z" fill="#fff"/></g>
+<path d="M0 172Q90 150 180 166T360 160V205H0Z" fill="#B9DAA5"/>
+<g class="hbob" style="animation-delay:-1s"><path d="M92 168V138" fill="none"/><g fill="#A8D3E6"><circle cx="92" cy="128" r="8"/><circle cx="102" cy="136" r="8"/><circle cx="82" cy="136" r="8"/><circle cx="86" cy="147" r="8"/><circle cx="98" cy="147" r="8"/></g><circle cx="92" cy="138" r="6" fill="#F6D27A"/></g>
+<g class="hbob" style="animation-delay:-2s"><path d="M272 166V136" fill="none"/><g fill="#F2A497"><circle cx="272" cy="124" r="9"/><circle cx="283" cy="132" r="9"/><circle cx="261" cy="132" r="9"/><circle cx="265" cy="145" r="9"/><circle cx="279" cy="145" r="9"/></g><circle cx="272" cy="136" r="7" fill="#F6D27A"/></g>
+<g class="sway"><path d="M180 168C180 145 176 128 180 104" fill="none" stroke-width="4"/>
+<path d="M180 128C160 126 148 112 146 98C164 98 178 108 180 128Z" fill="#B9DAA5"/><path d="M180 116C200 114 214 100 216 86C198 86 182 96 180 116Z" fill="#B9DAA5"/>
+<path d="M180 100c-9-12-25 2-11 13l11 9 11-9c14-11-2-25-11-13z" fill="#F2A497"/></g>
+<g fill="#F6D27A" stroke-width="2"><path class="twk" d="M130 70l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path class="twk" style="animation-delay:-.8s" d="M240 104l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path class="twk" style="animation-delay:-1.6s" d="M310 50l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g>
+<g class="pets"><ellipse cx="40" cy="40" rx="4" ry="2.6" style="--y:40px;animation-duration:9s;animation-delay:-2s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="110" cy="90" rx="4" ry="2.6" style="--y:90px;animation-duration:11s;animation-delay:-6s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="160" cy="30" rx="4" ry="2.6" style="--y:30px;animation-duration:10s;animation-delay:-4s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="250" cy="60" rx="4" ry="2.6" style="--y:60px;animation-duration:12s;animation-delay:-8s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="300" cy="20" rx="4" ry="2.6" style="--y:20px;animation-duration:9s;animation-delay:-1s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="330" cy="110" rx="4" ry="2.6" style="--y:110px;animation-duration:11s;animation-delay:-5s" fill="#F2A497" stroke-width="1.5"/><ellipse cx="205" cy="120" rx="4" ry="2.6" style="--y:120px;animation-duration:10s;animation-delay:-3s" fill="#F2A497" stroke-width="1.5"/></g></svg></div>
         <h1>✨ 幸福種子句調配器 ✨</h1>
         <div class="subtitle">【全圖鑑終極大圓滿版】100% 完整收錄書中所有功法、模式與經咒</div>
 
@@ -1479,5 +1571,14 @@ function initBodyMapEngine() {
 <!-- ★★★ 外部資料檔與花精核心邏輯 ★★★ -->
 <script src="flower_map_data.js"></script>
 <script type="module" src="flower.js"></script>
+<script>
+(function(){const o=window.switchTab;if(typeof o!=='function')return;
+window.switchTab=function(e,id){o.apply(this,arguments);
+ const el=document.getElementById(id),b=e&&e.currentTarget;
+ if(b&&b.scrollIntoView)b.scrollIntoView({inline:'center',block:'nearest'});
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ if(el){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}
+ if(b){b.classList.remove('bounce');void b.offsetWidth;b.classList.add('bounce')}}})();
+</script>
 </body>
 </html>
